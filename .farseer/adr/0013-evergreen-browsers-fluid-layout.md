@@ -12,7 +12,7 @@ The prototype targets one 10.1" 1280x800 photo frame running Android WebView 106
 
 - Support current Safari (iOS and iPadOS 17+) and current Chrome only.
 - Layouts are fluid and responsive from phone to 1920x1080 landscape. The fixed stage and the Chromium 106 CSS limits are dropped.
-- The 21.5" panel is an Android all-in-one running Fully Kiosk Browser (current Chromium, HA integration for screen on/off and motion wake, remote reload), with Tailscale (ADR-0007).
+- The 21.5" panel is an Android all-in-one running Fully Kiosk Browser (current Chromium, HA integration for screen on/off and motion wake, remote reload), with Tailscale (ADR-0014).
 
 ## Alternatives Considered
 

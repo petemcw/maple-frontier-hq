@@ -40,7 +40,7 @@ Existing content:
 ## Key Integrations
 
 - **Home Assistant** (Container install, 10.10.20.98, same Compose stack): WebSocket API via the non-admin "Home HQ" service user for state and commands; OAuth for sign-in; area and label registries for layout; `notify.mobile_app_*` for push (ADR-0012).
-- **Network** (ADR-0007): Caddy serves `hq.<domain>` with a Let's Encrypt cert via Cloudflare DNS-01. Away devices reach the LAN address through a Tailscale subnet route. Kiosks run Tailscale too.
+- **Network** (ADR-0014): a Tailscale sidecar (hostname `maplefrontier`) runs `tailscale serve`, so Home HQ lives at `https://maplefrontier.alpine-ling.ts.net`, with no host ports and Funnel off. Every device, kiosks included, runs Tailscale; key expiry is off for the sidecar and kiosks. The server reaches HA at its LAN address.
 - **Storage** (ADR-0008): SQLite on a Docker volume, nightly and pre-migration `VACUUM INTO` snapshots.
 - **Deploy** (ADR-0009): GitHub Actions builds `linux/amd64` and pushes `ghcr.io/petemcw/home-hq`; the iot Compose stack pulls it. Secrets in Docker secrets or a host `.env`.
 - **Wall panel** (ADR-0013): 21.5" Android all-in-one running Fully Kiosk Browser.

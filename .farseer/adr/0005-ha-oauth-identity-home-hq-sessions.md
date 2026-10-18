@@ -47,7 +47,7 @@ Every family member already has an HA account. Devices are rarely shared: each p
 
 ### Negative
 
-- No passkeys. Sign-in depends on HA's login page being reachable from the device (kiosks run Tailscale for this, ADR-0007).
+- No passkeys. Sign-in depends on HA's login page being reachable from the device (kiosks run Tailscale for this, ADR-0014).
 
 ### Risks
 

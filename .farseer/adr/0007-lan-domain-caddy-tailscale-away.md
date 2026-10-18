@@ -1,7 +1,7 @@
 # ADR-0007: A LAN domain behind Caddy, with Tailscale for away access
 
 **Date**: 2026-10-18
-**Status**: accepted
+**Status**: superseded by ADR-0014
 **Deciders**: Pete McWilliams
 
 ## Context

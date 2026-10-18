@@ -914,6 +914,6 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 15. Is there a presence sensor in the kitchen, so the screen can wake, dim and go to ambient by room occupancy (RED-24, RED-25) and not only by touch?
 16. Which LLM features do we want (dinner ideas, reading a menu photo into data, finding events), and do they write data directly or propose changes for an adult to approve, as FamilyOS requires?
 17. Should automation settings (thresholds, schedules, freeze) be adjustable from the wall (RED-22), or stay in the HA editor?
-18. How is Home HQ hosted: as its own static app (NFR-13), as custom cards inside HA's frontend (RED-29), or as a standalone page served by HA over its WebSocket API (RED-47)? **Decided: ADR-0002, ADR-0004, ADR-0007.**
+18. How is Home HQ hosted: as its own static app (NFR-13), as custom cards inside HA's frontend (RED-29), or as a standalone page served by HA over its WebSocket API (RED-47)? **Decided: ADR-0002, ADR-0004, ADR-0014.**
 19. Which household-specific extras earn space on a family screen? The two Reddit dashboards each carry things only their owners care about (planes, cars, network health, a watch pick), much like our Agents tab.
 20. If Home HQ is a page served by HA, how does each device sign in? Files in `/config/www` are public, so a long-lived token can't live in the page's files (RED-66). The options are HA's login flow on each device, or something like FamilyOS's display pairing (FOS-10). **Decided: ADR-0005 (Home HQ is not served by HA; members and kiosks sign in with HA OAuth).**
