@@ -57,3 +57,37 @@ _Avoid_: HA token (alone), bot user
 **HA mirror**:
 The server's live, in-memory copy of current entity states, rebuilt from HA on every connect and never persisted.
 _Avoid_: cache, device store, state copy
+
+## Shopping
+
+What the family needs to buy, and where.
+
+### Language
+
+**Shopping list**:
+A named list of things to buy, such as Groceries, Pharmacy or Hardware. Shared by the whole family.
+_Avoid_: list (alone, where task lists are meant too), cart
+
+**Store**:
+Where an item will be bought, such as Costco. Any item on any shopping list may carry one, and an item remembers its last store.
+_Avoid_: shop, vendor, list (for a store)
+
+**Category**:
+The aisle group an item is filed under, such as Produce or Pantry, shown in one household order. Remembered per item name for the whole family.
+_Avoid_: section, aisle, department
+
+**General list**:
+The permanent shopping list named Shopping. Items with no list, and new items from the voice inbox, land here.
+_Avoid_: inbox, default list, Shopping (in code)
+
+**Voice inbox**:
+HA's built-in shopping list, used only to receive adds from Assist, Siri and the HA app. Home HQ moves each item out and empties it.
+_Avoid_: HA shopping list (as the family's list), HA list
+
+**Usuals**:
+The items most often bought lately from one shopping list, offered as one-tap adds on that list.
+_Avoid_: favourites, staples
+
+**Got it**:
+The drawer of ticked-off items, from which an item can be added back. It empties itself after 7 days.
+_Avoid_: cart, completed, done list

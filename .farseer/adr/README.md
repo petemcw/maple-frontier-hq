@@ -18,3 +18,4 @@
 | [0014](0014-tailscale-serve-hostname.md) | Serve Home HQ at maplefrontier.alpine-ling.ts.net through a Tailscale sidecar | accepted | 2026-10-18 |
 | [0015](0015-feature-scope.md) | Feature scope for Home HQ | accepted | 2026-10-18 |
 | [0016](0016-fixed-roles-delete-requests.md) | Three fixed roles, and delete requests for others' items | accepted | 2026-10-18 |
+| [0017](0017-ha-shopping-list-voice-inbox.md) | HA's shopping list is a one-way voice inbox for Home HQ's shopping lists | accepted | 2026-10-18 |
