@@ -13,7 +13,7 @@ Every family member already has an HA account. Devices are rarely shared: each p
 - Family members and kiosks sign in through HA's OAuth flow (client ID is the Home HQ URL). The server exchanges the code, reads the HA user with `auth/current_user`, maps it to a Home HQ member, and discards the HA tokens.
 - Home HQ issues its own sliding session of about 90 days: an HTTP-only cookie for the web, a bearer token for future native clients (ADR-0003).
 - Each kiosk has its own HA user (e.g. "Kitchen Panel"), so one kiosk is revoked by disabling its HA user.
-- Roles (admin, member, kid, display) are stored in Home HQ. The first HA admin to sign in becomes the Home HQ admin.
+- Roles (admin, member, display; the kid role was dropped by ADR-0016) are stored in Home HQ. The first HA admin to sign in becomes the Home HQ admin.
 - HA commands still go through the service user (ADR-0004), whoever is signed in.
 
 ## Alternatives Considered

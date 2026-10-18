@@ -17,3 +17,4 @@
 | [0013](0013-evergreen-browsers-fluid-layout.md) | Evergreen browsers and a fluid layout; the wall panel is Android with Fully Kiosk | accepted | 2026-10-18 |
 | [0014](0014-tailscale-serve-hostname.md) | Serve Home HQ at maplefrontier.alpine-ling.ts.net through a Tailscale sidecar | accepted | 2026-10-18 |
 | [0015](0015-feature-scope.md) | Feature scope for Home HQ | accepted | 2026-10-18 |
+| [0016](0016-fixed-roles-delete-requests.md) | Three fixed roles, and delete requests for others' items | accepted | 2026-10-18 |

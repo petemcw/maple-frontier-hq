@@ -35,8 +35,20 @@ The actor recorded for an action taken on a kiosk, when no family member is name
 _Avoid_: family (as an actor), anonymous
 
 **Role**:
-What a signed-in member or kiosk may do in Home HQ: admin, member, kid or display. Stored in Home HQ, not HA.
-_Avoid_: permission level, user type
+What a signed-in member or kiosk may do in Home HQ: admin, member or display. Stored in Home HQ, not HA. There is no kid role.
+_Avoid_: permission level, user type, kid, supervised
+
+**Admin**:
+A family member with the admin role. Both parents are admins.
+_Avoid_: owner, parent (as a role)
+
+**Owner**:
+Whoever may delete an item outright: the person who added it, or the person it is for. The household owns what a kiosk added, and Family calendar events with no known creator.
+_Avoid_: author, assignee (when the delete right is meant)
+
+**Delete request**:
+A request from a member or a kiosk to delete an item they don't own. It takes effect only when an owner or an admin approves it.
+_Avoid_: draft, proposal, suggestion
 
 **Service user**:
 The non-admin "Home HQ" user in Home Assistant whose token only the server holds. Every HA read and command goes through it.
