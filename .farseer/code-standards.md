@@ -1,6 +1,6 @@
 # Code Standards
 
-> **Provisional.** There is no code yet. These standards copy the sibling `ha-dashboard` project (`../ha-dashboard/.farseer/code-standards.md`) and stand until planning settles the stack. Update this file when the first plan scaffolds the app.
+> **Provisional commands.** The stack is settled (`.farseer/adr/` ADR-0002): a pnpm monorepo, so commands run from the repo root with pnpm. Script names and paths are final once the first plan scaffolds the app.
 
 ## Style Guide
 
@@ -10,10 +10,10 @@ TypeScript (strict) and React function components. Formatting is Prettier: 2-spa
 
 ```bash
 # Check for issues
-npm run lint
+pnpm run lint
 
 # Auto-fix issues
-npx oxlint --fix
+pnpm exec oxlint --fix
 ```
 
 oxlint with the `react`, `typescript` and `oxc` plugins.
@@ -21,8 +21,8 @@ oxlint with the `react`, `typescript` and `oxc` plugins.
 ## Formatting
 
 ```bash
-npm run format        # write
-npm run format:check  # verify
+pnpm run format        # write
+pnpm run format:check  # verify
 ```
 
 ## Pre-commit Checks
@@ -30,11 +30,11 @@ npm run format:check  # verify
 Run before every commit:
 
 ```bash
-npm run format:check && npm run lint && npm test && npm run build
+pnpm run format:check && pnpm run lint && pnpm test && pnpm run build
 ```
 
 - All tests must pass.
-- Run `npm run test:e2e` when a change touches a user workflow, layout, connection or auth.
+- Run `pnpm run test:e2e` when a change touches a user workflow, layout, connection or auth.
 - Never commit secrets: tokens, `.env.local`, private URLs. Never put a long-lived Home Assistant token in source, the bundle, or a file served publicly (anything under HA's `/config/www` is served without sign-in).
 
 ## Naming Conventions

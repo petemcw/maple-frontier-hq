@@ -1,6 +1,6 @@
 # Issue Tracker: Local Markdown
 
-Issues for this repo live as markdown files in `.farseer/plans/{plan-name}/issues/`. The repo has no remote; if it moves to GitHub later, replace this file with the GitHub tracker config.
+Issues for this repo live as markdown files in `.farseer/plans/{plan-name}/issues/`. Issues stay local even once the GitHub remote for image builds exists (ADR-0009). Replace this file only if we decide to move issues to GitHub.
 
 ## Conventions
 

@@ -14,18 +14,22 @@ Skip for: quick bug fixes, single-line changes, questions, documentation. When s
 
 **Every question put to the user goes through the `AskUserQuestion` tool**. When presenting options, provide genuine alternatives; the recommended one always comes first, labelled "(Recommended)". An open-ended question still goes through the tool, whose built-in free-text path carries the user's own words. If a question is worth stopping for, it is worth making answerable in one click.
 
-## Tech Stack (provisional)
+## Tech Stack
 
-Matches the sibling `../ha-dashboard` project until planning decides otherwise:
+Settled in `.farseer/adr/` (ADR-0002, 0003, 0008):
 
-- **Language**: TypeScript
-- **UI**: React on Vite
+- **Language**: TypeScript, Node 24 LTS
+- **Repo**: pnpm workspaces: `apps/web`, `apps/server`, `packages/shared`
+- **UI**: React SPA on Vite, installable PWA
+- **Server**: Hono serving the SPA, `/api` (zod + `@hono/zod-openapi`) and `/ws`
+- **Data**: SQLite via Drizzle (`better-sqlite3`)
 - **Testing**: Vitest + React Testing Library, Playwright
 - **Linting**: oxlint, Prettier
 
 ## Core Principles
 
-- Home Assistant is the source of truth for the house. Home HQ never keeps its own copy of device state.
+- Home Assistant is the source of truth for device state. Home HQ may hold a live in-memory mirror rebuilt from HA on every connect, never persists device state, and never shows device state as current while its HA connection is down (ADR-0004).
+- Only the server talks to Home Assistant, through the non-admin "Home HQ" service user. Browsers never hold an HA token.
 - This is a real house with a real family. Ask before anything that changes devices, Home Assistant config, or family data.
 - Every family member, every device: layouts work from phone to wall display, touch first, accessible.
 - Decisions that settle a brainstorm question get an ADR in `.farseer/adr/`.
@@ -47,9 +51,10 @@ Matches the sibling `../ha-dashboard` project until planning decides otherwise:
 
 Project configuration files are in `.farseer/`:
 
-- `architecture.md` - Technical patterns and structure (mostly to be decided in planning)
-- `code-standards.md` - Coding conventions (provisional)
-- `testing.md` - Test configuration and commands (provisional)
+- `architecture.md` - Technical patterns and structure
+- `adr/` - Architecture decision records; check before touching an area they cover
+- `code-standards.md` - Coding conventions (commands final once the app is scaffolded)
+- `testing.md` - Test configuration and commands (commands final once the app is scaffolded)
 
 ### Glossary
 
@@ -57,7 +62,7 @@ The household: Maple Frontier, Home HQ, and family members. See `.farseer/glossa
 
 ### Issue Tracker
 
-Local markdown files under `.farseer/plans/{plan-name}/issues/`; the repo has no remote. See `.farseer/issue-tracker.md`.
+Local markdown files under `.farseer/plans/{plan-name}/issues/`. Issues stay local even once the GitHub remote for image builds is added (ADR-0009). See `.farseer/issue-tracker.md`.
 
 ### Triage Labels
 

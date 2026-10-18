@@ -54,8 +54,8 @@ When nobody touches it, the screen returns to Today, then turns into a photo fra
 
 ### Display and device
 
-- **NFR-01.** The design canvas is a fixed 1280x800 landscape stage (`#stage`). On any other screen size the stage scales uniformly to fit (`fit()` in `app.js`), so desktop browsers show a letterboxed preview. The viewport meta is `width=1280, user-scalable=no`.
-- **NFR-02.** The target engine is Android WebView / Chromium 106. JS builds to `chrome106`. CSS builds to `chrome61` on purpose, because that WebView rejects 4- and 8-digit hex colors and a newer target lets the minifier emit them (`vite.config.js`). The CSS avoids nesting, `color-mix()`, `oklch()` and `dvh` (`css/tokens.css`).
+- **NFR-01.** The design canvas is a fixed 1280x800 landscape stage (`#stage`). On any other screen size the stage scales uniformly to fit (`fit()` in `app.js`), so desktop browsers show a letterboxed preview. The viewport meta is `width=1280, user-scalable=no`. _Superseded by ADR-0013: fluid layout, no fixed stage._
+- **NFR-02.** The target engine is Android WebView / Chromium 106. JS builds to `chrome106`. CSS builds to `chrome61` on purpose, because that WebView rejects 4- and 8-digit hex colors and a newer target lets the minifier emit them (`vite.config.js`). The CSS avoids nesting, `color-mix()`, `oklch()` and `dvh` (`css/tokens.css`). _Superseded by ADR-0013: evergreen browsers only._
 - **NFR-03.** Touch only. Minimum tap target is 64px (`--tap`). There is no hover-only UI.
 - **NFR-04.** Today never scrolls. Calendar grids, the shopping list and the home-control rooms scroll inside their own panels.
 - **NFR-05.** Units are Celsius and 12-hour time. Copy uses Canadian spelling and places ("Favourite", Toronto venues). The real system will need locale settings.
@@ -72,8 +72,8 @@ When nobody touches it, the screen returns to Today, then turns into a photo fra
 
 - **NFR-11.** If the JS bundle has not started within 10 s (a stale page after a deploy, or a network blip), the page reloads itself (inline script in `index.html`).
 - **NFR-12.** Ambient and night screens nudge their text by up to 4 px every minute to avoid image retention.
-- **NFR-13.** Hosting is a static Vite build deployed to Cloudflare Workers static assets (`npm run deploy`, `wrangler.jsonc`). There is no backend, auth, or persistence. All state lives in memory and resets on reload.
-- **NFR-14.** A PWA manifest makes it installable as a fullscreen landscape app named "Home HQ".
+- **NFR-13.** Hosting is a static Vite build deployed to Cloudflare Workers static assets (`npm run deploy`, `wrangler.jsonc`). There is no backend, auth, or persistence. All state lives in memory and resets on reload. _Superseded by ADR-0002, ADR-0008, ADR-0009: Hono server, SQLite, Docker on the HA host._
+- **NFR-14.** A PWA manifest makes it installable as a fullscreen landscape app named "Home HQ". _Kept; see ADR-0003._
 - **NFR-15.** External runtime dependencies are Google Fonts (Archivo variable-width sans, Instrument Serif) and `picsum.photos` for every image (mock photos, camera snapshots, album art). A broken image gets a fallback style, and a slide shows after 2.5 s even if its image never loads.
 
 ### Diagnostics
@@ -898,22 +898,22 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 ## 18. Questions for the Home HQ plan
 
 1. Which screens stay? Agents is a personal developer tool, not a family one.
-2. Do we build on FamilyOS (run it, fork it, or write extensions for it) or copy its ideas into our own app? It is AGPL-3.0, beta, Svelte, and built for read-only displays, while `ha-dashboard` is React and talks to Home Assistant directly.
-3. Is Home HQ one app on both the wall frame and phones (like `ha-dashboard`, which targets phones first), or a wall-only app?
-4. Does the wall screen stay interactive (tick chores, edit lists, unlock doors), or become read-only as FamilyOS requires?
-5. Where does shared state live (chores, stars, shopping, photos, favorites), given the prototype has no backend?
+2. Do we build on FamilyOS (run it, fork it, or write extensions for it) or copy its ideas into our own app? It is AGPL-3.0, beta, Svelte, and built for read-only displays, while `ha-dashboard` is React and talks to Home Assistant directly. **Decided: ADR-0001.**
+3. Is Home HQ one app on both the wall frame and phones (like `ha-dashboard`, which targets phones first), or a wall-only app? **Decided: one app for phones, tablets and the wall panel (ADR-0002, ADR-0013).**
+4. Does the wall screen stay interactive (tick chores, edit lists, unlock doors), or become read-only as FamilyOS requires? **Decided: ADR-0006.**
+5. Where does shared state live (chores, stars, shopping, photos, favorites), given the prototype has no backend? **Decided for app data: ADR-0008. Photo storage still open.**
 6. Which calendar provider holds the family's events, and how do events map to people?
 7. Which FamilyOS areas matter to us: tasks, kitchen and meal plan, household records, the board, Quick add, the assistant, MCP access?
 8. Do kids use stars, a rotation, or both? Do chores need recurrence, a daily reset and star redemption on day one? Do kids' changes need an adult's approval?
 9. Where do photos come from, and who curates them?
 10. Which devices does the house have for each Home control tile, alert and status line? Is there an alarm system, a water valve, a doorbell camera with two-way audio?
-11. Should the wall display get its own credentials and permissions (for example no unlock without a PIN) separate from phones?
-12. Do we keep the 1280x800 fixed stage and the Chromium 106 limits, or does the frame change?
+11. Should the wall display get its own credentials and permissions (for example no unlock without a PIN) separate from phones? **Decided: ADR-0005, ADR-0006.**
+12. Do we keep the 1280x800 fixed stage and the Chromium 106 limits, or does the frame change? **Decided: ADR-0013.**
 13. Is the Today hero a family photo (TODAY-14) or an illustrated scene that reacts to weather and the family's schedule (RED-01)? If it is a scene, where does the art come from? The frog panoramas are Google's artwork reposted on GitHub, so we would need to check whether we can use them. The OP made extra scenes in the same style with an image model.
 14. Should short-lived things (timers, now playing, parcels, the school card) show as cards over the hero (RED-04) instead of as sheets and banners?
 15. Is there a presence sensor in the kitchen, so the screen can wake, dim and go to ambient by room occupancy (RED-24, RED-25) and not only by touch?
 16. Which LLM features do we want (dinner ideas, reading a menu photo into data, finding events), and do they write data directly or propose changes for an adult to approve, as FamilyOS requires?
 17. Should automation settings (thresholds, schedules, freeze) be adjustable from the wall (RED-22), or stay in the HA editor?
-18. How is Home HQ hosted: as its own static app (NFR-13), as custom cards inside HA's frontend (RED-29), or as a standalone page served by HA over its WebSocket API (RED-47)?
+18. How is Home HQ hosted: as its own static app (NFR-13), as custom cards inside HA's frontend (RED-29), or as a standalone page served by HA over its WebSocket API (RED-47)? **Decided: ADR-0002, ADR-0004, ADR-0007.**
 19. Which household-specific extras earn space on a family screen? The two Reddit dashboards each carry things only their owners care about (planes, cars, network health, a watch pick), much like our Agents tab.
-20. If Home HQ is a page served by HA, how does each device sign in? Files in `/config/www` are public, so a long-lived token can't live in the page's files (RED-66). The options are HA's login flow on each device, or something like FamilyOS's display pairing (FOS-10).
+20. If Home HQ is a page served by HA, how does each device sign in? Files in `/config/www` are public, so a long-lived token can't live in the page's files (RED-66). The options are HA's login flow on each device, or something like FamilyOS's display pairing (FOS-10). **Decided: ADR-0005 (Home HQ is not served by HA; members and kiosks sign in with HA OAuth).**

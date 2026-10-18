@@ -4,7 +4,7 @@ This project's test facts: framework, commands, locations, coverage and naming. 
 
 When exploring the codebase, read `.farseer/glossary.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching. If a change contradicts an ADR, say so rather than silently overriding it.
 
-> **Provisional.** There is no code yet. These settings copy the sibling `ha-dashboard` project (`../ha-dashboard/.farseer/testing.md`) and stand until planning settles the stack and hosting (brainstorm questions 2, 3 and 18 in `docs/brainstorming.md`). Update this file when the first plan scaffolds the app.
+> **Provisional commands.** The stack is settled (`.farseer/adr/` ADR-0002): a pnpm monorepo with `apps/web`, `apps/server` and `packages/shared`, each with its own tests. Script names and paths are final once the first plan scaffolds the app.
 
 ## Test Framework
 
@@ -16,26 +16,26 @@ When exploring the codebase, read `.farseer/glossary.md` (if it exists) so test 
 
 ```bash
 # Run all unit and component tests (Vitest runs files in parallel by default)
-npm test
+pnpm test
 
 # Run all tests sequentially, for debugging a flaky failure
-npm test -- --no-file-parallelism
+pnpm test -- --no-file-parallelism
 
 # Run a specific test file or filter (scoped run, used by TDD workers)
-npm test -- src/path/to/module.test.ts
+pnpm test -- src/path/to/module.test.ts
 
 # Run with coverage
-npm run test:coverage
+pnpm run test:coverage
 
 # Playwright end-to-end tests
-npm run test:e2e
+pnpm run test:e2e
 ```
 
 ## Parallel Execution
 
 - **Default**: always run tests in parallel unless debugging a specific failure.
-- Parallel command: `npm test` (Vitest worker pool) and `npm run test:e2e` (Playwright `fullyParallel`).
-- Sequential fallback: `npm test -- --no-file-parallelism`, `npm run test:e2e -- --workers=1`.
+- Parallel command: `pnpm test` (Vitest worker pool) and `pnpm run test:e2e` (Playwright `fullyParallel`).
+- Sequential fallback: `pnpm test -- --no-file-parallelism`, `pnpm run test:e2e -- --workers=1`.
 
 ## Test File Locations
 
