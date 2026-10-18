@@ -897,13 +897,13 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 
 ## 18. Questions for the Home HQ plan
 
-1. Which screens stay? Agents is a personal developer tool, not a family one.
+1. Which screens stay? Agents is a personal developer tool, not a family one. **Agents ruled out: ADR-0015. The rest of the screen list is still open.**
 2. Do we build on FamilyOS (run it, fork it, or write extensions for it) or copy its ideas into our own app? It is AGPL-3.0, beta, Svelte, and built for read-only displays, while `ha-dashboard` is React and talks to Home Assistant directly. **Decided: ADR-0001.**
 3. Is Home HQ one app on both the wall frame and phones (like `ha-dashboard`, which targets phones first), or a wall-only app? **Decided: one app for phones, tablets and the wall panel (ADR-0002, ADR-0013).**
 4. Does the wall screen stay interactive (tick chores, edit lists, unlock doors), or become read-only as FamilyOS requires? **Decided: ADR-0006.**
 5. Where does shared state live (chores, stars, shopping, photos, favorites), given the prototype has no backend? **Decided for app data: ADR-0008. Photo storage still open.**
 6. Which calendar provider holds the family's events, and how do events map to people?
-7. Which FamilyOS areas matter to us: tasks, kitchen and meal plan, household records, the board, Quick add, the assistant, MCP access?
+7. Which FamilyOS areas matter to us: tasks, kitchen and meal plan, household records, the board, Quick add, the assistant, MCP access? **Decided: ADR-0015.**
 8. Do kids use stars, a rotation, or both? Do chores need recurrence, a daily reset and star redemption on day one? Do kids' changes need an adult's approval?
 9. Where do photos come from, and who curates them?
 10. Which devices does the house have for each Home control tile, alert and status line? Is there an alarm system, a water valve, a doorbell camera with two-way audio?
@@ -915,5 +915,5 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 16. Which LLM features do we want (dinner ideas, reading a menu photo into data, finding events), and do they write data directly or propose changes for an adult to approve, as FamilyOS requires?
 17. Should automation settings (thresholds, schedules, freeze) be adjustable from the wall (RED-22), or stay in the HA editor?
 18. How is Home HQ hosted: as its own static app (NFR-13), as custom cards inside HA's frontend (RED-29), or as a standalone page served by HA over its WebSocket API (RED-47)? **Decided: ADR-0002, ADR-0004, ADR-0014.**
-19. Which household-specific extras earn space on a family screen? The two Reddit dashboards each carry things only their owners care about (planes, cars, network health, a watch pick), much like our Agents tab.
+19. Which household-specific extras earn space on a family screen? The two Reddit dashboards each carry things only their owners care about (planes, cars, network health, a watch pick), much like our Agents tab. **Decided: ADR-0015.**
 20. If Home HQ is a page served by HA, how does each device sign in? Files in `/config/www` are public, so a long-lived token can't live in the page's files (RED-66). The options are HA's login flow on each device, or something like FamilyOS's display pairing (FOS-10). **Decided: ADR-0005 (Home HQ is not served by HA; members and kiosks sign in with HA OAuth).**

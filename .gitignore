@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vite/
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+.claude/worktrees/
+.DS_Store
+!.envrc
+.farseer/plans/
+.farseer/scratch/
