@@ -91,3 +91,53 @@ _Avoid_: favourites, staples
 **Got it**:
 The drawer of ticked-off items, from which an item can be added back. It empties itself after 7 days.
 _Avoid_: cart, completed, done list
+
+## Records
+
+What the household keeps track of, and the jobs that come back. See ADR-0018.
+
+### Language
+
+**Record**:
+Something the household keeps track of: the home, a thing, a service, a vehicle or a pet. A record can be archived when it leaves the household, keeping its history.
+_Avoid_: asset, item, entry
+
+**Home**:
+The one record for Maple Frontier itself, which things and services belong to.
+_Avoid_: house record, property
+
+**Thing**:
+An appliance or other object kept as a record, such as the fridge, the furnace or the mower, with its brand, model, serial and warranty.
+_Avoid_: device (an HA device), appliance (alone), item
+
+**Service**:
+A utility, insurance or subscription kept as a record, such as electricity, internet or a streaming plan.
+_Avoid_: subscription (alone), account, utility (alone)
+
+**Duty**:
+A dated job on a record that may repeat every so many weeks, months or years, such as renewing insurance or changing the furnace filter. Unassigned duties remind the admins.
+_Avoid_: obligation, chore, task, reminder
+
+**End date**:
+A date on a record that asks nothing of anyone, such as a warranty end or a paper's valid-until. It reminds the admins ahead of time but is never done or overdue.
+_Avoid_: lapsing duty, expiry, deadline
+
+**Log**:
+A record's dated list of what was done to it: services, treatments, repairs, filter changes. Completing a duty adds a log entry.
+_Avoid_: history (alone), service log, treatment history
+
+**Paper**:
+A file attached to a record, with a label and an optional valid-until date. Only admins add or view papers.
+_Avoid_: document, attachment, file (alone)
+
+**Unfiled paper**:
+A file found in a record's NAS folder that nobody has labeled yet.
+_Avoid_: inbox item, orphan
+
+**Preset**:
+A suggested duty for a kind of record, such as a rabies shot for a pet, offered as a one-tap chip with a repeat and lead time. Admins edit presets.
+_Avoid_: template, default duty
+
+**Sensor prompt**:
+The question "Was the furnace filter changed?" raised when a duty's linked HA entity reaches its trigger state. Answered once, it clears everywhere.
+_Avoid_: done check, confirmation, alert

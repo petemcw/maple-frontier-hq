@@ -1,7 +1,7 @@
 # ADR-0016: Three fixed roles, and delete requests for others' items
 
 **Date**: 2026-10-18
-**Status**: accepted
+**Status**: accepted (admin-only list extended by ADR-0018)
 **Deciders**: Pete McWilliams
 
 ## Context
