@@ -90,3 +90,43 @@ One region format for the whole household, read from HA's config (unit system, t
 - **Covers**: NFR-05 (replaced: the region format follows HA), FOS-53 (ruled out)
 - **Depends on**: the HA connection (ADR-0004); SQLite storage (ADR-0008)
 - **ADRs**: ADR-0020
+
+### Recipe box
+
+One family recipe box. A recipe has a title, ingredient lines (headings such as "For the sauce:" allowed), steps, servings, total time, source link, labels and one photo. Search matches titles and ingredients, and labels filter as chips. Cook notes are a dated log on the recipe showing who wrote each one. Anyone can add one, and only the writer or an admin deletes it. Whoever adds a recipe owns it, so deleting someone else's is a delete request. Kiosks can view recipes. No rating, no made-it log, no meal plan.
+
+- **Covers**: FOS-33 (no AI capture here)
+- **Depends on**: Roles; Delete requests
+- **ADRs**: ADR-0015, ADR-0016, ADR-0021
+
+### Recipe from a link
+
+Paste a recipe page's URL and the server reads its schema.org Recipe data (JSON-LD, including `@graph`, HowToSection and ISO 8601 times) into the recipe form to check and save. A link shared to the Telegram bot does the same as a recipe draft that only the sender sees, and the bot replies with a link to it. When a page can't be read, the form opens with the URL as the source.
+
+- **Covers**: FOS-33 (source link), FOS-41 (the link part, no AI)
+- **Depends on**: Recipe box; the Telegram bot (ADR-0019) and linking each Telegram user to a family member
+- **ADRs**: ADR-0019, ADR-0021
+
+### Recipe scaling and units
+
+Each ingredient line is parsed when saved into amount, unit and the rest: whole numbers, decimals, fractions, unicode fractions, mixed numbers and ranges, in US and metric units. The edit form shows how each line was read. A servings stepper (or ½× and 2×) scales amounts, shown as kitchen fractions, and tidies units within their system (6 tsp → 2 tbsp, 16 oz → 1 lb). A US/metric toggle converts amounts like for like, volume to volume and weight to weight, never volume to weight. Step text is never converted. Each device remembers its choice for all recipes. Unparsed lines never change.
+
+- **Covers**: none in the brainstorm (FamilyOS lists scaling as a gap)
+- **Depends on**: Recipe box; Region format
+- **ADRs**: ADR-0020, ADR-0021
+
+### Ingredients to shopping
+
+Tick a recipe's ingredients ("Select all" or one by one) and add them to a chosen shopping list exactly as shown, scaled and in the units on screen. Only the recipe's own lines are accepted. An item already open on the list is never changed, and the result reports it with both amounts ("Chicken is already on the list (500 g; recipe needs 600 g)"). A ticked-off item in Got it comes back. New items take their remembered category.
+
+- **Covers**: FOS-35
+- **Depends on**: Recipe scaling and units; Shopping lists; Shopping add
+- **ADRs**: ADR-0017, ADR-0021
+
+### Cook mode
+
+The recipe in large type for cooking from a phone or tablet: ingredients alongside the steps (side by side on a tablet), each tickable, and the screen kept awake with the Screen Wake Lock API while open. Scaling and the US/metric toggle apply. A time in a step ("simmer 20 minutes") is tappable and starts a kitchen timer.
+
+- **Covers**: none (the brainstorm notes FamilyOS has no cook mode, under "Kitchen (new area)")
+- **Depends on**: Recipe scaling and units; kitchen timers
+- **ADRs**: ADR-0021

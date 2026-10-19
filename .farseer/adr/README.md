@@ -22,3 +22,4 @@
 | [0018](0018-household-records-duties-papers.md) | Household records keep duties in Home HQ, linked to HA sensors, with papers on the NAS | accepted | 2026-10-18 |
 | [0019](0019-home-hq-owns-telegram-bot.md) | The Home HQ server owns the Maple Frontier Telegram bot | accepted | 2026-10-18 |
 | [0020](0020-region-format-follows-ha.md) | One household region format, taken from Home Assistant | accepted | 2026-10-18 |
+| [0021](0021-recipe-box-parsed-ingredients-no-meal-plan.md) | A family recipe box with parsed ingredient lines, and no meal plan | accepted | 2026-10-18 |

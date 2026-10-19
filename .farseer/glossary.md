@@ -96,6 +96,36 @@ _Avoid_: favorites, staples
 The drawer of ticked-off items, from which an item can be added back. It empties itself after 7 days.
 _Avoid_: cart, completed, done list
 
+## Kitchen
+
+The family's recipes and cooking from them. See ADR-0021.
+
+### Language
+
+**Recipe box**:
+The family's one shared collection of recipes.
+_Avoid_: cookbook, recipe list, library
+
+**Recipe**:
+A dish in the recipe box: title, ingredient lines, steps, servings, time, source, labels and a photo. Owned by whoever added it.
+_Avoid_: meal (a meal plan is out of scope)
+
+**Ingredient line**:
+One line of a recipe's ingredients, read as an amount, a unit and the rest when it can be, so it can scale.
+_Avoid_: ingredient (alone, for the line), item (a shopping item)
+
+**Recipe draft**:
+A recipe read from a link sent to the Telegram bot, seen only by its sender until they save it to the recipe box.
+_Avoid_: proposal, pending recipe, import
+
+**Cook mode**:
+The recipe in large type, with ingredients and steps tickable and the screen kept awake, for cooking from a phone or tablet.
+_Avoid_: kitchen mode, step mode
+
+**Cook note**:
+A dated note on a recipe, with who wrote it, such as "less salt, better".
+_Avoid_: comment, review
+
 ## Records
 
 What the household keeps track of, and the jobs that come back. See ADR-0018.
