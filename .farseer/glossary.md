@@ -319,3 +319,33 @@ _Avoid_: kill switch, Good Night (an HA scene)
 **Room presence**:
 The room HA places a family member in, from their phone heard in that room. It's missing when nothing hears the phone.
 _Avoid_: location (GPS and zones), occupancy (a motion reading that doesn't say who)
+
+## Alerts and house status
+
+What Home HQ tells the family about the house without being asked. See ADR-0027.
+
+### Language
+
+**Banner**:
+A notice that shows on every screen until someone acts on it, and clears everywhere at once. Home HQ has two: Garage left open and Delivered.
+_Avoid_: takeover (Home HQ has none), toast (a short confirmation of the viewer's own action), notification (a Companion push)
+
+**Garage left open**:
+The banner and admin push for a garage open 15 minutes, or 3 minutes at night. Leave open quiets it until the door closes, except that nightfall brings it back once.
+_Avoid_: garage alarm, garage warning
+
+**Parcel**:
+A delivery the household knows about from the parcels mailbox. It belongs to the household, not to whoever ordered it, and Home HQ only knows about today's.
+_Avoid_: package (the prototype's word), shipment, order
+
+**Parcels mailbox**:
+The dedicated Workspace mailbox that family members forward shipping emails to, read by Mail and Packages in HA, never by Home HQ.
+_Avoid_: parcels inbox, voice inbox (the shopping one)
+
+**House status**:
+The Today line with the garage, the lights-on count and the inside temperature.
+_Avoid_: security line, health pill, status bar
+
+**House problem**:
+Something in the house that needs fixing: a battery below 20%, a device fault, or a failed HA backup. An unavailable tile isn't one.
+_Avoid_: alert, warning, issue

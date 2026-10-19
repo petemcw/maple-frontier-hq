@@ -346,3 +346,43 @@ On a phone, Home control opens scrolled to the room the member's room presence s
 - **Covers**: the "open at the room the family member is in" part of the home control ticket
 - **Depends on**: Home control layout; ESPresense receivers in the bedrooms and main rooms with every family member's phone enrolled, publishing a room sensor per person to HA (a household change)
 - **ADRs**: ADR-0026
+
+### Banners
+
+A banner is a notice that shows across the top of every screen, kiosks and phones alike, until someone acts on it. The server holds each banner's state and pushes changes over `/ws`, so dismissing it on one device clears it everywhere, and a device that reconnects gets the current set. While Home HQ's HA connection is down, banners built from HA state are withdrawn instead of showing as current (ADR-0004).
+
+- **Covers**: the acknowledge-across-devices part of ALERT-02 (applied to banners), section 12 Banners
+- **Depends on**: the `/ws` channel and the HA mirror
+- **ADRs**: ADR-0004, ADR-0027
+
+### Garage left open
+
+The garage left open banner fires when `binary_sensor.garage_door_status` has been open for 15 minutes, or for 3 minutes while `binary_sensor.household_nighttime` is on, and a door already open past 3 minutes at nightfall fires at once. It reads "Garage open for {n} min · Opened at {time}" with Close garage, which opens the garage slide sheet, and Leave open. Leave open quiets it on every device until the door closes, except that nightfall brings it back once. Closing the door clears it. When it fires, both admins get a Companion push whose Close garage action iOS runs only after Face ID or the passcode (`authenticationRequired`). The action can only close the door. Tests cover the day and night thresholds, nightfall re-arming, and that the push action never sends open.
+
+- **Covers**: ALERT-03, RED-18 (the garage's open duration)
+- **Depends on**: Banners, Garage, Companion notifications to admins (ADR-0012); the garage template cover (a household change)
+- **ADRs**: ADR-0006, ADR-0012, ADR-0026, ADR-0027
+
+### Parcels
+
+Home HQ reads the Mail and Packages sensors and camera entities from HA. Mail and Packages is a HACS integration pinned to a release tag, reading the parcels mailbox in the family's Workspace, and each member's Gmail filter forwards carrier and shop emails there. Parcels belong to the household. While any are out for delivery, Today shows "{n} parcels today", and its sheet lists each one with its carrier and any Amazon locker or delivery code, on every screen. Each delivery raises a "Delivered · {carrier}" banner whose View photo opens the carrier's delivery photo, and OK on any device clears it. Deliveries send no push. Home HQ holds no mailbox credentials.
+
+- **Covers**: ALERT-04, RED-19 (today's deliveries only)
+- **Depends on**: Banners; Mail and Packages installed in HA with a parcels mailbox and a Gmail forwarding filter for each member (a household change)
+- **ADRs**: ADR-0004, ADR-0027
+
+### House status
+
+The house status line on Today shows the garage open or closed, in the warning style when open, then "{n} lights on" from labeled light tiles and the inside temperature from the ecobee in the region format. Tapping it opens Home control. No lock or alarm wording appears anywhere, which retires DEF-02 and DEF-05.
+
+- **Covers**: TODAY-17, DEF-02, DEF-05
+- **Depends on**: Home control layout, Garage, Climate
+- **ADRs**: ADR-0020, ADR-0026, ADR-0027
+
+### House problems
+
+The server derives house problems from the HA mirror: a battery below 20%, named with its device, room and battery-type label ("Laundry motion · Laundry Room · CR2450 · 14%"), a Shelly or TP-Link fault sensor turning on, and HA's daily backup failing. A problem clears itself when its cause clears. An unavailable tile is not a house problem. Where problems appear is set by the "What needs attention" ticket.
+
+- **Covers**: RED-06 (the signals, not the pill)
+- **Depends on**: the HA mirror
+- **ADRs**: ADR-0027
