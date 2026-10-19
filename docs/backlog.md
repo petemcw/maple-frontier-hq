@@ -6,19 +6,19 @@ One flat list of Home HQ features, each sharp enough to hand to `/farseer:planne
 
 ### Roles
 
-Every signed-in family member or kiosk has one fixed role: admin, member or display. Both parents are admins and the four children are members. Admin-only actions are managing members and roles (including letting in an unmapped HA user), approving kiosks, and integrations: iCloud, Immich, the AI key and spending limit, and the weather location. Adding and viewing papers, viewing account numbers, and editing duty presets are admin-only too (ADR-0018), as are setting the task reminder hours and putting someone else on a task break (ADR-0023). Every other action is open to every member, and kiosks act as the household. Roles are checked in code, with no capability table.
+Every signed-in family member or kiosk has one fixed role: admin, member or display. Both parents are admins and the four children are members. Admin-only actions are managing members and roles (including letting in an unmapped HA user), approving kiosks, and integrations: Google, Immich, the AI key and spending limit, and the weather location. Adding and removing calendar subscriptions is admin-only too (ADR-0024). Adding and viewing papers, viewing account numbers, and editing duty presets are admin-only too (ADR-0018), as are setting the task reminder hours and putting someone else on a task break (ADR-0023). Every other action is open to every member, and kiosks act as the household. Roles are checked in code, with no capability table.
 
 - **Covers**: FOS-48 (narrowed), question 8 (approval part), question 20
 - **Depends on**: sign-in with Home Assistant (ADR-0005)
-- **ADRs**: ADR-0005, ADR-0006, ADR-0016, ADR-0018, ADR-0023
+- **ADRs**: ADR-0005, ADR-0006, ADR-0016, ADR-0018, ADR-0023, ADR-0024
 
 ### Delete requests
 
-Deleting a calendar event, household record, recipe or task that someone else owns creates a delete request instead. The item stays until an owner (whoever added it, or the person it is for) or an admin approves. Unanswered requests expire after 7 days, or when the event ends. Home HQ records the creator and subject of every covered item. An event with no known creator belongs to the person whose calendar it's on, or to the household on the Family calendar. A kiosk deletes only household items. Shopping items aren't covered.
+Deleting a household record, recipe or task that someone else owns creates a delete request instead. The item stays until an owner (whoever added it, or the person it is for) or an admin approves. Unanswered requests expire after 7 days. Home HQ records the creator and subject of every covered item. A kiosk deletes only household items. Calendar events aren't covered, because Home HQ never edits Google (ADR-0024). Shopping items aren't covered.
 
 - **Covers**: FOS-48 (replaces Supervised drafts), question 8 (approval part)
-- **Depends on**: Roles; the calendar, tasks, kitchen and household records features it guards
-- **ADRs**: ADR-0016
+- **Depends on**: Roles; the tasks, kitchen and household records features it guards
+- **ADRs**: ADR-0016, ADR-0024
 
 ### Shopping lists
 
@@ -178,3 +178,59 @@ Every completion records the occurrence, who did it, who ticked it and when. Eve
 - **Covers**: CHORE-10 (history), replaces CHORE-09
 - **Depends on**: Tasks
 - **ADRs**: ADR-0023
+
+### Google calendar connection
+
+Home HQ reads the Family calendar and each member's free/busy from the family's Google Workspace, as a dedicated Home HQ Workspace user. It uses an Internal OAuth app with `calendar.calendarlist.readonly`, `calendar.events.readonly` and `calendar.freebusy`, and never writes. The OAuth client and refresh token live in a Docker secret, never in SQLite. Access tokens stay in memory, and auth headers are redacted from logs. Events sync with sync tokens every 1-2 minutes and whenever a client opens the calendar. A 410 triggers a full resync of that calendar. Each member maps to their Workspace address. An `invalid_grant` shows admins "Google access lost" and never retries. Setup is a checklist for the admin: create the Home HQ user and the Internal app, share the Family calendar with it as "See all event details", and set the domain's primary-calendar default to "Only free/busy". Before building, check the research's open items on a real account: whether `calendar.freebusy` alone is enough, how declined and "Available" invites show, whether attendee copies share `iCalUID`, and how far an endless series expands.
+
+- **Covers**: question 6
+- **Depends on**: Roles; the Docker secret (ADR-0009); a Workspace seat for the Home HQ user
+- **ADRs**: ADR-0008, ADR-0009, ADR-0024
+
+### Calendar
+
+The Calendar screen shows the Family calendar in Today, 3 Day, Week and Month modes, with the prototype's header, arrows, swipe and Today button. Today mode has one lane per member. Everyone events span every lane, and an event with family attendees appears in each attendee's lane, colored by its first attendee, with dots for the others. Week is Sunday to Saturday, and Month is a Sunday-start grid. Repeating events show as their occurrences. Times are in the household time zone, and all-day events stay on their date. Each member has one color kept in Home HQ, and everyone events are black. On phones, a "+" opens Google Calendar's new-event screen. The wall panel has no "+".
+
+- **Covers**: CAL-01 to CAL-18 (CAL-04 now opens Google; CAL-16 is Sunday to Saturday; CAL-18 starts on Sunday), FOS-13 (showing repeats only)
+- **Depends on**: Google calendar connection; Region format
+- **ADRs**: ADR-0020, ADR-0024
+
+### Event sheet
+
+Tapping an event opens its sheet: a band in the event's color with the day and date, the title, and the time range or "All day". It notes the event's own time zone when that differs from the household's ("10:00 AM MT"). Below that come the leave-by row, the location, attendee chips (everyone for an everyone event), the notes, and how it repeats. On phones, the sheet also has "Open in Google Calendar". Nothing on the sheet edits the event.
+
+- **Covers**: CAL-19, CAL-20, CAL-21 (repeats now shown)
+- **Depends on**: Calendar
+- **ADRs**: ADR-0024
+
+### Busy blocks
+
+Each member's primary calendar shows as grey "Busy" blocks in their Today lane, in 3 Day and in Week, read through `freebusy.query` with no titles. Busy blocks never count for Next up, leave-by or Month's dots, and tapping one does nothing. A busy block that matches an event already in that member's lane is dropped, so an accepted invitation doesn't show twice.
+
+- **Covers**: question 6 (primary calendars as free/busy)
+- **Depends on**: Google calendar connection; Calendar
+- **ADRs**: ADR-0024
+
+### Calendar subscriptions
+
+Admins add, rename and remove read-only ICS feeds, such as a school calendar or US holidays. Home HQ fetches each feed itself every 6 hours. Their events are everyone events, shown and counted like any other, but never editable.
+
+- **Covers**: FOS-14 (narrowed: every feed is for everyone, with no reminder switch)
+- **Depends on**: Calendar; Roles
+- **ADRs**: ADR-0024
+
+### Leave-by
+
+A timed event with a physical location that isn't home gets a drive time from Google's traffic-aware Routes API. Home HQ calls it directly with its own key, kept in a Docker secret, and caches the result per event, recomputing as leave-by nears. A single-person event measures from that person's location in the HA mirror. If the location is unknown, stale, or HA is down, it uses home. Shared and everyone events measure from home. Leave-by is start minus drive time, and it drives the leave pill, the hatched travel block, Next up's order, and the sheet's "Leave by {time}" with "{n} min drive from {home | your location}". A quota cap in Google Cloud keeps costs inside the free tier.
+
+- **Covers**: DATA-06, TODAY-06 (order), TODAY-08, CAL-10 (travel block), CAL-20 (leave-by row, now live)
+- **Depends on**: Google calendar connection; the HA mirror (ADR-0004); a Google Maps API key with billing
+- **ADRs**: ADR-0004, ADR-0024
+
+### Time to leave
+
+Ten minutes before leave-by, each of the event's people gets a Companion notification: "Leave in 10 min for {title} · {n} min drive". There's none if they are already at the event's location. It's the only calendar notification Home HQ sends, because Google sends the event reminders.
+
+- **Covers**: TODAY-08 (as a notification), FOS-13 (replaces Home HQ's event reminders)
+- **Depends on**: Leave-by; the Companion app on every member's phone and mapping each member to their notify targets (ADR-0012)
+- **ADRs**: ADR-0012, ADR-0024

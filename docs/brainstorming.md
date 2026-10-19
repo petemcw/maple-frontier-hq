@@ -902,7 +902,7 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 3. Is Home HQ one app on both the wall frame and phones (like `ha-dashboard`, which targets phones first), or a wall-only app? **Decided: one app for phones, tablets and the wall panel (ADR-0002, ADR-0013).**
 4. Does the wall screen stay interactive (tick chores, edit lists, unlock doors), or become read-only as FamilyOS requires? **Decided: ADR-0006.**
 5. Where does shared state live (chores, stars, shopping, photos, favorites), given the prototype has no backend? **Decided for app data: ADR-0008. Photo storage still open.**
-6. Which calendar provider holds the family's events, and how do events map to people?
+6. Which calendar provider holds the family's events, and how do events map to people? **Decided: ADR-0024 (Google Workspace, view-only, one Family calendar plus busy blocks from primary calendars).**
 7. Which FamilyOS areas matter to us: tasks, kitchen and meal plan, household records, the board, Quick add, the assistant, MCP access? **Decided: ADR-0015.**
 8. Do kids use stars, a rotation, or both? Do chores need recurrence, a daily reset and star redemption on day one? Do kids' changes need an adult's approval? **Decided: ADR-0016 (no kid role; only deletes of others' items need approval) and ADR-0023, which supersedes ADR-0022 (no stars; chores and family tasks are one list of tasks, with rotation, recurrence and overdue roll-over).**
 9. Where do photos come from, and who curates them?

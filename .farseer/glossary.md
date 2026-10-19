@@ -47,7 +47,7 @@ A family member with the admin role. Both parents are admins.
 _Avoid_: owner, parent (as a role)
 
 **Owner**:
-Whoever may delete an item outright: the person who added it, or the person it is for. The household owns what a kiosk added, and Family calendar events with no known creator.
+Whoever may delete an item outright: the person who added it, or the person it is for. The household owns what a kiosk added.
 _Avoid_: author, assignee (when the delete right is meant)
 
 **Delete request**:
@@ -225,3 +225,41 @@ _Avoid_: chores check, deadline, nag, cutoff
 **Snooze**:
 Pushing an open, dated task later, by an hour, to the evening check or to tomorrow morning, but never past a repeating task's next occurrence. It isn't overdue until then.
 _Avoid_: postpone, defer, skip
+
+## Calendar
+
+The family's events, read from Google Workspace and shown in Home HQ without editing. See ADR-0024.
+
+### Language
+
+**Family calendar**:
+The one shared Google calendar, owned by a parent, that holds the events the family sees in full.
+_Avoid_: shared calendar, household calendar, Family Sharing calendar
+
+**Primary calendar**:
+A family member's own default Google calendar. Home HQ sees it only as busy blocks.
+_Avoid_: personal calendar, my calendar
+
+**Busy block**:
+A stretch of time when someone's primary calendar has something on, shown with no title or details.
+_Avoid_: free/busy, private event, blocked time
+
+**Everyone event**:
+An event for the whole family: a Family calendar event with no family attendees or with all six, or an event from a calendar subscription.
+_Avoid_: family event (in code), all-hands, shared event
+
+**Calendar subscription**:
+A read-only ICS feed, such as a school or US holidays, that an admin adds and Home HQ fetches itself.
+_Avoid_: feed (alone), subscribed calendar, ICS calendar
+
+**Drive time**:
+The traffic-aware time to drive to an event's location, from the person's location or from home.
+_Avoid_: travel time (in code), commute, ETA
+
+**Leave-by**:
+An event's start time minus its drive time.
+_Avoid_: departure time, leave time
+
+**Time to leave**:
+The notification sent to an event's people 10 minutes before its leave-by.
+_Avoid_: event reminder, alert, leave alert

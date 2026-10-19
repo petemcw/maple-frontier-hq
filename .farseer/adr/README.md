@@ -25,3 +25,4 @@
 | [0021](0021-recipe-box-parsed-ingredients-no-meal-plan.md) | A family recipe box with parsed ingredient lines, and no meal plan | accepted | 2026-10-18 |
 | [0022](0022-chores-rotate-without-stars.md) | Chores rotate between family members, with no stars and no routines | superseded by [0023](0023-tasks-replace-chores.md) | 2026-10-18 |
 | [0023](0023-tasks-replace-chores.md) | Tasks replace chores, in one list for routine work and one-off to-dos | accepted | 2026-10-18 |
+| [0024](0024-google-calendars-view-only.md) | Home HQ shows the family's Google calendars, view-only | accepted | 2026-10-18 |
