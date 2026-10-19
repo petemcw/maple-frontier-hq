@@ -6,17 +6,17 @@
 
 ## Context
 
-FamilyOS (brainstorm section 16) already does much of what the prototype mocks: calendar, chores, lists, roles, live sync. It is AGPL-3.0, beta with no compatibility promise, written in Svelte, treats wall displays as read-only, and leaves smart-home control out of scope. Home HQ's centre is Home Assistant control from an interactive wall panel, and the sibling `ha-dashboard` is React. Settles brainstorm section 18 question 2.
+FamilyOS (brainstorm section 16) already does much of what the prototype mocks: calendar, chores, lists, roles, live sync. It is AGPL-3.0, beta with no compatibility promise, written in Svelte, treats wall displays as read-only, and leaves smart-home control out of scope. Home HQ's center is Home Assistant control from an interactive wall panel, and the sibling `ha-dashboard` is React. Settles brainstorm section 18 question 2.
 
 ## Decision
 
-We write Home HQ as our own TypeScript/React app. FamilyOS is a source of ideas (`FOS-xx` requirements), not a dependency, fork or neighbouring service.
+We write Home HQ as our own TypeScript/React app. FamilyOS is a source of ideas (`FOS-xx` requirements), not a dependency, fork or neighboring service.
 
 ## Alternatives Considered
 
 ### Run FamilyOS alongside Home HQ
 
-- **Pros**: family-organiser features exist today.
+- **Pros**: family-organizer features exist today.
 - **Cons**: two apps, two logins, two data stores; no smart-home control; read-only displays.
 - **Why not**: splits the family's day across two products.
 

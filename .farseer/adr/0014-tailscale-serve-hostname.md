@@ -43,5 +43,5 @@ ADR-0007 put Home HQ on a LAN domain behind Caddy, so home devices could work wi
 
 ### Risks
 
-- A kiosk cold-booting during an internet outage may not reconnect until Tailscale's coordination server is reachable. Mitigation: the cached app shell (ADR-0010) still renders, with house data greyed out until it reconnects.
+- A kiosk cold-booting during an internet outage may not reconnect until Tailscale's coordination server is reachable. Mitigation: the cached app shell (ADR-0010) still renders, with house data grayed out until it reconnects.
 - Node keys expiring silently. Mitigation: key expiry disabled on the sidecar and kiosks, as above.

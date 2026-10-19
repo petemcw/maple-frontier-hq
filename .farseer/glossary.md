@@ -90,7 +90,7 @@ _Avoid_: HA shopping list (as the family's list), HA list
 
 **Usuals**:
 The items most often bought lately from one shopping list, offered as one-tap adds on that list.
-_Avoid_: favourites, staples
+_Avoid_: favorites, staples
 
 **Got it**:
 The drawer of ticked-off items, from which an item can be added back. It empties itself after 7 days.

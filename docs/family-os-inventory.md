@@ -12,12 +12,12 @@ Each feature section uses the same subsections: *What the user can do*, *Data mo
 
 ### What FamilyOS is
 
-FamilyOS is a single-container, self-hosted family organiser built for modest hardware such as a Raspberry Pi. One installation serves one family. It is a SvelteKit PWA (phone, desktop and paired wall display) over a Hono API on Node 24, with SQLite (Kysely) as the only database. Every feature is a first-party extension compiled in at build time. Five principles shape the product. Each one is a requirement decision Home HQ should make explicitly:
+FamilyOS is a single-container, self-hosted family organizer built for modest hardware such as a Raspberry Pi. One installation serves one family. It is a SvelteKit PWA (phone, desktop and paired wall display) over a Hono API on Node 24, with SQLite (Kysely) as the only database. Every feature is a first-party extension compiled in at build time. Five principles shape the product. Each one is a requirement decision Home HQ should make explicitly:
 
 1. **AI proposes, people decide.** No model changes data on its own. Every AI change, and every change by a Supervised member, becomes a *draft* that a person approves. Approved drafts carry an *undo* (a declared inverse action).
 2. **Access is capabilities, not role names.** Each feature declares `view` / `use` / `edit` / `manage` capabilities. Roles (Admin, Member, Supervised, Guest, plus custom roles) map those capabilities to levels. "Propose instead of refuse": a person without the edit right can still suggest, and an adult approves.
 3. **Wall displays are view-only devices.** A display is paired by code, holds only the `view` grants an admin picks for it, never gets PIN sign-in or profiles, and cannot run actions. By default it hides names ("hallway privacy").
-4. **Region-neutral and language-neutral.** The code holds English only. Languages and colour palettes are installable data packs, and date/number formats follow the family's region, separately from each person's language.
+4. **Region-neutral and language-neutral.** The code holds English only. Languages and color palettes are installable data packs, and date/number formats follow the family's region, separately from each person's language.
 5. **Smart-home control is explicitly out of scope** (`docs/architecture.md` §1, "Home Assistant already does it well"). The `home` extension covers household *records* (warranties, utilities, upkeep), not devices.
 
 ### Home HQ prototype vs FamilyOS
@@ -25,7 +25,7 @@ FamilyOS is a single-container, self-hosted family organiser built for modest ha
 | Home HQ prototype feature | What FamilyOS has | Section |
 |---|---|---|
 | Today overview | Today page with a "next thing" countdown hero (family's or mine), one lane per person, one-clause status per person, chore rings, a weather sentence that names the event the rain overlaps, "Needs you" cards, photo of the day, evening flip to tomorrow. Three styles: Broadsheet, Lanes, Wall | 2 |
-| Calendar: Today by person / 3-day / week / month | Calendar with per-person colours, tags, repeats (daily, weekly on chosen days, monthly), one reminder per event, ICS subscriptions in (6 h refresh) and secret per-person ICS feeds out. Phones have no Day view or person filter | 3 |
+| Calendar: Today by person / 3-day / week / month | Calendar with per-person colors, tags, repeats (daily, weekly on chosen days, monthly), one reminder per event, ICS subscriptions in (6 h refresh) and secret per-person ICS feeds out. Phones have no Day view or person filter | 3 |
 | Chores with star rewards and time-of-day routines | Rotating chores (fixed, take turns, least done in 90 days), "anyone may do it", turn-aware permissions, credit to whoever's turn it was, rings on Today. **No points, stars or rewards; no time-of-day routines** | 5 |
 | Grocery list with stores, categories, usuals | Several named shopping lists, merge-on-add (no duplicates; bought items come back), remembered section per product, one-line parser for many items and amounts, "in the cart" state, offline taps. Plus a separate general **task list** | 4 |
 | Photo slideshow | Uploaded family photos, a deterministic "photo of the day", and ambient mode (idle slideshow) on displays. No albums, captions or per-display photo sets | 2 |
@@ -49,10 +49,10 @@ Grouped by theme. Each is detailed, with evidence, in its section.
 - **Household records**
   - Vehicles, pets and the home as records with recurring *duties* (insurance, inspection, vaccinations, warranty end, upkeep), reminders some days ahead and on the due day, and filed *papers*. Repeats count from the first due date, and late completion skips missed periods.
   - Home: things with warranty dates kept in sync, plus utilities/services. Pets: treatment history. Vehicles: service log.
-- **Family board:** short notes with an optional photo, colour and end day. Notes expire automatically, admins can pin them, the family can drag to reorder, and "seen by" receipts replace reactions. Shown on Today and on displays.
+- **Family board:** short notes with an optional photo, color and end day. Notes expire automatically, admins can pin them, the family can drag to reorder, and "seen by" receipts replace reactions. Shown on Today and on displays.
 - **Kitchen:** a recipe box, a weekly meal plan (breakfast / lunch / dinner / other) and "ingredients to the shopping list" with a robust ingredient-line parser. Today's meals appear on the display's day view.
 - **Tasks:** a family to-do list separate from chores, with assignee or "Anyone", due date and time, repeats that skip missed dates, and due-time reminders. Timed tasks appear on Today's timeline.
-- **Calendar sync:** a secret per-person ICS feed out ("my events plus family events" in the phone's own calendar app; hashed tokens shown once; per-device label; last used; revoke), and read-only ICS subscriptions in (school, holidays, Google/iCloud secret addresses) with colour, member and reminder switches.
+- **Calendar sync:** a secret per-person ICS feed out ("my events plus family events" in the phone's own calendar app; hashed tokens shown once; per-device label; last used; revoke), and read-only ICS subscriptions in (school, holidays, Google/iCloud secret addresses) with color, member and reminder switches.
 - **Displays:** device-code pairing (RFC 8628 style, QR deep link, single-use hashed token in an httpOnly cookie, five wrong codes end all open pairings). Per-screen view-only grants, a hallway-privacy default, a never-scroll fit planner that drops content in priority order, per-screen style/palette/hidden blocks, and a live-update model (id-only events, a 60 s self-check and a 5-minute full re-read).
 - **People and access:** Supervised members whose changes become drafts, PIN sign-in only on admin-marked family devices (lockout per account), custom roles as a base role plus overrides, and Guests.
 - **Notifications:** in-app records rendered per recipient language, web push (own VAPID / Web Push encryption) and Telegram with approve/reject buttons. Quiet hours per person *defer* pushes rather than drop them. A notification already read in the app suppresses the push. Approval prompts clean themselves up once a draft is decided.
@@ -124,7 +124,7 @@ There is one data layer, `TodayData` (`apps/web/src/lib/today/today-data.svelte.
 
 **On Today (a person, `apps/web/src/routes/+page.svelte`)**
 
-- **Head.** A clock and date, and a one-sentence greeting that summarises the day, for example "Good morning, Deniz. **3 things need you**, …" (`TodayData.sentence`, `composeSentence` in `apps/web/src/lib/today.ts`). The weather sits in the head too, through the `today.atmosphere` slot.
+- **Head.** A clock and date, and a one-sentence greeting that summarizes the day, for example "Good morning, Deniz. **3 things need you**, …" (`TodayData.sentence`, `composeSentence` in `apps/web/src/lib/today.ts`). The weather sits in the head too, through the `today.atmosphere` slot.
 - **The next thing (the "hero").** It sits on the theme's single accent surface and shows:
   - a countdown;
   - a pill reading "Until 16:30", "At <place>" or "Starts 15:45";
@@ -138,7 +138,7 @@ There is one data layer, `TodayData` (`apps/web/src/lib/today/today-data.svelte.
   - The next hours as tiles (Broadsheet), bars (Wall) or a row on the chart's time axis (Lanes).
   - An animated sky behind the block (`extensions/ambient/src/web/TodayWeather.svelte`, `packages/ui/src/famos/WeatherBlock.svelte`).
   - When the weather is off, a person holding `ambient.manage` sees a "Set your city to see the weather" link instead.
-- **A photo of the day.** One uploaded photo per family day, labelled "From the photos · <month added>" (`packages/ui/src/famos/PhotoTile.svelte`).
+- **A photo of the day.** One uploaded photo per family day, labeled "From the photos · <month added>" (`packages/ui/src/famos/PhotoTile.svelte`).
 - **Needs you.** These are the `dashboard.card` contributions in the `needs` band:
   - Quick add suggestions waiting (`inbox.waiting`);
   - overdue tasks (`lists.overdue`);
@@ -278,7 +278,7 @@ There is one data layer, `TodayData` (`apps/web/src/lib/today/today-data.svelte.
 
 - **Two codes.**
   - A **device code**: 32 random bytes in base64url. Only its SHA-256 is stored, and only the display ever holds it.
-  - A **user code**: 8 characters from `ABCDEFGHJKMNPQRSTUVWXYZ23456789` (no 0/O or 1/I/L), drawn by rejection sampling so every character is equally likely. It is shown as `XXXX-XXXX` and typed on a phone. Input is normalised (case, spaces, dashes) by `normalizeUserCode`.
+  - A **user code**: 8 characters from `ABCDEFGHJKMNPQRSTUVWXYZ23456789` (no 0/O or 1/I/L), drawn by rejection sampling so every character is equally likely. It is shown as `XXXX-XXXX` and typed on a phone. Input is normalized (case, spaces, dashes) by `normalizeUserCode`.
 - **Starting a pairing is public, with limits:**
   - 10 starts per IP per 10 minutes (`createRateLimiter`);
   - at most 100 open pairings server-wide;
@@ -465,9 +465,9 @@ Chores never join another clause; the rings carry them.
   - `hourly=temperature_2m,weather_code,precipitation_probability`;
   - `timezone=auto`, `timeformat=unixtime`, `forecast_days=2` (so the evening can talk about the night);
   - `temperature_unit=fahrenheit` when the family's unit is Fahrenheit.
-- **No API key.** The licence is CC BY 4.0, and the attribution "Weather data by Open-Meteo.com" / "Weather: Open-Meteo" is shown wherever the data appears.
+- **No API key.** The license is CC BY 4.0, and the attribution "Weather data by Open-Meteo.com" / "Weather: Open-Meteo" is shown wherever the data appears.
 - **Place.** Only one place per family is supported. Coordinates are rounded to 2 decimals (about 1 km) before they are stored or sent (`roundCoordinate`).
-- **Geocoding.** `https://geocoding-api.open-meteo.com/v1/search?name=…&count=5&language=<family locale>`. Results are labelled "name, admin1, country". Searching needs `ambient.manage`.
+- **Geocoding.** `https://geocoding-api.open-meteo.com/v1/search?name=…&count=5&language=<family locale>`. Results are labeled "name, admin1, country". Searching needs `ambient.manage`.
 - **Fetching.**
   - It goes through `ctx.http.get`, the SSRF-guarded port: 256 KB cap, 15 s timeout.
   - It runs **inside the route handler** (a read-through), not in a job.
@@ -531,7 +531,7 @@ The capabilities offered at pairing are computed as `familyModeCapabilities()` p
 
 - **"Displays follow the sun" / "switch to night at sunset" is not implemented.**
   - The claim appears in `docs/guide/appearance.md`, `docs/design/design-system.md` principle 12, the UI string `devices_display_theme_hint` ("it still follows the sun", in `apps/web/src/messages/en.json`), the comment in `packages/ui/src/theme.css`, and the comment in `display/+page.svelte`.
-  - In code, `/display` uses the same `followDayNight()` as every page: the per-browser `famos.mode`, defaulting to the OS colour scheme.
+  - In code, `/display` uses the same `followDayNight()` as every page: the per-browser `famos.mode`, defaulting to the OS color scheme.
   - No sunrise or sunset is computed. Open-Meteo `is_day` only drives the weather icon and sky.
 - **The photo-of-the-day hint is wrong.** `block_photo_hint` says "A family photo from the same month in another year." The code (`pickForDay`) walks a seeded shuffle, one photo per day, with no date matching. The label shows the month the photo was *added*.
 - **52 px kiosk controls** (design-system §3.1, §9) are not applied. Nothing sets `data-ctl="kiosk"`, and the `kiosk` button size is unused.
@@ -573,7 +573,7 @@ Home HQ already has Today, calendar views, chores, grocery, a slideshow, ambient
   - Single-use tokens are kept only as hashes in an httpOnly cookie, and exactly one poll wins.
   - Starting a pairing is rate-limited per IP; a wrong code invalidates all open codes after 5 misses; `slow_down` is enforced.
 - **Per-screen, capability-scoped, view-only grants.** The admin picks what each screen may read (calendar, chores, lists, meals, weather, photos, board, records, the waiting count). The server enforces it per request, for actions, routes and realtime alike, and revocation is instant.
-- **"Hallway privacy" mode.** By default a screen shows no names or colours: one merged day, a family chore total, and a hero without "for whom". Names are an explicit opt-in per screen.
+- **"Hallway privacy" mode.** By default a screen shows no names or colors: one merged day, a family chore total, and a hero without "for whom". Names are an explicit opt-in per screen.
 - **Never-scroll fit planner.**
   - It degrades in priority order: fewer items per person, then dropping widget-band items, then dropping blocks (photo → weather hours → extras → chores), then zooming down to a floor.
   - Ended items leave first.
@@ -618,19 +618,19 @@ The calendar is one extension (`extensions/calendar`, package `@famos/ext-calend
   - Day and Week are an hour grid (`WeekBoard.svelte`):
     - an all-day lane above the grid, up to 3 rows;
     - a now-line;
-    - today's next event outlined in the `accent` colour;
+    - today's next event outlined in the `accent` color;
     - on open, the grid scrolls to 07:00, or to an hour before the first event (`firstVisibleHour` in `layout.ts`);
     - clicking empty space adds an event at that time, snapped to 30 minutes (`snapSlot`).
   - Month is a 5- or 6-week grid (`MonthBoard.svelte`; the sixth week is dropped when it is all next month). Each cell shows as many rows as fit, then "+N more". Clicking a day opens it in Day view.
   - Keyboard: left and right arrows move by a day, week or month; `t` goes back to today.
 - Phone: a header with a **Week / Month** toggle.
-  - Week is a 7-day strip with coloured dots per day. Month is a grid with dots. Tapping a day shows that day's agenda list below it.
+  - Week is a 7-day strip with colored dots per day. Month is a grid with dots. Tapping a day shows that day's agenda list below it.
   - The agenda uses the shared `Timeline` component. Groups run all-day, then timed, "Any time", "Evening". There is a now-line, and the next item says "in N min" or "in N h", or "first" on days other than today (`packages/ui/src/famos/timeline.ts`).
   - A floating "+" button adds an event.
   - The phone has no Day/Week/Month board and **no person filter**.
 - Filters:
   - **Person** (tablet only): avatar toggles. A selected person keeps their own events plus whole-family events (`filterBoard` in `board.ts`).
-  - **Subscription**: dashed chips in each feed's colour, one per subscribed calendar with events in view. Tapping one hides it.
+  - **Subscription**: dashed chips in each feed's color, one per subscribed calendar with events in view. Tapping one hides it.
   - **Tag**: chips. The selection is stored per device in `localStorage` key `famos.calendar.tagFilter` (`tags.ts`).
 - Event detail: on tablet a family event opens read-only in the side panel first (`EventDetailView.svelte`: when, repeat, who, where, reminder, tags, notes), and **Edit** turns it into the form. On a phone, tapping opens the form directly. Subscription events open read-only (`ExternalDetail.svelte`, marked "From <calendar name>", with notes).
 - Hour-grid layout (`layout.ts`, tested in `test/calendar-layout.test.ts`):
@@ -640,10 +640,10 @@ The calendar is one extension (`extensions/calendar`, package `@famos/ext-calend
   - Events of 6 hours or more (`isLongBlock`, e.g. someone at work) are drawn hollow and dashed behind the other events and take no column.
   - A block is never shorter than one title line.
   - Events that cross midnight are clipped onto both days (`clipToDay`).
-- Colour:
-  - An event's stripe is its members' colours (bands when there are several). Whole-family events are neutral `--ink-soft`.
-  - Subscription events use the subscription's colour.
-  - Tags have their own colours from an 8-colour palette (`SUBSCRIPTION_COLORS` in `contract/index.ts`, the same as core's member palette). A new tag gets the next unused colour automatically (`ensureTags` in `store.ts`).
+- Color:
+  - An event's stripe is its members' colors (bands when there are several). Whole-family events are neutral `--ink-soft`.
+  - Subscription events use the subscription's color.
+  - Tags have their own colors from an 8-color palette (`SUBSCRIPTION_COLORS` in `contract/index.ts`, the same as core's member palette). A new tag gets the next unused color automatically (`ensureTags` in `store.ts`).
 - Live updates: the page reloads on any realtime event whose name starts with `calendar.` (`app.onEvent('calendar.', …)`).
 - Offline: the service worker keeps the last-seen `/api/v1/calendar/occurrences` responses (`apps/web/src/service-worker/index.ts`). Editing needs a connection.
 
@@ -662,7 +662,7 @@ The calendar is one extension (`extensions/calendar`, package `@famos/ext-calend
 - reminder: one preset or none.
 - tags: up to 5, each up to 24 characters, compared case-insensitively. Turkish dotted and dotless I are folded too (`tagKey`).
 - The new-event form defaults to the next full hour today, or 09:00 on other days, with a one-hour length (`emptyForm`). Moving the start moves the end by the same amount (`shiftEnd`).
-- There is no per-event colour, no attachments, no URL field, no attendee or RSVP, and no travel time.
+- There is no per-event color, no attachments, no URL field, no attendee or RSVP, and no travel time.
 
 **Repeating events** (`packages/time/src/index.ts`, `RecurrenceSchema` / `toRRule` / `fromRRule`; picker in `packages/ui/src/famos/RepeatPicker.svelte`)
 
@@ -707,7 +707,7 @@ The calendar is one extension (`extensions/calendar`, package `@famos/ext-calend
 - Plain `http:` is refused by the contract, even for a NAS on the home network.
 - Fields:
   - name (up to 80 characters)
-  - colour (palette)
+  - color (palette)
   - "Whose is it?" members (empty means everyone)
   - "Remind about its events"
   - "Calendar on my home network" (`allowLocal`)
@@ -729,7 +729,7 @@ The calendar is one extension (`extensions/calendar`, package `@famos/ext-calend
 
 **Tags** (`server/tags.ts`, `TagsSection.svelte`)
 
-- People with `calendar.edit` can rename, recolour or delete a tag. Rename and delete rewrite every event that has the tag.
+- People with `calendar.edit` can rename, recolor or delete a tag. Rename and delete rewrite every event that has the tag.
 - Renaming onto an existing name merges the two tags.
 - The tag input suggests existing family tags (`suggestTags`).
 
@@ -792,7 +792,7 @@ All tables are created in one migration, `0001_init`, in `extensions/calendar/sr
   - `Occurrence`, one expanded instance:
     - `eventId` (for external ones, `<sub>:<uid>:<recurrenceKey>`);
     - `key`, `start`/`end` or `startDate`/`endDate`, `memberIds`, `location`, `recurring`;
-    - `notes` (external only), `source` (subscription id, name, colour), `editable`, `tags`.
+    - `notes` (external only), `source` (subscription id, name, color), `editable`, `tags`.
 - Routes (`/api/v1/calendar/...`):
   - `GET /occurrences?from&to` (at most 62 days)
   - `GET /events/{id}`
@@ -930,7 +930,7 @@ All tables are created in one migration, `0001_init`, in `extensions/calendar/sr
 - `docs/guide/calendars.md` says the feed scope choice is shown to "only admins". The code checks `calendar.manage` (`FeedsSection.svelte` `mayShareFamily`, `feeds.ts`). That is admin-only by default, but a custom role can hold it.
 - `docs/guide/calendars.md` says tags are managed "under **Phone and other calendars**, then **Tags**". In code, tags live on Settings → Family → **Calendars & tags** (`/settings/calendars`).
   - The Settings nav entry for that page requires `calendar.manage`.
-  - Members who have `calendar.edit` but not manage can reach it only through the calendar page's settings icon, which is labelled "Phone and other calendars". The page then shows them only the Tags section.
+  - Members who have `calendar.edit` but not manage can reach it only through the calendar page's settings icon, which is labeled "Phone and other calendars". The page then shows them only the Tags section.
 - `docs/guide/everyday.md` says "Pick **Day**, **Week** or **Month**" and "The people pills filter by person". Neither is quite true everywhere:
   - Week is hidden below 1024 px.
   - The phone has only Week/Month and an agenda.
@@ -961,11 +961,11 @@ All tables are created in one migration, `0001_init`, in `extensions/calendar/sr
   - instant revocation;
   - optional notes.
 - **Read-only ICS subscriptions in** for school, club, holidays and Google/iCloud secret addresses:
-  - each with its own colour, member assignment and reminder switch;
+  - each with its own color, member assignment and reminder switch;
   - a home-network (NAS) opt-in;
   - error codes shown on the subscription.
   Holiday calendars are the cheap fix for "holidays".
-- **Tags/categories** on events with family-wide colours, rename/merge/delete, a tag filter remembered per device, and round-trip through ICS CATEGORIES.
+- **Tags/categories** on events with family-wide colors, rename/merge/delete, a tag filter remembered per device, and round-trip through ICS CATEGORIES.
 - **Approval workflow**: supervised members' and the AI's changes become drafts with undo. The duplicate-on-same-day hint, draft expiry once the date has passed, and the "your words must name the target" guard all come with it.
 - **Natural-language calendar queries and edits** through an assistant or MCP. That includes past/now/upcoming tagging and "next match" answers, and moving a single date of a repeating event (split plus undo).
 - **Overnight events** (end earlier than start means the next day). **Long-block rendering**: events of 6 hours or more are drawn hollow behind others, which suits work shifts on a wall display.
@@ -1618,7 +1618,7 @@ The nav entry is Household → Home (`/home`). Each home has its own page at `/h
   - Fields: name, room, brand, model, serial, bought on, warranty ends, notes.
   - Things can get item presets when added.
   - A warranty date automatically maintains a "Warranty ends" duty on the thing's page.
-- **Services**, labelled "Subscriptions" in the UI
+- **Services**, labeled "Subscriptions" in the UI
   - Kind: electricity, gas, water, internet, phone, TV, insurance, building dues, other.
   - Fields: provider, account or subscriber number, usual billing day (1–31, informational only), notes.
   - Each service is a record with its own What needs doing and Papers, but no presets are offered (`ServicePage.svelte` passes no `presets`).
@@ -1652,7 +1652,7 @@ The nav entry is Household → Home (`/home`). Each home has its own page at `/h
   - Re-saving with the same date restores `lapses = true` if someone had turned it into a normal duty.
 - **Name sync.** Renaming a home or thing, or changing a service's provider, calls `records.renameRecord`, so Coming up and reminders show the new name.
 - **Partial update for AI.** `home.updateItem` changes only the fields it is given. Its undo restores just those fields from a `before` map. This lets an AI suggestion such as "warranty extended" touch one field only.
-- **AI exposure is minimised.**
+- **AI exposure is minimized.**
   - `home.aiContext` lists home names and tenure only. `home.aiContextItems` lists thing name, brand and model, room, home and warranty end, with no serial, account number, address or notes (`context.ts`).
   - The AI may propose `home.addItem` (from a receipt or warranty card) and `home.updateItem` (for example a warranty extension) as drafts.
 - **Duplicate guards.** Homes match on name. Things match on home + name + brand + model. Services match on home + kind + provider.
@@ -1772,7 +1772,7 @@ The nav entry is Household → Vehicles (`/vehicles`, `/vehicles/:id`).
   - What needs doing and Papers from records.
   - **Service and repairs** (`VehicleLogs.svelte`), a log. Each entry has kind (service, repair, other), date, place (garage), "what was done" notes and an optional linked paper (for example the invoice). Entries can be removed with two taps.
 - Edit and archive from the ⋯ menu.
-- Mileage is deliberately not modelled: "Dates only, no odometer or units: a mileage … goes in the notes of a log entry" (`extensions/vehicles/src/contract/index.ts`).
+- Mileage is deliberately not modeled: "Dates only, no odometer or units: a mileage … goes in the notes of a log entry" (`extensions/vehicles/src/contract/index.ts`).
 
 #### Data model (`extensions/vehicles/src/server/store.ts`)
 
@@ -1831,7 +1831,7 @@ Vehicles has no cards of its own. Insurance, inspection and tax dates appear thr
 
 ## 8. Family board
 
-`extensions/board` is a fridge-door board of short notes for the whole family. Each note has text, one of five paper colours, an optional photo, an optional end day and an optional pin. Notes have no replies or threads. The only reaction is "seen", which is recorded automatically (`extensions/board/src/contract/index.ts`).
+`extensions/board` is a fridge-door board of short notes for the whole family. Each note has text, one of five paper colors, an optional photo, an optional end day and an optional pin. Notes have no replies or threads. The only reaction is "seen", which is recorded automatically (`extensions/board/src/contract/index.ts`).
 
 ### What the user can do
 
@@ -1841,7 +1841,7 @@ Vehicles has no cards of its own. Insurance, inspection and tax dates appear thr
   - The nav entry has `placement: 'primary'`, group `household`. It sits in the rail on wide screens and moves into More on phones (`web/index.ts`).
 - **Write a note.** The first tile, "Write a note…", turns into an inline composer (`Composer.svelte`) with these fields:
   - Text, up to 500 characters. Line breaks are kept.
-  - Paper: five swatches, `note-1` … `note-5`, coloured by the theme.
+  - Paper: five swatches, `note-1` … `note-5`, colored by the theme.
   - **Add a photo**: one per note.
   - **Stays on the board**: Until I take it down / Until today / Until tomorrow / Until the end of the week / Until a day I pick. "End of the week" respects the family's week start and is offered only when it falls later than tomorrow.
   - **Pin it to the top**: shown only to managers.
@@ -1886,7 +1886,7 @@ Vehicles has no cards of its own. Insurance, inspection and tax dates appear thr
   - Pinned notes come first.
   - Within each group, arranged notes come first in `position` order, followed by never-arranged notes, newest first. Ties are broken by id.
   - A new note, or a newly pinned or unpinned one, joins the top of its group (`topOf` = smallest position − 1, or null while nobody has arranged the group).
-- **Moves change one row.** The note gets the midpoint between its neighbours. The first time a group is arranged, or when a gap falls below 1e-6, the whole group is renumbered 1, 2, 3…
+- **Moves change one row.** The note gets the midpoint between its neighbors. The first time a group is arranged, or when a gap falls below 1e-6, the whole group is renumbered 1, 2, 3…
   - A move to where the note already is returns `moved: false` and sends no event.
   - Moving beside a note of the other group, or one that has gone, is refused with a plain message.
   - The client applies the same order optimistically (`moveLocal`).
@@ -1907,7 +1907,7 @@ Vehicles has no cards of its own. Insurance, inspection and tax dates appear thr
   - The server caps the upload at 6 MB, sniffs magic bytes (JPEG, PNG or WebP, ignoring the client's claimed type) and stores the file under a key scoped to the note.
   - `board.setNotePhoto` accepts only keys under `board/<thatNoteId>/`. If the action fails, the stored file is deleted. A replaced photo's old file is deleted. Taking a note down deletes the photo through a queued job, so the file goes only if the row really went.
   - Photos are served only through `GET /notes/{id}/photo`, which requires `board.view`.
-- **Deterministic look.** Paper tilt (−2° to 2°) and the fastener (tape for one note in three, otherwise a push pin in ink, info or sun colour; pinned notes always get an accent push pin) are hashed from the note id with FNV-1a. A note looks the same on every screen (`web/paper.ts`). Under `prefers-contrast: more`, papers are straight and plain.
+- **Deterministic look.** Paper tilt (−2° to 2°) and the fastener (tape for one note in three, otherwise a push pin in ink, info or sun color; pinned notes always get an accent push pin) are hashed from the note id with FNV-1a. A note looks the same on every screen (`web/paper.ts`). Under `prefers-contrast: more`, papers are straight and plain.
 - **AI.** The AI can propose `board.postNote` as a draft, never pinned, and undo takes the note down. It can read the board through `board.listNotes` (30 notes, board order). A post whose last day has already passed is not offered as a draft (`draftDate`). Duplicate guard: identical text already on the board.
 
 ### Integrations
@@ -1918,7 +1918,7 @@ Vehicles has no cards of its own. Insurance, inspection and tax dates appear thr
 
 ### Today / display relevance
 
-- `dashboard.card` `board.today` (`BoardCard.svelte`): band `notes`, order 5, labelled "The board". It shows small papers in two columns in board order: 4, or 6 when the card is wide, plus "and N more". Each paper links to `/board`.
+- `dashboard.card` `board.today` (`BoardCard.svelte`): band `notes`, order 5, labeled "The board". It shows small papers in two columns in board order: 4, or 6 when the card is wide, plus "and N more". Each paper links to `/board`.
 - `display.widget` `board.notes` (`DisplayBoard.svelte`): order 15. Read-only papers in larger type, at most 2 notes (a code comment says a third was cut off) plus "+N". It shows "Nothing on the board" when empty and never marks notes seen. It needs the display to be granted `board.view`. `docs/guide/displays.md` places it in the bottom band of the display.
 
 ### Docs vs code
@@ -1938,7 +1938,7 @@ Vehicles has no cards of its own. Insurance, inspection and tax dates appear thr
 ### Beyond Home HQ (net-new ideas)
 
 - A shared fridge-door board, separate from chat:
-  - short notes with optional photo, colour and end day that expire automatically;
+  - short notes with optional photo, color and end day that expire automatically;
   - admin-only pinning;
   - family-arranged order with drag on touch screens;
   - passive "seen by" receipts instead of reactions.
@@ -2462,7 +2462,7 @@ AI adapter (`packages/adapters/src/llm-aisdk/tables.ts`, migrations 0001–0002)
 - **Audit**: every tool call writes an `ai_usage` row with the key's name and the area touched (metadata only). Keys, requests and results are never logged.
 
 **Model adapter** (`packages/adapters/src/llm-aisdk/llm.ts`, `settings.ts`, `schemas.ts`)
-- **One client for every provider kind**: `@ai-sdk/openai-compatible` `createOpenAICompatible`. Kinds are presets of base URL and behaviour:
+- **One client for every provider kind**: `@ai-sdk/openai-compatible` `createOpenAICompatible`. Kinds are presets of base URL and behavior:
   - OpenRouter: `https://openrouter.ai/api/v1`, key required
   - Ollama: `http://localhost:11434/v1`; the bundled compose profile uses `http://ollama:11434/v1`
   - OpenAI-compatible: any address (OpenAI, Groq, LM Studio, vLLM, speaches/whisper.cpp for speech to text)
@@ -3122,8 +3122,8 @@ The design system (`docs/design/design-system.md`) defines page templates, compo
 
 **Choose a style and a theme** in Settings → You → Appearance (`apps/web/src/routes/settings/appearance/+page.svelte`).
 
-- **Style.** The page shows three live previews of Today. Each is a made-up sample day (`apps/web/src/lib/today/StylePreview.svelte`, `sample.ts`) drawn in the person's current colours.
-- **Colours.**
+- **Style.** The page shows three live previews of Today. Each is a made-up sample day (`apps/web/src/lib/today/StylePreview.svelte`, `sample.ts`) drawn in the person's current colors.
+- **Colors.**
   - A segmented control for "Day and night on this device": Like the system, Day or Night.
   - A sample of real components.
   - Every theme as a card showing its day and night swatches.
@@ -3217,7 +3217,7 @@ All three are applied before first paint by the inline script in `apps/web/src/a
   - at most 1.5 MB decoded per pack;
   - fonts must be WOFF2, at most 400 KB each and at most 8 per pack;
   - `famos` is a semver range checked against the app version.
-- **Colour formats:** `#rgb`, `#rrggbb`, `rgb()` and `oklch()`, converted to sRGB. Unknown tokens produce a warning and are ignored. Tokens a pack leaves out are inherited from Ev Işığı.
+- **Color formats:** `#rgb`, `#rrggbb`, `rgb()` and `oklch()`, converted to sRGB. Unknown tokens produce a warning and are ignored. Tokens a pack leaves out are inherited from Ev Işığı.
 - **Bundled fonts**, all SIL OFL, latin and latin-ext subsets only, served from the app's own origin:
 
   | Font | Role it plays |
@@ -3252,7 +3252,7 @@ Other pages take only the style's type roles from `packages/ui/src/type.css`: `t
 
 **A style is code; a palette is data.**
 
-- A pack can change colours, the corner radius and fonts.
+- A pack can change colors, the corner radius and fonts.
 - A pack can never change sizes, arrangement or controls. The type ramp is deliberately not a token, so a pack cannot make text unreadable or hide anything (`docs/architecture.md`, appearance section).
 - New arrangements need reviewed code.
 
@@ -3272,24 +3272,24 @@ Other pages take only the style's type roles from `packages/ui/src/type.css`: `t
 - `on-accent` on `accent` (the hero pill uses the inverse pair);
 - `attention`, `now`, `info` and `destructive` used as text on `wall` and `surface`.
 
-`sun` and `heat` only colour icons next to a text label, so they have no rule.
+`sun` and `heat` only color icons next to a text label, so they have no rule.
 
 - Only the pairs a pack sets itself are checked (`contrastProblems` with `explicit`). Pairs it inherits are the default theme's responsibility.
 - Installed packs must pass. Bundled packs are loaded with contrast shortfalls reported as warnings only, because Ev Işığı predates the rule (`apps/server/src/themes.ts`).
 - Extra tests cover:
   - text on the animated weather sky in every pack, day and night (`scripts/sky-contrast.test.ts`);
   - tinted state pills (`packages/themes/test/pill-contrast.test.ts`);
-  - the member colour palette (`scripts/member-colors.test.ts`);
-  - hard-coded colours anywhere in the app (`scripts/theme-colors.test.ts`).
+  - the member color palette (`scripts/member-colors.test.ts`);
+  - hard-coded colors anywhere in the app (`scripts/theme-colors.test.ts`).
 
-**Colour semantics**
+**Color semantics**
 
-- State colours (`attention`, `now`, `sun`, `info`, `heat`) describe state only and are never assigned to people.
-- Member colours (`MEMBER_COLORS` in `packages/core/src/core-extension.ts`) are assigned in order and kept away from coral and red, so a person never reads as a warning.
-- Letters on a member colour are white or the day ink, whichever contrasts more (`onMemberColor`).
-- Member colours are day colours, drawn inside `.day`.
+- State colors (`attention`, `now`, `sun`, `info`, `heat`) describe state only and are never assigned to people.
+- Member colors (`MEMBER_COLORS` in `packages/core/src/core-extension.ts`) are assigned in order and kept away from coral and red, so a person never reads as a warning.
+- Letters on a member color are white or the day ink, whichever contrasts more (`onMemberColor`).
+- Member colors are day colors, drawn inside `.day`.
 - `accent` fills at most one surface per page (the next-up hero) and is never used as text.
-- Tints use `color-mix(in oklab, state 15%, transparent)`. Text on a tint is the state colour mixed toward `ink`, never the pure state colour.
+- Tints use `color-mix(in oklab, state 15%, transparent)`. Text on a tint is the state color mixed toward `ink`, never the pure state color.
 
 **No flash on load.**
 
@@ -3382,7 +3382,7 @@ Other pages take only the style's type roles from `packages/ui/src/type.css`: `t
 - **Accessibility**
   - Focus rings use `info`.
   - Every row with an action is a `button` or an `a`.
-  - Colour is never the only signal.
+  - Color is never the only signal.
 
 ### Integrations
 
@@ -3394,7 +3394,7 @@ Other pages take only the style's type roles from `packages/ui/src/type.css`: `t
 
 - **"Family displays follow the sun" is not implemented.**
   - The claim appears in `docs/guide/appearance.md`, in `docs/design/design-system.md` principle 12 ("displays switch to night at sunset"), in the `devices_display_theme_hint` UI string and in a `theme.css` comment.
-  - In code, `/display` uses the same per-browser mode as every page (`followDayNight` in `apps/web/src/lib/theme.svelte.ts`): `famos.mode`, defaulting to the OS colour scheme. Nothing on the display lets anyone change it.
+  - In code, `/display` uses the same per-browser mode as every page (`followDayNight` in `apps/web/src/lib/theme.svelte.ts`): `famos.mode`, defaulting to the OS color scheme. Nothing on the display lets anyone change it.
 - **The 52 px kiosk control size is not applied.** The design system (§3.1, §9) promises `--ctl: 52px` and 52 px targets on displays. `[data-ctl="kiosk"]` is defined in `packages/ui/src/theme.css` but never set, and the button's `kiosk` size is unused.
 - **"The bundled packs pass every rule"** (appearance guide). The server registry treats bundled-pack contrast shortfalls as warnings only, because Ev Işığı predates the rule (`apps/server/src/themes.ts`). Whether any bundled pack actually falls short was not checked here.
 - **Matches between docs and code:**
@@ -3414,7 +3414,7 @@ Other pages take only the style's type roles from `packages/ui/src/type.css`: `t
 
 ### Beyond Home HQ (net-new ideas)
 
-- **Style versus palette as separate axes.** Arrangement and type are reviewed code; colours are a data pack. Any style works with any palette.
+- **Style versus palette as separate axes.** Arrangement and type are reviewed code; colors are a data pack. Any style works with any palette.
 - **Three-level choice with a clear fallback chain** (display, then person, then family, then the theme's suggestion, then the default), plus a per-display look and per-display hidden blocks for wall screens.
 - **Installable theme packs as validated data:**
   - no CSS, a server-generated stylesheet;
@@ -3428,10 +3428,10 @@ Other pages take only the style's type roles from `packages/ui/src/type.css`: `t
 - **"What Today shows"** with show/hide per block, stored as a hidden list so new blocks appear by default, and hiding from the block itself with Undo.
 - **Token rules worth adopting:**
   - one accent surface per page;
-  - state colours never used for people;
-  - member colours tuned for 4.5:1 initials;
+  - state colors never used for people;
+  - member colors tuned for 4.5:1 initials;
   - tinted text mixed toward `ink`;
-  - a test that fails on any hard-coded colour.
+  - a test that fails on any hard-coded color.
 - **Bundled high-contrast pack** (AAA text, outlined cards) aimed at bright rooms and low vision.
 
 ### Evidence
@@ -3442,7 +3442,7 @@ Other pages take only the style's type roles from `packages/ui/src/type.css`: `t
 - Server registry: `apps/server/src/themes.ts` (`createThemeRegistry`, `MAX_INSTALLED = 40`)
 - Core themes: `packages/core/src/themes.ts` (choices, resolution, routes, actions `core.set{Family,My,Display}{Theme,Style,TodayBlocks}`, `core.installThemePack`, `core.installThemePackFromUrl`, `core.removeThemePack`)
 - Web: `apps/web/src/lib/appearance.svelte.ts`, `apps/web/src/lib/theme.svelte.ts`, `apps/web/src/app.html`, `apps/web/src/lib/PreviewBar.svelte`, `apps/web/src/routes/settings/appearance/+page.svelte`, `apps/web/src/routes/settings/theme/+page.svelte`, `apps/web/src/lib/today/blocks.ts`, `apps/web/src/lib/today/TodayBlocksList.svelte`, `apps/web/src/lib/today/StylePreview.svelte`
-- Member colours: `packages/core/src/core-extension.ts` (`MEMBER_COLORS`)
+- Member colors: `packages/core/src/core-extension.ts` (`MEMBER_COLORS`)
 - Tests named in docs: `scripts/theme-colors.test.ts`, `scripts/sky-contrast.test.ts`, `scripts/member-colors.test.ts`, `scripts/page-frame.test.ts`, `packages/themes/test/pill-contrast.test.ts`
 - Docs: `docs/guide/appearance.md`, `docs/design/design-system.md`, `docs/architecture.md` (appearance: styles and palettes)
 

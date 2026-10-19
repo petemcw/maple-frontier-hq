@@ -12,7 +12,7 @@ Skip for: quick bug fixes, single-line changes, questions, documentation. When s
 
 ## Asking the User
 
-**Every question put to the user goes through the `AskUserQuestion` tool**. When presenting options, provide genuine alternatives; the recommended one always comes first, labelled "(Recommended)". An open-ended question still goes through the tool, whose built-in free-text path carries the user's own words. If a question is worth stopping for, it is worth making answerable in one click.
+**Every question put to the user goes through the `AskUserQuestion` tool**. When presenting options, provide genuine alternatives; the recommended one always comes first, labeled "(Recommended)". An open-ended question still goes through the tool, whose built-in free-text path carries the user's own words. If a question is worth stopping for, it is worth making answerable in one click.
 
 ## Tech Stack
 

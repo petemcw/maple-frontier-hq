@@ -316,7 +316,7 @@ Layout: clock top left, weather top center, presence top right; next-up card and
 
 ## 9. Photos
 
-- **PHOTO-01.** A full-bleed black stage, a glass segmented control at top right (Auto, Cover, Pair, Collage, Polaroid), and bottom controls: previous, Favourite, next.
+- **PHOTO-01.** A full-bleed black stage, a glass segmented control at top right (Auto, Cover, Pair, Collage, Polaroid), and bottom controls: previous, Favorite, next.
 - **PHOTO-02.** Three invisible tap zones: left 22% goes back, center 56% toggles captions to full opacity (they sit at 70% by default), right 22% goes forward.
 - **PHOTO-03.** Slides advance every 15 s here, 12 s on the Today tile and 14 s in ambient mode. Manual next or previous restarts the timer. Previous walks back through history.
 - **PHOTO-04.** Queue: each cycle shuffles all photos, adds favorites a second time, and puts "on this day" photos first.
@@ -327,7 +327,7 @@ Layout: clock top left, weather top center, presence top right; next-up card and
   - Polaroid: one photo as a tilted print with a handwritten-style caption "{place}, {Month Year}" on a blurred background.
 - **PHOTO-06.** Auto picks per slide. A portrait gets Pair if another photo shares its tag, else Polaroid. Landscapes are mostly Cover, with every 5th slide Collage (slot 3) or Polaroid (slot 4).
 - **PHOTO-07.** Captions read "On this day · {n} years ago today · {place}" (or "{n} years ago" or "This year") above a big serif date. Multi-photo slides show the month and year.
-- **PHOTO-08.** Favourite toggles the current slide's first photo. Toast "Added to favourites · it'll show up more often" or "Removed from favourites". Not persisted.
+- **PHOTO-08.** Favorite toggles the current slide's first photo. Toast "Added to favourites · it'll show up more often" or "Removed from favourites". Not persisted.
 - **PHOTO-09.** The slideshow pauses when Photos is hidden and resumes on return.
 - **PHOTO-10.** Missing: a real library or albums, uploads, contributor display, hiding a photo, and video.
 
@@ -651,10 +651,10 @@ Features pulled from dashboards other people have posted. Each thread gets its o
   - the kid's schedule: kindergarten run on weekdays 07:00-08:30, with the frog dressed for the actual weather (umbrella, sled); bedtime 20:30-21:30; weekend mornings 08:00-10:30
   - dates: holidays (Christmas, Easter, Halloween, Children's Day) and birthdays beat everything else
 
-  If the season filter rules out every match, it falls back to the unfiltered matches. The 15-minute rotation is deterministic: the current 15-minute slot number picks the scene from the list, so every screen shows the same one without storing anything (OP comment). Text colour: the post says each scene stores a colour measured from screenshots. A comment says the card samples the image under the clock and weather text and switches between white and dark text. It may do both. Each scene also has its own vertical framing, so the frog is never cut off. The OP posted the scene-picking JavaScript (weather code to scene, season filter, light phase, pick) [in a comment](https://www.reddit.com/r/homeassistant/comments/1x5mx00/comment/pgqhhqj/).
+  If the season filter rules out every match, it falls back to the unfiltered matches. The 15-minute rotation is deterministic: the current 15-minute slot number picks the scene from the list, so every screen shows the same one without storing anything (OP comment). Text color: the post says each scene stores a color measured from screenshots. A comment says the card samples the image under the clock and weather text and switches between white and dark text. It may do both. Each scene also has its own vertical framing, so the frog is never cut off. The OP posted the scene-picking JavaScript (weather code to scene, season filter, light phase, pick) [in a comment](https://www.reddit.com/r/homeassistant/comments/1x5mx00/comment/pgqhhqj/).
 - **RED-03. Exhaustive rule test.** A script runs every combination (28 weather codes × every half hour × every month × realistic local temperatures, about 86,000 cases) to check that the rules always pick a sensible scene. The same idea would work for any rule-driven content we add, such as weather advice (TODAY-03) or the idle and mode timers (SHELL-05, SHELL-06).
 - **RED-04. Context cards over the banner (screenshot).** Timers, now playing, kindergarten, dinner ideas, kids' shows and parcels appear as white cards over the right half of the banner, each with its own X to dismiss. Two parcel cards can sit side by side. Round icons in the header (a teddy bear and a plate) open the kid and dinner cards; the plate icon is ringed while its card is open. This is a lighter alternative to our sheets (SHELL-10) and banners (SHELL-11): the clock and weather stay visible. The OP says everything time-sensitive goes in the banner so nobody has to scroll for it, including a "Laundry is done" card (RED-09) (OP comment).
-- **RED-05. Header strip (screenshot).** Humidity and a CAQI air-quality index with a coloured dot; current temperature, condition, high and low, and rain chance; two blurred person avatars with a green percentage badge (85%, 99%), most likely each phone's battery (inferred); live household power draw ("179 W"); and the "All good" pill (RED-06). The prototype collects but never shows humidity (DATA-23) and has no air quality or power data.
+- **RED-05. Header strip (screenshot).** Humidity and a CAQI air-quality index with a colored dot; current temperature, condition, high and low, and rain chance; two blurred person avatars with a green percentage badge (85%, 99%), most likely each phone's battery (inferred); live household power draw ("179 W"); and the "All good" pill (RED-06). The prototype collects but never shows humidity (DATA-23) and has no air quality or power data.
 - **RED-06. "All good" health pill.** One pill at the top that turns orange or red for low batteries, offline critical sensors, an open window while the heating is on, or a leak. It is a broader version of the Today home status line (TODAY-17), which only covers lights, locks and temperature.
 
 #### Kitchen helpers
@@ -665,7 +665,7 @@ Features pulled from dashboards other people have posted. Each thread gets its o
   - The integration polls every 180 s by default, so a new timer can take 3 minutes to appear. The OP lowered it to 3 s.
   - The countdown runs locally in the card from the fire time, so it ticks every second without polling. It is shifted by about 3.5 s because the speaker rings slightly late, so both reach zero together.
   - It relies on Google's unofficial local API, so a Google update could break it.
-- **RED-08. Now playing with full controls.** Album art, title, artist, room, pause, skip and a volume slider, shown as a banner card. The Speakers & radio card also has a power button per speaker and a row of favourite radio stations, each one tap ("Vanilla", "Smooth", "OFF") (screenshot). This extends HOME-13, which has play/pause only.
+- **RED-08. Now playing with full controls.** Album art, title, artist, room, pause, skip and a volume slider, shown as a banner card. The Speakers & radio card also has a power button per speaker and a row of favorite radio stations, each one tap ("Vanilla", "Smooth", "OFF") (screenshot). This extends HOME-13, which has play/pause only.
 - **RED-09. Running appliances.** Washing machine (from SmartThings) and dishwasher (detected from power draw), each with % done, the current phase ("Washing", "Rinsing") and time left on a progress bar. When a cycle ends, a "Laundry is done" card appears in the banner with the finish time ("13:05, 5 min ago") and the hint "Tap ✕ once it's emptied", so it stays until someone deals with it (OP's tablet photo). How the dishwasher works (OP comment):
   - The hardware is a Tuya smart plug with power metering, run locally through `tuya_local`, plus a Zigbee door contact sensor. There is no dishwasher integration.
   - A cycle starts when the plug reads above 10 W for 3 minutes. The delay ignores the panel lighting up when the door opens or a program is picked.
@@ -688,16 +688,16 @@ Features pulled from dashboards other people have posted. Each thread gets its o
 #### Kid and family
 
 - **RED-11. School card.** In the morning: the weather at drop-off time (temperature at 08:00, feels like, today's max, rain chance) and what the kid eats at kindergarten today (breakfast, lunch, snack, each with an emoji). In the evening it switches to tomorrow, like FamilyOS's evening flip (FOS-01). The weekly menu arrives as a photo from the teacher on WhatsApp. The author forwards it to a Discord channel and Claude reads it into an HA sensor. That is a narrow version of FamilyOS's capture inbox (FOS-41).
-- **RED-12. Kids' events finder.** Every Monday it reads the local children's theatre listings and keeps shows for next weekend that suit the kid's age and don't start before 10:00 ("we're never ready by 9"). Shown as a paged card ("Kids shows 3/8") with poster, title, day and time, price, age rating and venue (screenshot). When nothing matches, the kid's section says "none next weekend".
+- **RED-12. Kids' events finder.** Every Monday it reads the local children's theater listings and keeps shows for next weekend that suit the kid's age and don't start before 10:00 ("we're never ready by 9"). Shown as a paged card ("Kids shows 3/8") with poster, title, day and time, price, age rating and venue (screenshot). When nothing matches, the kid's section says "none next weekend".
 - **RED-13. Per-kid section (screenshot).** A "For {kid}" card collects the kid features: Kids shows, Weekly menu (showing today's dish), Recipes, and a saved recipes list with a count and a "4 more recipes" expander.
 - **RED-14. Kid's room page (screenshot).** Room temperature and humidity, and a sleep light with an on/off schedule (on at 20:30, off at 07:30) and an on/off switch for that schedule.
 
 #### Home status and control
 
 - **RED-15. Heating by room.** Temperature for three rooms, the central heating thermostat with ± buttons, and its state ("Idle", or "Not asking · today 2 min", which is heating run time today) (screenshot). The boiler will not start while a window in that room is open. One-zone climate in the prototype (HOME-11, DATA-20) would need to grow to several rooms.
-- **RED-16. Water safety that acts.** Three leak sensors, the dishwasher door state, and a motorised main valve that closes by itself on a leak and cuts power to the machines. The valve tile shows Open with a manual Close button. In the prototype the shut-off is UI only (ALERT-02).
+- **RED-16. Water safety that acts.** Three leak sensors, the dishwasher door state, and a motorized main valve that closes by itself on a leak and cuts power to the machines. The valve tile shows Open with a manual Close button. In the prototype the shut-off is UI only (ALERT-02).
 - **RED-17. Consumables tracker.** Each water filter cartridge shows days left, the replace-by date, a progress bar and a reset button for when it is replaced. This is a smaller, kitchen-specific form of FamilyOS's recurring duties on household records (FOS-37).
-- **RED-18. How long a door has been closed (screenshot).** Door and window tiles say "Closed for 36 min", and the card header summarises "all closed". The garage banner in the prototype has duration copy, but it is static (ALERT-03).
+- **RED-18. How long a door has been closed (screenshot).** Door and window tiles say "Closed for 36 min", and the card header summarizes "all closed". The garage banner in the prototype has duration copy, but it is static (ALERT-03).
 - **RED-19. Parcels from courier app notifications.** The tablet reads the notifications of the two courier apps the family uses (Sameday and FAN Courier). Cards show a locker pickup countdown ("1d 7h left to pick up, until Thu 19:42") and a courier delivery window with the amount to pay on delivery (screenshot). The prototype's package banner (ALERT-04) only covers a porch drop. How it works (OP comment):
   - The couriers have no official API. The HA Android companion app's "last notification" sensor is limited to the two courier apps.
   - When a notification arrives ("Your parcel ... has arrived at easybox ..."), an automation sends its text to a Python script that pulls out the tracking number (AWB) and the locker. The script then checks the courier's public tracking page every 30 minutes.
@@ -708,7 +708,7 @@ Features pulled from dashboards other people have posted. Each thread gets its o
 - **RED-22. Automation settings on the dashboard (screenshot).** The kid's room page shows the AC rules as plain controls: a night shut-off rule with its time and time left, other rules as on/off tiles ("Automatic temperature control", "Motion → bedroom light"), thresholds with ± buttons ("Start cooling above 27.3°", "Stop cooling below 26.9°", "Cooldown between switches 15 min"), and a "Freeze automation" button. The family can tune automations without opening the HA editor.
 - **RED-23. Light and presence readout (screenshot).** Kitchen light level in lux and kitchen presence ("Empty"). Probably mainly for debugging the wake and dim rules (inferred).
 
-#### Screen behaviour
+#### Screen behavior
 
 - **RED-24. Presence-driven wake and dim.** The mmWave sensor wakes the screen when someone walks into the kitchen and dims it when the room is empty. Brightness also follows the time of day. The prototype only uses touch idle timers (SHELL-04 to SHELL-06) and a time-based night mode.
 - **RED-25. Presence-based screensaver.** After 15 minutes with nobody in the kitchen, daytime only, the tablet switches to a screensaver: eyes that follow you, a drawn frog, or an animated frog. Our ambient mode (AMB-01) starts after 120 s without a touch, whether or not anyone is in the room.
@@ -744,7 +744,7 @@ Most of the screen maps to something we already have. The new parts are the hous
 | Today: temperature, condition, high and low, sunset, feels like, wind, UV, an 8-hour strip | Weather (TODAY-02 to TODAY-04) | Shows feels like and wind, which our data has but never shows (DATA-23). Adds sunset and UV |
 | Climate: two zones, mode badge; the tile opens a full control sheet | Climate (HOME-11), heating by room (RED-15) | The control sheet's content (RED-37) |
 | Sonos: now playing, transport, volume, room chips to group speakers | Media (HOME-13), now playing (RED-08) | Speaker grouping and one-tap playlists (RED-38) |
-| Cameras: 4 snapshot tiles, live on tap, "No recent activity" | Cameras (HOME-12) | Real refresh and live-stream behaviour, and a package chip (RED-39) |
+| Cameras: 4 snapshot tiles, live on tap, "No recent activity" | Cameras (HOME-12) | Real refresh and live-stream behavior, and a package chip (RED-39) |
 | Doorbell pop-up | Doorbell takeover (ALERT-01), package banner (ALERT-04) | The trigger, suppress and auto-close rules (RED-40) |
 | Theme toggle, light by day and dark at night | Day, ambient and night modes (AMB, NIGHT) | A manual toggle and a second, serif theme (RED-45) |
 | OLED burn-in handling | Pixel shift (NFR-12) | An art screensaver after one minute (RED-46) |
@@ -776,7 +776,7 @@ Most of the screen maps to something we already have. The new parts are the hous
 
 #### Today column
 
-- **RED-35. Robot vacuum with "rooms fresh".** The Home card shows the Dreame's battery, status ("Heading home"), pause and dock buttons, and "3/6 rooms fresh" with one dot per room (screenshot). The post says the full view has the cleaning map, which rooms were cleaned and when, and lets you tap a room to clean it. A room is "fresh" when it has been both vacuumed and mopped in the last 24 hours. Dreame has no rooms-cleaned entity, so the dashboard builds one (OP comment): it pulls 10 days of history for the vacuum, its current-room sensor and its state sensor, and replays them as one timeline. A room counts as cleaned when the robot was cleaning, on the floor (not at the dock washing the mop), and spent at least 90 seconds in that room, so driving through the hallway doesn't count. Each room's colour comes from its last clean: green under 24 h, yellow 1-3 days, grey after that. Room names come from the `rooms` attribute of the Tasshack Dreame integration.
+- **RED-35. Robot vacuum with "rooms fresh".** The Home card shows the Dreame's battery, status ("Heading home"), pause and dock buttons, and "3/6 rooms fresh" with one dot per room (screenshot). The post says the full view has the cleaning map, which rooms were cleaned and when, and lets you tap a room to clean it. A room is "fresh" when it has been both vacuumed and mopped in the last 24 hours. Dreame has no rooms-cleaned entity, so the dashboard builds one (OP comment): it pulls 10 days of history for the vacuum, its current-room sensor and its state sensor, and replays them as one timeline. A room counts as cleaned when the robot was cleaning, on the floor (not at the dock washing the mop), and spent at least 90 seconds in that room, so driving through the hallway doesn't count. Each room's color comes from its last clean: green under 24 h, yellow 1-3 days, gray after that. Room names come from the `rooms` attribute of the Tasshack Dreame integration.
 - **RED-36. What to wear today.** Under the weather: a watch for the day ("Datejust 36") and a morning and evening fragrance. The pick comes from the OP's own collections in Notion, and checks the weather and calendar (meetings, dinners, flights). It rotates through what they own, and rain means no leather straps. The OP only says it is "a mix of Notion databases, news articles, weather lookups" (OP comment). The idea that carries over for us: a pick from things the family owns, filtered by weather and the day's events, like kids' clothes or which jacket to take. It is a step beyond our weather advice line (TODAY-03).
 - **RED-37. Controls inside the tile.** No separate controls page: tapping a tile opens its controls in a sheet (OP comment). The climate sheet shown has a zone switcher (Upstairs, Basement), setpoint ±, now/humidity/outside, Mode (Off, Cool, Heat, Auto), Fan (Auto, On, Circulate) with circulate time %, a dehumidify toggle with a target %, humidity mode (Normal, Max, Climate IQ), schedule presets (Schedule IQ, Summer, Winter, Spring/fall, Save energy), and Away and Smart Away toggles (screenshot). This is our sheet pattern (SHELL-10, HOME-02) applied to every tile. The richer climate sheet goes past HOME-11.
 - **RED-38. Speaker grouping.** The Sonos card shows what's playing and its source ("TV audio · From the TV · Living Room"), previous, pause and next, and volume. Below that are room chips that add or remove a speaker from the group (Kitchen +, Living Room ✓, Main Bedroom +, Pool...) (screenshot). The post also mentions one-tap playlists. The OP said the card is still a work in progress (OP comment). Our media (HOME-13) and RED-08 have no grouping.
@@ -801,7 +801,7 @@ Most of the screen maps to something we already have. The new parts are the hous
   - Small uppercase letter-spaced labels instead of big bold headers.
   - Big radii (26 px cards, 20 px tiles, 15 px buttons) and a soft two-layer shadow.
   - List rows as rounded tiles, and cards that hug their content instead of stretching to the column height.
-  - A warm background (`#f1eee7`), navy for the selected pill, brass for the brand colour, and press feedback by scaling down slightly.
+  - A warm background (`#f1eee7`), navy for the selected pill, brass for the brand color, and press feedback by scaling down slightly.
   - Turning off transitions for `prefers-reduced-motion`.
 
   The full token block and CSS are [in a comment](https://www.reddit.com/r/homeassistant/comments/1wuhxk0/comment/peba885/). It is close to our paper-and-ink palette (NFR-18).
@@ -826,7 +826,7 @@ Most of the screen maps to something we already have. The new parts are the hous
 
 #### How much overlaps
 
-There is a lot of overlap, with this doc and with the walnut-and-brass thread. The pages we have no equivalent for are Energy, Irrigation and the theme picker. The overlapping pages add useful detail: a calendar form that has the fields our new-event sheet lacks (CAL-24), camera clip playback, an alarm keypad, and a notification centre with an "Active" tab.
+There is a lot of overlap, with this doc and with the walnut-and-brass thread. The pages we have no equivalent for are Energy, Irrigation and the theme picker. The overlapping pages add useful detail: a calendar form that has the fields our new-event sheet lacks (CAL-24), camera clip playback, an alarm keypad, and a notification center with an "Active" tab.
 
 | This dashboard | Already in this doc | What's new here |
 | --- | --- | --- |
@@ -835,14 +835,14 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 | Heat pump card, 5-day forecast | Climate (HOME-11), weather strip (TODAY-04) | Per-room units on the Climate page (RED-56) |
 | Weather page | TODAY-02 to TODAY-04, header metrics (RED-05) | Charts per metric with a one-line summary, and hazard alerts (RED-52) |
 | Notifications: Alerts and Active tabs | Health pills (RED-06, RED-34), FamilyOS "Needs you" (FOS-05) | An "Active" list of what's on or open right now (RED-51) |
-| Light detail sheet | Light tile (HOME-06) | Colour temperature, colours, "turned on 19 minutes ago" (RED-53) |
+| Light detail sheet | Light tile (HOME-06) | Color temperature, colors, "turned on 19 minutes ago" (RED-53) |
 | Scene gallery | Scenes (HOME-03) | Image-based scenes applied per room (RED-54) |
 | Rooms | Rooms (DATA-17, HOME-05) | Filters, temperature-tinted cards, per-room automation toggles (RED-55) |
 | Alarm | None (DEF-05 notes we have no alarm) | A PIN keypad and siren (RED-57) |
 | Cameras | HOME-12, ALERT-01, RED-39 | Clip playback by date, a stream-quality switch, a garage button in the camera view (RED-58) |
 | Energy | Live power draw only (RED-05) | Tariff-aware cost and insights (RED-59) |
 | Irrigation | Nothing | RED-60 |
-| Events | Calendar (section 6), new-event sheet (CAL-22), FamilyOS repeats (FOS-13) | A list by day with a colour legend for each calendar, and a full add form (RED-61) |
+| Events | Calendar (section 6), new-event sheet (CAL-22), FamilyOS repeats (FOS-13) | A list by day with a color legend for each calendar, and a full add form (RED-61) |
 | Vehicle | Cars (RED-41) | A fuel car's eco score, and window and boot status (RED-62) |
 | Theme page | Theme toggle (RED-45), FamilyOS looks (FOS-54) | Style × font × mode × accent (RED-63) |
 | Phone and desktop layouts | Per-device layouts (RED-28) | A bottom bar on phones, a side bar on desktop (RED-65) |
@@ -850,15 +850,15 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 
 #### New or more detailed
 
-- **RED-50. Mini player and synced lyrics.** A now-playing bar sits above the bottom bar on every page. On Home it expands into a card with shuffle, previous, pause, next and repeat, and a "+1" shows a second player is active. Swiping the card shows lyrics, highlighting the current line. The Media page lists each Spotify Connect speaker with its art, controls and volume, has an "Open Spotify" button, and shows a full lyrics view labelled "Synced" with a ± offset to line the lyrics up (screenshot). The post says lyrics show "when available" and are mostly synced. The source isn't named.
-- **RED-51. Notification centre (screenshot).** A sheet with two tabs:
+- **RED-50. Mini player and synced lyrics.** A now-playing bar sits above the bottom bar on every page. On Home it expands into a card with shuffle, previous, pause, next and repeat, and a "+1" shows a second player is active. Swiping the card shows lyrics, highlighting the current line. The Media page lists each Spotify Connect speaker with its art, controls and volume, has an "Open Spotify" button, and shows a full lyrics view labeled "Synced" with a ± offset to line the lyrics up (screenshot). The post says lyrics show "when available" and are mostly synced. The source isn't named.
+- **RED-51. Notification center (screenshot).** A sheet with two tabs:
   - **Alerts:** hazard alerts (RED-52); "towel heating" listing the heated towel rails that are on; low batteries with each sensor's %; and controls for room occupancy (rooms turned off), presence status, and driveway camera detection (person, vehicle).
   - **Active:** lights that are on, with their brightness and an "All off" button, and open windows.
 
   The Active tab answers "what's on or open?" before you leave or go to bed, which our home status line (TODAY-17) only counts.
 - **RED-52. Hazard alerts.** A GeoNet alert ("Volcano Ruapehu · Minor volcanic unrest · 15 October at 11:21 pm") tops the notification sheet and the Weather page. For us this would mean official local weather and emergency warnings.
-- **RED-53. Light detail sheet (screenshot).** On/off, "turned on 19 minutes ago", a brightness ring, a warm-to-cool slider, colour swatches, and that light's scenes ("Midwinter", "All scenes").
-- **RED-54. Picture scenes per room (screenshot).** Scenes look like Philips Hue's: a gallery of photos grouped by mood (Refreshing, Peaceful, Lake, Coastal), each with its colour dots, plus a Gradient tab. You pick a scene and then a room to apply it to, from tabs for Living area, Bedroom, Bathroom and Outdoor, listing that room's lights. Our scenes (HOME-03) are whole-house buttons.
+- **RED-53. Light detail sheet (screenshot).** On/off, "turned on 19 minutes ago", a brightness ring, a warm-to-cool slider, color swatches, and that light's scenes ("Midwinter", "All scenes").
+- **RED-54. Picture scenes per room (screenshot).** Scenes look like Philips Hue's: a gallery of photos grouped by mood (Refreshing, Peaceful, Lake, Coastal), each with its color dots, plus a Gradient tab. You pick a scene and then a room to apply it to, from tabs for Living area, Bedroom, Bathroom and Outdoor, listing that room's lights. Our scenes (HOME-03) are whole-house buttons.
 - **RED-55. Rooms (screenshot).** Filters for Occupied, Main, Utility and Outdoor. Each room card shows temperature, humidity, a count of open windows and lights on, and a "Heat" badge, and is tinted by temperature. A room page has light tiles that fill to their brightness, "1 of 8 on", and "All off". A per-room automations sheet has switches such as "Movie mode" and "Presence sensor" (compare RED-21 and RED-22).
 - **RED-56. Climate by room (screenshot).** The heat pump card has Off, Cool, Heat, Fan and Dry modes and a fan speed. Below it, each room's unit has a card with its temperature, on/off and a target with ±, tinted warmer or cooler by temperature.
 - **RED-57. Alarm with a PIN (screenshot).** The Security page shows the alarm state ("DISARMED"), an "Arm away" button, and siren controls ("Siren", "Siren · 30 s"). Arming opens a numeric keypad for the PIN. The alarm state also shows in the header on every page. We have no alarm (DEF-05), and our only protection for risky actions is press-and-hold (SHELL-13).
@@ -869,27 +869,27 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
   - Usage per device from three smart plugs (portable heater, rice cooker, Dyson).
   - Insights: change vs last month ("↓ 23%"), the busiest hour and its biggest consumer, and how much of the free hours were used, with a saving tip ("running Portable Heater there instead could save up to $0.83").
 
-  The OP says this is their favourite page and they plan to add more plugs.
+  The OP says this is their favorite page and they plan to add more plugs.
 - **RED-60. Irrigation adviser (screenshot).**
   - The current water restriction ("No water restriction · use water sensibly").
-  - A rain check for the next 12 hours with a verdict ("Rain on the way, likely enough to skip watering"), expected millimetres, peak chance, time to first rain, and hourly bars.
+  - A rain check for the next 12 hours with a verdict ("Rain on the way, likely enough to skip watering"), expected millimeters, peak chance, time to first rain, and hourly bars.
   - Soil moisture for the last 72 hours for each zone, with wet/moist/dry bands and its own verdict ("Soil is still wet, no need to water yet").
   - Each zone shows its flow rate ("0.4 m³/h · moderate flow"), soil moisture and soil temperature, with run buttons for 5 m, 15 m, 30 m, 1 h and 2 h.
 
   The pattern of a plain-language verdict on top of the numbers would work for any decision card we build.
-- **RED-61. Household calendar (screenshot).** The Events page has month stepping, "Today" and "+ Add event", and a colour legend for each calendar (Birthdays, each parent, House maintenance, New Zealand holidays). Events are listed by day. Bin days and chores are all-day events ("Recycle", "Rubbish", "7:00 pm Bring the purple library bag"). The add form has a title, a calendar picker, an all-day switch, start and end dates and times, repeat, location and notes. Those are exactly the fields our new-event sheet is missing (CAL-24).
+- **RED-61. Household calendar (screenshot).** The Events page has month stepping, "Today" and "+ Add event", and a color legend for each calendar (Birthdays, each parent, House maintenance, New Zealand holidays). Events are listed by day. Bin days and chores are all-day events ("Recycle", "Rubbish", "7:00 pm Bring the purple library bag"). The add form has a title, a calendar picker, an all-day switch, start and end dates and times, repeat, location and notes. Those are exactly the fields our new-event sheet is missing (CAL-24).
 - **RED-62. Fuel car (screenshot).** Fuel %, range, odometer, lock, ignition and park brake; an eco score with rings for acceleration, constant speed and coasting; trip stats (km, km/h average, L/100 km); and a grid of windows, sunroof and boot, with an unlocked boot highlighted in red. This extends RED-41 to a fuel car.
 - **RED-63. Theme picker (screenshot).**
   - Four styles: Default; Liquid glass ("iOS style: frosted, translucent layers"); Material ("Google style: soft tonal surfaces, pill buttons"); Minimal ("flat, thin lines, no effects").
   - Six fonts: Plus Jakarta Sans, Roboto Flex, Roboto Flex with Roboto Mono labels, Outfit, Manrope, and "Classic", the previous look.
   - Dark, light, or follow the device.
-  - Twelve accent colours (violet, blue, teal, green, indigo, cyan, lime, amber, orange, red and more).
+  - Twelve accent colors (violet, blue, teal, green, indigo, cyan, lime, amber, orange, red and more).
 
   The video shows the whole UI re-tinting as soon as an accent is picked. The OP was "doing final checks on the colour visibility on all the themes" (OP comment). This goes well past RED-45 and FOS-54.
-- **RED-64. Colour and motion from live data.** The post says there are many animations, and that colour follows the data (temperature, on, off, playing). In the video, the weather card animates rain, room and climate cards are tinted by temperature, and lit light tiles glow in their light's colour.
+- **RED-64. Color and motion from live data.** The post says there are many animations, and that color follows the data (temperature, on, off, playing). In the video, the weather card animates rain, room and climate cards are tinted by temperature, and lit light tiles glow in their light's color.
 - **RED-65. Phone, desktop, then tablet.** One page that changes layout: a bottom bar plus a "More" grid on phones, a full side bar on desktop (screenshot). The tablet version is still to come. Compare RED-28 and question 3.
 - **RED-66. Hosting, sign-in and build (OP comment).**
-  - **Files:** two files in HA's `www` folder, served at `/local/dash.html`. `dash.html` is the "engine": look, behaviour and a version number. `config.js` holds the HA token, pages, rooms, devices and helper entities.
+  - **Files:** two files in HA's `www` folder, served at `/local/dash.html`. `dash.html` is the "engine": look, behavior and a version number. `config.js` holds the HA token, pages, rooms, devices and helper entities.
   - **Connection and speed:** the page runs in the browser on a phone, tablet or PC and connects straight to HA over the WebSocket. It loads about 3 seconds faster than opening the dashboard in the companion app. The OP keeps the companion app only for notifications.
   - **Access:** it is reached through Nabu Casa (HTTPS, no open port). The OP called access the weak point, then changed the page to send people to HA's own login page first. The token is saved on each device and cleared when the user logs out.
   - **Security note:** files under `/config/www` are served at `/local/` without authentication. A long-lived token kept in `config.js` would be readable by anyone who can reach the HA address. Signing in through HA's login flow, which the OP moved to, avoids that. This applies to RED-47 too.
