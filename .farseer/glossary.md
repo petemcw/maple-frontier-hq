@@ -263,3 +263,37 @@ _Avoid_: departure time, leave time
 **Time to leave**:
 The notification sent to an event's people 10 minutes before its leave-by.
 _Avoid_: event reminder, alert, leave alert
+
+## Photos
+
+The family's photos, kept in Immich on the NAS and shown in Home HQ.
+
+### Language
+
+**Home HQ album**:
+The one Immich album whose photos Home HQ shows. Family members add to it from their own Immich accounts.
+_Avoid_: library, gallery, photo stream, feed
+
+**Slideshow**:
+Photos from the Home HQ album shown one slide at a time, laid out automatically.
+_Avoid_: carousel, photo frame (the ambient screen), gallery
+
+**Slide**:
+One step of the slideshow: a landscape photo filling the screen, two portraits from the same day side by side, or a lone portrait over a blurred copy of itself.
+_Avoid_: frame, card, page
+
+**On this day**:
+Photos from the Home HQ album taken on today's date in past years. They lead the slideshow and are captioned with how many years ago.
+_Avoid_: memories (Immich's own, per owner), flashback, anniversary
+
+**Favorite**:
+A photo a family member has hearted in Home HQ, which comes up more often in their slideshow. Each member has their own, and a kiosk has none.
+_Avoid_: star, like, Immich favorite (owner-only, not used)
+
+**Hidden photo**:
+A photo taken off every Home HQ screen while it stays in Immich and in the Home HQ album. Anyone may hide one, and only an admin may unhide it.
+_Avoid_: deleted, removed, archived (Immich's own state)
+
+**Photo of the day**:
+The one photo the household sees for a day, the same on every screen, chosen by the server.
+_Avoid_: daily photo, featured photo, hero (the Today block that may show it)

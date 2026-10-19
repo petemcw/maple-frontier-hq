@@ -234,3 +234,43 @@ Ten minutes before leave-by, each of the event's people gets a Companion notific
 - **Covers**: TODAY-08 (as a notification), FOS-13 (replaces Home HQ's event reminders)
 - **Depends on**: Leave-by; the Companion app on every member's phone and mapping each member to their notify targets (ADR-0012)
 - **ADRs**: ADR-0012, ADR-0024
+
+### Immich connection
+
+Home HQ reads the Home HQ album from the family's Immich on the NAS, as its own Immich user that owns nothing. A parent owns the album, makes the other five family members editors, and shares it to Home HQ's user as viewer. The API key has only `album.read`, `asset.read` and `asset.view`, and lives in a Docker secret, never in SQLite. The server calls Immich through `@immich/sdk` behind one adapter. On connect it checks `GET /server/version`, needs v3.2 or later, and refuses an untested major. It re-reads the album every 15 minutes and when someone opens Photos, and skips the re-read when the album's change timestamp hasn't moved. Only stills are kept. Browsers get images only through the server's proxy, at `/api/photos/:id/:size?c=<thumbhash>`, and only for photos in the album that aren't hidden. They never see the key or an Immich URL. A disk cache of recent previews (about 150 MB, keyed by photo, size and thumbhash) keeps slideshows playing while Immich is down. With an empty cache, Photos says "Photos are unavailable". Admins see the connection's state. Setup is a checklist for the admin: create the Home HQ user and its key, create the album, and share it. Tests run against a fake Immich. Relicensing the repo to AGPL-3.0 is already done.
+
+- **Covers**: question 5 (photo storage), question 9, PHOTO-10 (a real library)
+- **Depends on**: Roles; the Docker secret (ADR-0009); Immich v3.2 or later on the NAS
+- **ADRs**: ADR-0008, ADR-0009, ADR-0016, ADR-0025
+
+### Slideshow
+
+The Photos screen plays the Home HQ album full-bleed on black. Each slide lays itself out. A landscape fills the screen with a slow random pan, two portraits from the same day sit side by side, and a lone portrait sits over a blurred copy of itself, with the thumbhash painting the blur while the preview loads. A portrait counts as one when its height is greater than its width. On this day photos lead each round, found by Home HQ's own search on the local capture date across past years. The rest are shuffled. The caption reads "On this day · 3 years ago · Duluth", or "3 years ago" or "This year" with the place, above the date. It never says who added the photo. Tapping the left or right edge, or swiping, steps back or forward through history. A tap in the middle brings the caption to full strength and shows a bar with back, heart, Hide and next that fades after a few seconds. Slides change every 15 seconds, a manual step restarts the timer, and the slideshow pauses while Photos is hidden. The service worker preloads the next few slides.
+
+- **Covers**: PHOTO-01 to PHOTO-03 (no layout picker), PHOTO-04 (on this day first), PHOTO-05 and PHOTO-06 (Cover and Pair only), PHOTO-07, PHOTO-09
+- **Depends on**: Immich connection; Region format
+- **ADRs**: ADR-0010, ADR-0020, ADR-0025
+
+### Photo favorites
+
+Each family member hearts photos for themselves, stored in Home HQ by Immich photo ID. A member's favorites come up more often in their own slideshow, and an All / Mine switch plays only their favorites, with an empty state when they have none. On kiosks, a photo anyone has hearted comes up more often. Kiosks show no heart and no switch. The toast reads "Added to favorites · it'll show up more often" or "Removed from favorites". Favorites are never written to Immich.
+
+- **Covers**: PHOTO-04 (favorites weighting), PHOTO-08 (now saved, per member)
+- **Depends on**: Slideshow
+- **ADRs**: ADR-0008, ADR-0025
+
+### Hidden photos
+
+Anyone, a kiosk included, can hide the photo on screen from the slideshow bar. It leaves every Home HQ screen at once, with undo in the toast, and stays in Immich and in the album. Home HQ records who hid it and when. Only admins see the Hidden list, with thumbnails, and unhide from it. Hiding isn't a delete, so it needs no delete request. A hidden photo is never proxied, cached anew, or chosen as the photo of the day.
+
+- **Covers**: PHOTO-10 (hiding a photo)
+- **Depends on**: Slideshow; Roles
+- **ADRs**: ADR-0006, ADR-0016, ADR-0025
+
+### Photo of the day
+
+The server picks one photo per family day, the same on every screen. An on this day photo wins when there is one. Otherwise it walks a shuffled round of the album, stored in SQLite, so every photo comes up once per round and none repeats on consecutive days. A photo anyone has hearted is likelier, and hidden photos never qualify. A photo hidden during its day is replaced at once. Where the photo of the day shows (the Today hero, the ambient screen) belongs to those features.
+
+- **Covers**: FOS-08
+- **Depends on**: Immich connection; Photo favorites; Hidden photos; Region format (the family day)
+- **ADRs**: ADR-0008, ADR-0020, ADR-0025

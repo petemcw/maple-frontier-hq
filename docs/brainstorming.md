@@ -901,11 +901,11 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 2. Do we build on FamilyOS (run it, fork it, or write extensions for it) or copy its ideas into our own app? It is AGPL-3.0, beta, Svelte, and built for read-only displays, while `ha-dashboard` is React and talks to Home Assistant directly. **Decided: ADR-0001.**
 3. Is Home HQ one app on both the wall frame and phones (like `ha-dashboard`, which targets phones first), or a wall-only app? **Decided: one app for phones, tablets and the wall panel (ADR-0002, ADR-0013).**
 4. Does the wall screen stay interactive (tick chores, edit lists, unlock doors), or become read-only as FamilyOS requires? **Decided: ADR-0006.**
-5. Where does shared state live (chores, stars, shopping, photos, favorites), given the prototype has no backend? **Decided for app data: ADR-0008. Photo storage still open.**
+5. Where does shared state live (chores, stars, shopping, photos, favorites), given the prototype has no backend? **Decided for app data: ADR-0008. Photo storage: ADR-0025 (photos stay in Immich; favorites, hides and the photo of the day live in Home HQ).**
 6. Which calendar provider holds the family's events, and how do events map to people? **Decided: ADR-0024 (Google Workspace, view-only, one Family calendar plus busy blocks from primary calendars).**
 7. Which FamilyOS areas matter to us: tasks, kitchen and meal plan, household records, the board, Quick add, the assistant, MCP access? **Decided: ADR-0015.**
 8. Do kids use stars, a rotation, or both? Do chores need recurrence, a daily reset and star redemption on day one? Do kids' changes need an adult's approval? **Decided: ADR-0016 (no kid role; only deletes of others' items need approval) and ADR-0023, which supersedes ADR-0022 (no stars; chores and family tasks are one list of tasks, with rotation, recurrence and overdue roll-over).**
-9. Where do photos come from, and who curates them?
+9. Where do photos come from, and who curates them? **Decided: ADR-0025 (one shared Immich album that every family member adds to).**
 10. Which devices does the house have for each Home control tile, alert and status line? Is there an alarm system, a water valve, a doorbell camera with two-way audio?
 11. Should the wall display get its own credentials and permissions (for example no unlock without a PIN) separate from phones? **Decided: ADR-0005, ADR-0006.**
 12. Do we keep the 1280x800 fixed stage and the Chromium 106 limits, or does the frame change? **Decided: ADR-0013.**

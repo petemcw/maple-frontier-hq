@@ -26,3 +26,4 @@
 | [0022](0022-chores-rotate-without-stars.md) | Chores rotate between family members, with no stars and no routines | superseded by [0023](0023-tasks-replace-chores.md) | 2026-10-18 |
 | [0023](0023-tasks-replace-chores.md) | Tasks replace chores, in one list for routine work and one-off to-dos | accepted | 2026-10-18 |
 | [0024](0024-google-calendars-view-only.md) | Home HQ shows the family's Google calendars, view-only | accepted | 2026-10-18 |
+| [0025](0025-photos-from-one-immich-album.md) | Photos come from one shared Immich album, with favorites and hiding kept in Home HQ | accepted | 2026-10-18 |
