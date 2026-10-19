@@ -297,3 +297,25 @@ _Avoid_: deleted, removed, archived (Immich's own state)
 **Photo of the day**:
 The one photo the household sees for a day, the same on every screen, chosen by the server.
 _Avoid_: daily photo, featured photo, hero (the Today block that may show it)
+
+## Home control
+
+The house's lights, garage, climate and cameras, run from Home HQ. See ADR-0011 and ADR-0026.
+
+### Language
+
+**Tile**:
+The control for one labeled HA entity in Home control: a light, switch, fan, the garage or a camera. A tap acts on it, and a long press opens its sheet.
+_Avoid_: card, widget, button, device (an HA device)
+
+**Scene**:
+An HA scene or script with the Home HQ label, run from a button in Home control and undoable. Home HQ never defines one.
+_Avoid_: preset (a climate preset or a duty preset), routine, mode
+
+**All off**:
+Turning off every light in the house, or on one floor, at once, with Undo restoring exactly those lights.
+_Avoid_: kill switch, Good Night (an HA scene)
+
+**Room presence**:
+The room HA places a family member in, from their phone heard in that room. It's missing when nothing hears the phone.
+_Avoid_: location (GPS and zones), occupancy (a motion reading that doesn't say who)

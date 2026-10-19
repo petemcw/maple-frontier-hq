@@ -27,3 +27,4 @@
 | [0023](0023-tasks-replace-chores.md) | Tasks replace chores, in one list for routine work and one-off to-dos | accepted | 2026-10-18 |
 | [0024](0024-google-calendars-view-only.md) | Home HQ shows the family's Google calendars, view-only | accepted | 2026-10-18 |
 | [0025](0025-photos-from-one-immich-album.md) | Photos come from one shared Immich album, with favorites and hiding kept in Home HQ | accepted | 2026-10-18 |
+| [0026](0026-home-control-from-what-the-house-has.md) | Home control covers the devices Maple Frontier has, with scenes from HA and automations left in HA | accepted | 2026-10-18 |

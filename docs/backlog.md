@@ -274,3 +274,75 @@ The server picks one photo per family day, the same on every screen. An on this 
 - **Covers**: FOS-08
 - **Depends on**: Immich connection; Photo favorites; Hidden photos; Region format (the family day)
 - **ADRs**: ADR-0008, ADR-0020, ADR-0025
+
+### Home control layout
+
+Home control lists rooms from HA areas, grouped under HA floors (Top, Main, Lower, Lowest). Areas with no floor come last under "Outside". A room appears only if it holds a tile or a scene. Each room heading shows "{n} on" or "All off", plus a temperature where the room has a labeled temperature sensor. Three summary cards top the screen. Lights shows the count on and opens a sheet of every light, on first. Garage shows Open or Closed, tinted when open. Climate shows the temperature and what the ecobee is doing. Display names, order and hidden items use ADR-0011's admin overrides. With HA offline, every tile is disabled and no state shows as current.
+
+- **Covers**: HOME-01 (no Security or Media card), HOME-02 (Lights sheet), HOME-05, DATA-17, RED-55 (temperature on rooms only)
+- **Depends on**: the HA connection (ADR-0004); HA areas, floors and Home HQ labels; Stairs and Double Down given a floor in HA (a household change)
+- **ADRs**: ADR-0004, ADR-0011, ADR-0026
+
+### Tiles
+
+Labeled lights, switches and fans show as tiles in their room. A tap toggles, and turning a light on restores its last level, or 100%. A horizontal drag of more than 10 px on a dimmable light turns the tile into a dimmer, and letting go commits. On/off lights and switches only toggle. A fan tile shows on, off and its speed. A long press without moving opens the tile's sheet. There's no visible cog and no keyboard or screen-reader way in (ADR-0026). A light's sheet holds what that light supports: brightness, warm to cool, color, and "On for {n} min". A fan's sheet sets its speed.
+
+- **Covers**: HOME-06, RED-53, RED-37 (the sheet pattern), DATA-18 (lights, switches, fans)
+- **Depends on**: Home control layout
+- **ADRs**: ADR-0011, ADR-0026
+
+### Pending changes
+
+Every tile change shows at once with a pending dot, which stays until HA reports the new state. With no change after 5 s, the garage's after 30 s, the tile reverts and toasts "Couldn't reach {name} · it may be offline". Unavailable entities show as unavailable and can't be tapped. HA commands are never queued offline (ADR-0010).
+
+- **Covers**: HOME-10
+- **Depends on**: Tiles
+- **ADRs**: ADR-0004, ADR-0010, ADR-0026
+
+### All off
+
+"Turn everything off" in the Lights summary sheet turns off every labeled light. Each floor heading has its own All off for that floor's lights. Both toast with Undo, which turns back on exactly the lights they turned off, at their earlier levels, from the HA mirror.
+
+- **Covers**: HOME-02 ("Turn everything off"), plus All off per floor
+- **Depends on**: Home control layout, Tiles
+- **ADRs**: ADR-0026
+
+### Scenes
+
+Every HA scene or script with the Home HQ label is a scene button. A scene in an HA area shows in that room's section, and the rest share a whole-house row at the top. A tap runs it and toasts "{scene} on" with Undo, which restores the entities the scene touched from the HA mirror as they were just before. For a script, that's the entities it changed in the next few seconds. No scene stays highlighted. Home HQ stores no scene definitions, so a scene that pauses an automation is an HA script (RED-21).
+
+- **Covers**: HOME-03 (HA's scenes in place of the five fixed ones, with no locking), HOME-04 (Undo only), RED-21, DATA-19 (replaced by HA)
+- **Depends on**: Home control layout
+- **ADRs**: ADR-0011, ADR-0026
+
+### Climate
+
+The climate panel shows the ecobee's temperature, humidity and what it's doing (Heating, Cooling, Holding, Off), with the setpoint ± in 0.5 °F steps within the thermostat's own limits. In Auto (heat_cool) it shows both setpoints, each with ±. ± is disabled while the mode is Off. A Heat / Cool / Auto / Off switch sets the mode. A long press opens the climate sheet, with presets (home, away, sleep), fan (auto, on) and the humidifier. Every member and kiosk may change it.
+
+- **Covers**: HOME-11 (in °F), RED-37 (climate sheet), DATA-20; RED-15 and RED-56 dropped (one zone)
+- **Depends on**: Home control layout, Pending changes; Region format
+- **ADRs**: ADR-0020, ADR-0026
+
+### Garage
+
+The garage tile drives HA's garage cover. It shows Closed or Open, with a warning style when not closed, and Opening... or Closing... while the change is pending. A tap opens a confirm sheet ("Open the garage?" with "Make sure the driveway is clear.", or "Close the garage?" with "The door will stop and reverse if anything is in the way."). Sliding the knob all the way commits, and letting go early snaps back. It works the same away from home, and from kiosks.
+
+- **Covers**: HOME-09, the Garage summary card in HOME-01
+- **Depends on**: Tiles, Pending changes; an HA template cover built from the Shelly relay and the garage door sensor (a household change)
+- **ADRs**: ADR-0006, ADR-0026
+
+### Cameras
+
+Labeled cameras show as tiles on every device and kiosk. A camera with a still image refreshes every 20 s while the tile is on screen and the screen is awake, and shows "{n}s ago" from the image's real time. A camera with no still image (the porch camera on wyzeapi) shows its name and "Tap for live". Opening a tile plays live video, muted, through HA's WebRTC, with the server relaying the signaling over its own HA connection. A camera with no image and no stream says "Camera unavailable". There's no package chip, motion badge, playback, two-way talk or siren.
+
+- **Covers**: HOME-12, RED-39 (real refresh and live view only), DATA-22
+- **Depends on**: Home control layout; docker-wyze-bridge (IDisposable fork) publishing the School Room and Double Down cameras to HA by MQTT discovery (a household change)
+- **ADRs**: ADR-0004, ADR-0026
+
+### Open at your room
+
+On a phone, Home control opens scrolled to the room the member's room presence says they're in. If that room has no tiles, it opens at the room's floor, and with no reading at all, at the top. Kiosks and other shared devices always open at the top. Each member maps to their room presence sensor in HA, alongside their other HA mappings.
+
+- **Covers**: the "open at the room the family member is in" part of the home control ticket
+- **Depends on**: Home control layout; ESPresense receivers in the bedrooms and main rooms with every family member's phone enrolled, publishing a room sensor per person to HA (a household change)
+- **ADRs**: ADR-0026
