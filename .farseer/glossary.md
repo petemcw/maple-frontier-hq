@@ -20,6 +20,10 @@ _Avoid_: dashboard (alone), app, photo frame
 One of the six people who live at Maple Frontier and use Home HQ.
 _Avoid_: user (when a specific person is meant), resident
 
+**Region format**:
+How Home HQ writes times, dates, numbers and units for the whole household: its time zone, unit system, clock, week start and date style, taken from HA's config. There is one, shared by every family member and kiosk.
+_Avoid_: locale (alone), language, preferences
+
 ## Access
 
 Who and what signs in, and how Home HQ reaches Home Assistant. See ADR-0004 to ADR-0006.

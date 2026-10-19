@@ -33,8 +33,8 @@ Named shopping lists shared by the family, starting with the permanent general l
 One input adds one or several items: "milk, 2 kg rice, 1.5 l juice" splits on commas, semicolons and newlines and reads amounts and units. Suggestions come from items seen before. Adding something already listed merges into it (quantity up), a ticked-off item comes back, and undo restores the merge exactly. A new item takes its remembered category (falling back to a guess, then Other), its last store, and, when no list is chosen, its last shopping list or else the general list.
 
 - **Covers**: SHOP-05, SHOP-07, FOS-21, FOS-22, FOS-23
-- **Depends on**: Shopping lists; locale and units for parsing amounts
-- **ADRs**: ADR-0017
+- **Depends on**: Shopping lists; Region format
+- **ADRs**: ADR-0017, ADR-0020
 
 ### Usuals
 
@@ -82,3 +82,11 @@ Files attached to a record with a label (policy, invoice, card, receipt, manual,
 - **Covers**: FOS-38
 - **Depends on**: Records; a NAS share, mount and NAS account for Home HQ, with credentials kept out of the repo
 - **ADRs**: ADR-0018
+
+### Region format
+
+One region format for the whole household, read from HA's config (unit system, time zone, country, language) on every connect. `Intl` for that locale supplies the clock, week start and date styles: en-US today, so 12-hour, weeks starting Sunday, and "Sat, Oct 18" (numeric "10/18/2026" only where a numeric date can't be avoided). The server keeps the last one it read in SQLite and gives it to every client, falling back to en-US, America/Chicago and °F before the first connect. Every device shows times in the household time zone, even a phone in another zone. Values keep the unit HA reports and are never converted, and outside sources such as Open-Meteo are asked for the household's units. All dates, times, numbers and units are formatted through one shared formatter, never by hand. English only, American spelling, no translation layer.
+
+- **Covers**: NFR-05 (replaced: the region format follows HA), FOS-53 (ruled out)
+- **Depends on**: the HA connection (ADR-0004); SQLite storage (ADR-0008)
+- **ADRs**: ADR-0020
