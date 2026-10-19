@@ -10,3 +10,4 @@ dist/
 !.envrc
 .farseer/plans/
 .farseer/scratch/
+TODO.md
