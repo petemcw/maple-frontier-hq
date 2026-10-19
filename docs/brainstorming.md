@@ -910,7 +910,7 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 11. Should the wall display get its own credentials and permissions (for example no unlock without a PIN) separate from phones? **Decided: ADR-0005, ADR-0006.**
 12. Do we keep the 1280x800 fixed stage and the Chromium 106 limits, or does the frame change? **Decided: ADR-0013.**
 13. Is the Today hero a family photo (TODAY-14) or an illustrated scene that reacts to weather and the family's schedule (RED-01)? If it is a scene, where does the art come from? The frog panoramas are Google's artwork reposted on GitHub, so we would need to check whether we can use them. The OP made extra scenes in the same style with an image model.
-14. Should short-lived things (timers, now playing, parcels, the school card) show as cards over the hero (RED-04) instead of as sheets and banners?
+14. Should short-lived things (timers, now playing, parcels, the school card) show as cards over the hero (RED-04) instead of as sheets and banners? **Timers partly decided: ADR-0028 (Time's up is a banner; where running timers sit is still open). Now playing and the school card are still open.**
 15. Is there a presence sensor in the kitchen, so the screen can wake, dim and go to ambient by room occupancy (RED-24, RED-25) and not only by touch?
 16. Which LLM features do we want (dinner ideas, reading a menu photo into data, finding events), and do they write data directly or propose changes for an adult to approve, as FamilyOS requires?
 17. Should automation settings (thresholds, schedules, freeze) be adjustable from the wall (RED-22), or stay in the HA editor? **Decided: ADR-0026 (they stay in the HA editor; an HA script used as a scene can pause one).**

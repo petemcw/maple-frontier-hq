@@ -3,6 +3,7 @@
 **Date**: 2026-10-18
 **Status**: accepted
 **Deciders**: Pete McWilliams
+**Note (2026-10-19)**: the wall panel hangs in the entry, not the kitchen. Wording that called it the kitchen panel is corrected; the decision is unchanged (ADR-0028).
 
 ## Context
 
@@ -74,7 +75,7 @@ Brainstorm question 10 asks which devices the house has for each Home control ti
 
 - Before building, the household has HA and hardware changes to agree on: the garage template cover, floors for Stairs and Double Down, docker-wyze-bridge with a Wyze API key, ESPresense receivers with all six phones enrolled, and the Home HQ labels.
 - Sheets can't be reached without a long press. This departs from the project's accessibility principle, and anyone who later needs a keyboard or screen reader would need a new path in.
-- Indoor cameras show on the kitchen panel, where guests can see them. Removing a camera's label is the only way to hide it.
+- Indoor cameras show on the wall panel, where guests can see them. Removing a camera's label is the only way to hide it.
 - A room with no receiver, or a phone out of range, falls back to its floor or the top.
 
 ### Risks

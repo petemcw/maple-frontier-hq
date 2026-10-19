@@ -125,11 +125,11 @@ Tick a recipe's ingredients ("Select all" or one by one) and add them to a chose
 
 ### Cook mode
 
-The recipe in large type for cooking from a phone or tablet: ingredients alongside the steps (side by side on a tablet), each tickable, and the screen kept awake with the Screen Wake Lock API while open. Scaling and the US/metric toggle apply. A time in a step ("simmer 20 minutes") is tappable and starts a kitchen timer.
+The recipe in large type for cooking from a phone or tablet: ingredients alongside the steps (side by side on a tablet), each tickable, and the screen kept awake with the Screen Wake Lock API while open. Scaling and the US/metric toggle apply. A time in a step ("simmer 20 minutes") is tappable and starts a timer labeled with the recipe and step ("Chili · Step 4").
 
 - **Covers**: none (the brainstorm notes FamilyOS has no cook mode, under "Kitchen (new area)")
-- **Depends on**: Recipe scaling and units; kitchen timers
-- **ADRs**: ADR-0021
+- **Depends on**: Recipe scaling and units; Timers
+- **ADRs**: ADR-0021, ADR-0028
 
 ### Tasks
 
@@ -386,3 +386,19 @@ The server derives house problems from the HA mirror: a battery below 20%, named
 - **Covers**: RED-06 (the signals, not the pill)
 - **Depends on**: the HA mirror
 - **ADRs**: ADR-0027
+
+### Timers
+
+The server holds each timer's label, duration, end time and state (running, paused, time's up) and pushes changes over `/ws`. Timers belong to the household, so every screen shows the running ones, kiosks and phones alike, ticking locally from the end time. Anyone may cancel a timer, add a minute, or pause and resume it, and the change shows everywhere at once. A timer starts from a time in a cook mode step, labeled "{recipe} · Step {n}", or from New timer on the timers sheet on any screen, which takes a duration and an optional label ("10 min timer" without one). Where running timers sit on Today and other screens is set by the Today layout ticket. Starting a timer never moves the wall panel to Today. Timers are Home HQ data, so they keep running while the HA connection is down. Home HQ doesn't read the kitchen Alexa's voice timers.
+
+- **Covers**: RED-07 (Home HQ's own timers, without voice or speakers); RED-30's jump to Today is not adopted
+- **Depends on**: the `/ws` channel
+- **ADRs**: ADR-0028
+
+### Time's up
+
+When a timer reaches zero it becomes a "Time's up · {label}" banner. Every screen with Home HQ open chimes for 1 minute. Then the banner stays silent until someone dismisses it on any device, which clears it everywhere, or 30 minutes pass. +1 minute on the banner snoozes it into a running timer again. The family member who started the timer gets one time-sensitive Companion push. A timer started on a kiosk pushes nobody. Tests cover the chime stopping at 1 minute, the banner clearing at 30 minutes, snooze, and no push for kiosk-started timers.
+
+- **Covers**: RED-07 (the "Time's up!" state)
+- **Depends on**: Timers, Banners; Companion notifications to the starter (ADR-0012)
+- **ADRs**: ADR-0012, ADR-0027, ADR-0028

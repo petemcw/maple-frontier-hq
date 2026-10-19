@@ -3,6 +3,7 @@
 **Date**: 2026-10-18
 **Status**: accepted
 **Deciders**: Pete McWilliams
+**Note (2026-10-19)**: the wall panel hangs in the entry, not the kitchen. Wording that called it the kitchen panel is corrected; the decision is unchanged (ADR-0028).
 
 ## Context
 
@@ -35,7 +36,7 @@ FamilyOS makes wall displays read-only. The prototype's wall screen is the main 
 
 ### Positive
 
-- The wall panel works for anyone in the kitchen with no sign-in step.
+- The wall panel works for anyone at it with no sign-in step.
 
 ### Negative
 

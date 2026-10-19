@@ -3,6 +3,7 @@
 **Date**: 2026-10-19
 **Status**: accepted
 **Deciders**: Pete McWilliams
+**Note (2026-10-19)**: the wall panel hangs in the entry, not the kitchen. Wording that called it the kitchen panel is corrected; the decision is unchanged (ADR-0028).
 
 ## Context
 
@@ -54,7 +55,7 @@ Brainstorm question 10 asks which devices back each alert and status line. ADR-0
 
 ### Hide Amazon codes on kiosks
 
-- **Why not**: whoever's in the kitchen is often the one who picks up. The family accepts the panel as trusted (ADR-0006).
+- **Why not**: whoever's at the wall panel by the entry is often the one who picks up. The family accepts the panel as trusted (ADR-0006).
 
 ## Consequences
 
@@ -69,7 +70,7 @@ Brainstorm question 10 asks which devices back each alert and status line. ADR-0
 - Parcels cover today only, with no "arriving Thursday".
 - Household changes come before building: install Mail and Packages, create the parcels mailbox, and set up a Gmail forwarding filter for each member. The garage alert also needs the garage template cover from ADR-0026.
 - Only the admins hear about an open garage away from a screen.
-- Amazon codes are readable by anyone at the kitchen panel, guests included.
+- Amazon codes are readable by anyone at the wall panel, guests included.
 
 ### Risks
 

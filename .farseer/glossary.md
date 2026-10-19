@@ -34,6 +34,10 @@ Who and what signs in, and how Home HQ reaches Home Assistant. See ADR-0004 to A
 A wall panel or shared tablet signed in as its own HA user with the display role. Its actions count as the household.
 _Avoid_: display account, frame, wall display (in code)
 
+**Wall panel**:
+The 21.5" touch panel in the entry, Maple Frontier's one fixed kiosk.
+_Avoid_: kitchen panel, kitchen screen (it isn't in the kitchen)
+
 **Household**:
 The actor recorded for an action taken on a kiosk, when no family member is named.
 _Avoid_: family (as an actor), anonymous
@@ -125,6 +129,20 @@ _Avoid_: kitchen mode, step mode
 **Cook note**:
 A dated note on a recipe, with who wrote it, such as "less salt, better".
 _Avoid_: comment, review
+
+## Timers
+
+Countdowns the household runs in Home HQ. See ADR-0028.
+
+### Language
+
+**Timer**:
+A labeled countdown that belongs to the household, started from a cook mode step or New timer. Every screen shows it, and anyone may cancel, pause or extend it.
+_Avoid_: kitchen timer (it times laundry too), voice timer (the Alexa's own, which Home HQ doesn't see), alarm
+
+**Time's up**:
+The banner a timer becomes at zero. It chimes for a minute, then stays silent until dismissed or 30 minutes pass.
+_Avoid_: ringing, timer done, alert
 
 ## Records
 
@@ -327,7 +345,7 @@ What Home HQ tells the family about the house without being asked. See ADR-0027.
 ### Language
 
 **Banner**:
-A notice that shows on every screen until someone acts on it, and clears everywhere at once. Home HQ has two: Garage left open and Delivered.
+A notice that shows on every screen until someone acts on it, and clears everywhere at once. Home HQ has three: Garage left open, Delivered and Time's up.
 _Avoid_: takeover (Home HQ has none), toast (a short confirmation of the viewer's own action), notification (a Companion push)
 
 **Garage left open**:
