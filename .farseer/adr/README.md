@@ -23,4 +23,5 @@
 | [0019](0019-home-hq-owns-telegram-bot.md) | The Home HQ server owns the Maple Frontier Telegram bot | accepted | 2026-10-18 |
 | [0020](0020-region-format-follows-ha.md) | One household region format, taken from Home Assistant | accepted | 2026-10-18 |
 | [0021](0021-recipe-box-parsed-ingredients-no-meal-plan.md) | A family recipe box with parsed ingredient lines, and no meal plan | accepted | 2026-10-18 |
-| [0022](0022-chores-rotate-without-stars.md) | Chores rotate between family members, with no stars and no routines | accepted | 2026-10-18 |
+| [0022](0022-chores-rotate-without-stars.md) | Chores rotate between family members, with no stars and no routines | superseded by [0023](0023-tasks-replace-chores.md) | 2026-10-18 |
+| [0023](0023-tasks-replace-chores.md) | Tasks replace chores, in one list for routine work and one-off to-dos | accepted | 2026-10-18 |

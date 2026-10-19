@@ -1,6 +1,6 @@
 # Architecture
 
-Home HQ is the family and home hub for Maple Frontier. All six family members will use it, from various devices. It builds on Home Assistant for the house and adds family features (calendar, chores, shopping, photos and more).
+Home HQ is the family and home hub for Maple Frontier. All six family members will use it, from various devices. It builds on Home Assistant for the house and adds family features (calendar, tasks, shopping, photos and more).
 
 The infrastructure and stack are settled in `.farseer/adr/` (ADR-0001 to ADR-0013). There is no code yet; the directory layout below is what the first plan scaffolds. Product questions in `docs/brainstorming.md` section 18 that the ADRs don't cover are still open.
 
@@ -27,9 +27,9 @@ Existing content:
 - **One container, API-first** (ADR-0002, 0003). The SPA talks only to the Home HQ server. Every feature goes through `/api` (zod + `@hono/zod-openapi`, OpenAPI published) or `/ws` (zod discriminated unions in `packages/shared`).
 - **HA relay with a live mirror** (ADR-0004). One `subscribe_entities` connection held in RAM, rebuilt on every connect, never persisted. Clients get role-filtered states over `/ws`. When HA drops, clients show "HA offline" and disable house controls.
 - **Identity from HA, sessions and roles in Home HQ** (ADR-0005). HA OAuth, mapped to a member; ~90-day sliding session (cookie, or bearer for native). Roles: admin, member, kid, display.
-- **Kiosks act as the household** (ADR-0006). No PINs; risky actions need hold or slide gestures; chores credit their owner or ask who did an "Anyone" chore.
+- **Kiosks act as the household** (ADR-0006). No PINs; risky actions need hold or slide gestures; tasks credit their owner or ask who did an "Anyone" task.
 - **Layout from HA** (ADR-0011). Rooms from HA areas, tiles from entities with a Home HQ label, overrides in SQLite.
-- **Offline** (ADR-0010). Cached app shell; shopping and chore intents queued with client IDs, last write wins, 24-hour expiry. HA commands are never queued.
+- **Offline** (ADR-0010). Cached app shell; shopping and task intents queued with client IDs, last write wins, 24-hour expiry. HA commands are never queued.
 
 ## Conventions
 

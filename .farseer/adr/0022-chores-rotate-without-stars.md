@@ -1,7 +1,7 @@
 # ADR-0022: Chores rotate between family members, with no stars and no routines
 
 **Date**: 2026-10-18
-**Status**: accepted
+**Status**: superseded by ADR-0023
 **Deciders**: Pete McWilliams
 
 ## Context

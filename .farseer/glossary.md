@@ -176,44 +176,52 @@ _Avoid_: template, default duty
 The question "Was the furnace filter changed?" raised when a duty's linked HA entity reaches its trigger state. Answered once, it clears everywhere.
 _Avoid_: done check, confirmation, alert
 
-## Chores
+## Tasks
 
-The routine work of running the house, shared among family members. Upkeep tied to a record is a duty, not a chore.
+The work of running the house and the family's to-dos, from the weekly dishes to a one-off errand. Upkeep tied to a record is a duty, not a task.
 
 ### Language
 
-**Chore**:
-A piece of routine household work that comes due once, daily, or weekly on chosen days, such as the dishes, trash night or mowing. It has no stars or points.
-_Avoid_: task (a family task), duty (upkeep on a record), job, routine
+**Task**:
+Something a family member or Anyone needs to do: one-off, with an optional date, such as "book the dentist", or repeating daily or weekly on chosen days, such as the dishes or trash night. It has no stars or points.
+_Avoid_: chore, to-do, job, routine, duty (upkeep on a record)
+
+**One-off task**:
+A task that comes due once, or never if it has no date. It stays open, and overdue once its day passes, until it's done.
+_Avoid_: once chore, single task, errand
+
+**Someday**:
+The group of one-off tasks with no date.
+_Avoid_: no date, backlog, later
 
 **Who's up**:
-How a chore decides whose it is: a fixed person, take turns along a rota, or Anyone.
+How a task decides whose it is: a fixed person, Anyone, or, for a repeating task, take turns along a rota.
 _Avoid_: assignment mode, strategy
 
 **Rota**:
-The ordered list of family members a take-turns chore passes along.
+The ordered list of family members a take-turns task passes along.
 _Avoid_: rotation list, roster, queue
 
 **Turn**:
-The family member on a chore's rota whose go it is now.
-_Avoid_: assignee (for a take-turns chore), current owner
+The family member on a task's rota whose go it is now.
+_Avoid_: assignee (for a take-turns task), current owner
 
 **Anyone**:
-No one in particular: a chore or duty any family member may do. Whoever does it gets the credit.
+No one in particular: a task or duty any family member may do. Whoever does it gets the credit.
 _Avoid_: unassigned, everyone, shared
 
 **Occurrence**:
-One coming-due of a chore, on a given day. Ticking a chore completes its next open occurrence, even ahead of its day.
+One coming-due of a repeating task, on a given day. Ticking the task completes its next open occurrence, even ahead of its day.
 _Avoid_: instance, due date (for the thing itself)
 
-**Chore break**:
-A stretch, until a set date, when a family member's turns are skipped and their fixed chores fall to Anyone.
-_Avoid_: away (HA presence), vacation, pause
+**Task break**:
+A stretch, until a set date, when a family member's turns are skipped and their fixed tasks fall to Anyone.
+_Avoid_: chore break, away (HA presence), vacation, pause
 
-**Chores check**:
-The household's evening hour at which chores still open without a due time get a reminder.
-_Avoid_: deadline, nag, cutoff
+**Evening check**:
+The household's evening hour at which dated tasks still open without a due time get a reminder.
+_Avoid_: chores check, deadline, nag, cutoff
 
 **Snooze**:
-Pushing one open occurrence of a chore later, by an hour, to the chores check or to tomorrow morning, but never past the next occurrence. It isn't overdue until then.
+Pushing an open, dated task later, by an hour, to the evening check or to tomorrow morning, but never past a repeating task's next occurrence. It isn't overdue until then.
 _Avoid_: postpone, defer, skip
