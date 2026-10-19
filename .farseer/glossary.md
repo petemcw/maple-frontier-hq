@@ -175,3 +175,45 @@ _Avoid_: template, default duty
 **Sensor prompt**:
 The question "Was the furnace filter changed?" raised when a duty's linked HA entity reaches its trigger state. Answered once, it clears everywhere.
 _Avoid_: done check, confirmation, alert
+
+## Chores
+
+The routine work of running the house, shared among family members. Upkeep tied to a record is a duty, not a chore.
+
+### Language
+
+**Chore**:
+A piece of routine household work that comes due once, daily, or weekly on chosen days, such as the dishes, trash night or mowing. It has no stars or points.
+_Avoid_: task (a family task), duty (upkeep on a record), job, routine
+
+**Who's up**:
+How a chore decides whose it is: a fixed person, take turns along a rota, or Anyone.
+_Avoid_: assignment mode, strategy
+
+**Rota**:
+The ordered list of family members a take-turns chore passes along.
+_Avoid_: rotation list, roster, queue
+
+**Turn**:
+The family member on a chore's rota whose go it is now.
+_Avoid_: assignee (for a take-turns chore), current owner
+
+**Anyone**:
+No one in particular: a chore or duty any family member may do. Whoever does it gets the credit.
+_Avoid_: unassigned, everyone, shared
+
+**Occurrence**:
+One coming-due of a chore, on a given day. Ticking a chore completes its next open occurrence, even ahead of its day.
+_Avoid_: instance, due date (for the thing itself)
+
+**Chore break**:
+A stretch, until a set date, when a family member's turns are skipped and their fixed chores fall to Anyone.
+_Avoid_: away (HA presence), vacation, pause
+
+**Chores check**:
+The household's evening hour at which chores still open without a due time get a reminder.
+_Avoid_: deadline, nag, cutoff
+
+**Snooze**:
+Pushing one open occurrence of a chore later, by an hour, to the chores check or to tomorrow morning, but never past the next occurrence. It isn't overdue until then.
+_Avoid_: postpone, defer, skip

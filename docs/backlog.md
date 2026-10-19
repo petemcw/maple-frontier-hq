@@ -6,11 +6,11 @@ One flat list of Home HQ features, each sharp enough to hand to `/farseer:planne
 
 ### Roles
 
-Every signed-in family member or kiosk has one fixed role: admin, member or display. Both parents are admins and the four children are members. Admin-only actions are managing members and roles (including letting in an unmapped HA user), approving kiosks, and integrations: iCloud, Immich, the AI key and spending limit, and the weather location. Adding and viewing papers, viewing account numbers, and editing duty presets are admin-only too (ADR-0018). Every other action is open to every member, and kiosks act as the household. Roles are checked in code, with no capability table.
+Every signed-in family member or kiosk has one fixed role: admin, member or display. Both parents are admins and the four children are members. Admin-only actions are managing members and roles (including letting in an unmapped HA user), approving kiosks, and integrations: iCloud, Immich, the AI key and spending limit, and the weather location. Adding and viewing papers, viewing account numbers, and editing duty presets are admin-only too (ADR-0018), as are setting the chore reminder hours and putting someone else on a chore break (ADR-0022). Every other action is open to every member, and kiosks act as the household. Roles are checked in code, with no capability table.
 
 - **Covers**: FOS-48 (narrowed), question 8 (approval part), question 20
 - **Depends on**: sign-in with Home Assistant (ADR-0005)
-- **ADRs**: ADR-0005, ADR-0006, ADR-0016, ADR-0018
+- **ADRs**: ADR-0005, ADR-0006, ADR-0016, ADR-0018, ADR-0022
 
 ### Delete requests
 
@@ -130,3 +130,51 @@ The recipe in large type for cooking from a phone or tablet: ingredients alongsi
 - **Covers**: none (the brainstorm notes FamilyOS has no cook mode, under "Kitchen (new area)")
 - **Depends on**: Recipe scaling and units; kitchen timers
 - **ADRs**: ADR-0021
+
+### Chores
+
+A chore has a title, an emoji, notes, a repeat (once, daily, or weekly on chosen days, with an optional end date), an optional due time, and who's up: a fixed person or Anyone. Any member adds, edits and archives chores. The owners are whoever added it and, for a fixed-person chore, that person. Deleting someone else's chore is a delete request. The Chores screen groups chores into Overdue, Today, Coming up and Done, filtered Everyone or Mine. Anyone may tick any chore. A tick on a phone credits the signed-in member, with "Done by…" to credit someone else, and a kiosk always asks "Who did it?". A tick completes the next open occurrence, even before its day, and the schedule stays put. A chore turns overdue after its due time, or at the end of its day without one. When the next occurrence comes due, the missed one is dropped as missed, so only one is ever open. Tapping a done chore undoes it, with no confirmation, until the next occurrence comes due. Completions are one per occurrence, so offline replays are safe. No stars, points or routines.
+
+- **Covers**: FOS-26 (edit and archive), FOS-27 (without monthly repeats), FOS-30 (undo widened), FOS-32 (no suggestions), CHORE-04, CHORE-06, CHORE-07, CHORE-08 (reworked without stars or routines), question 8
+- **Depends on**: Roles; Delete requests; Region format
+- **ADRs**: ADR-0010, ADR-0016, ADR-0020, ADR-0022
+
+### Chore rotas
+
+A take-turns chore has an ordered rota of family members. Completing it passes the turn to whoever follows the turn holder, whoever did the work, so favors aren't tracked. A missed occurrence leaves the turn where it is. Undo gives the turn back. The chore row shows whose turn it is.
+
+- **Covers**: FOS-28 (without "least done in 90 days"), FOS-29 (without kid rules)
+- **Depends on**: Chores
+- **ADRs**: ADR-0022
+
+### Chore breaks
+
+A member puts themselves on a chore break until a date, and an admin may do it for anyone. During the break their turns are skipped on every rota and their fixed chores fall to Anyone. A chore whose whole rota is on a break becomes Anyone. Everything returns on the end date. A chore break is separate from HA presence and from vacation mode.
+
+- **Covers**: none in the brainstorm (the two oldest may be away for weeks)
+- **Depends on**: Chores; Chore rotas
+- **ADRs**: ADR-0022
+
+### Chore snooze
+
+Anyone may snooze an open chore from its row or its attention card: +1 hour, to the chores check, or to tomorrow at the morning hour. Only choices still ahead and before the next occurrence are offered, so a daily chore can go to tonight but not tomorrow. A snoozed occurrence isn't due or overdue until the snooze ends, then its reminder fires again. The schedule and the turn don't move. Snoozes have no limit, and each one goes in the chore's history. The reminder notification has no snooze action.
+
+- **Covers**: FOS-05 (the postpone, for chores)
+- **Depends on**: Chores; Chore reminders
+- **ADRs**: ADR-0022
+
+### Chore reminders
+
+Whoever's up gets a Companion notification at the due time, or at the morning hour (default 8 AM) for chores without one. If it's still open, they get one more at the due time, or at the chores check (default 7 PM) for chores without one. Admins set both hours. Anyone chores never send notifications. Members on a chore break get none.
+
+- **Covers**: FOS-31 (plus an overdue reminder)
+- **Depends on**: Chores; mapping each member to their Companion notify targets (ADR-0012)
+- **ADRs**: ADR-0012, ADR-0022
+
+### Chore history
+
+Every completion records the occurrence, who did it, who ticked it and when. Every snooze records who snoozed it and until when. Each chore shows its history, and each member's completions can be listed. It replaces the prototype's static "This week" strip.
+
+- **Covers**: CHORE-10 (history), replaces CHORE-09
+- **Depends on**: Chores
+- **ADRs**: ADR-0022

@@ -904,7 +904,7 @@ There is a lot of overlap, with this doc and with the walnut-and-brass thread. T
 5. Where does shared state live (chores, stars, shopping, photos, favorites), given the prototype has no backend? **Decided for app data: ADR-0008. Photo storage still open.**
 6. Which calendar provider holds the family's events, and how do events map to people?
 7. Which FamilyOS areas matter to us: tasks, kitchen and meal plan, household records, the board, Quick add, the assistant, MCP access? **Decided: ADR-0015.**
-8. Do kids use stars, a rotation, or both? Do chores need recurrence, a daily reset and star redemption on day one? Do kids' changes need an adult's approval? **Approval decided: ADR-0016 (no kid role; only deletes of others' items need approval).**
+8. Do kids use stars, a rotation, or both? Do chores need recurrence, a daily reset and star redemption on day one? Do kids' changes need an adult's approval? **Decided: ADR-0016 (no kid role; only deletes of others' items need approval) and ADR-0022 (no stars; rotation, recurrence and overdue roll-over).**
 9. Where do photos come from, and who curates them?
 10. Which devices does the house have for each Home control tile, alert and status line? Is there an alarm system, a water valve, a doorbell camera with two-way audio?
 11. Should the wall display get its own credentials and permissions (for example no unlock without a PIN) separate from phones? **Decided: ADR-0005, ADR-0006.**
