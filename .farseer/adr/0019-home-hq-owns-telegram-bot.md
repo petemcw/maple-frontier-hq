@@ -4,6 +4,8 @@
 **Status**: accepted
 **Deciders**: Pete McWilliams
 
+**Note (2026-10-20)**: assistant chat isn't built, so the bot carries quick add and recipe links only. Members link their chat with a one-time code from Home HQ (ADR-0030). The decision is unchanged.
+
 ## Context
 
 Quick add (FOS-41) and assistant chat (FOS-44) take messages from a Telegram bot, and FOS-50 adds approve and reject buttons to Telegram notices. The household already has @MapleFrontierBot. Telegram hands a bot's incoming messages to one reader only: a second `getUpdates` poller gets `409 Conflict` or silently loses messages, and a webhook blocks polling entirely. Sharing a bot between icloudpd and another poller broke icloudpd's re-auth replies, so icloudpd now has its own bot. HA's `telegram_bot` integration can be that reader, and its events are on the non-admin subscribe allowlist, but an attachment arrives only as a `file_id` that `telegram_bot.download_file` saves to HA's own disk, and HA ignores any chat missing from its `allowed_chat_ids`.

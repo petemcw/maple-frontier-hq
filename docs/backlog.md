@@ -104,7 +104,7 @@ One family recipe box. A recipe has a title, ingredient lines (headings such as 
 Paste a recipe page's URL and the server reads its schema.org Recipe data (JSON-LD, including `@graph`, HowToSection and ISO 8601 times) into the recipe form to check and save. A link shared to the Telegram bot does the same as a recipe draft that only the sender sees, and the bot replies with a link to it. When a page can't be read, the form opens with the URL as the source.
 
 - **Covers**: FOS-33 (source link), FOS-41 (the link part, no AI)
-- **Depends on**: Recipe box; the Telegram bot (ADR-0019) and linking each Telegram user to a family member
+- **Depends on**: Recipe box; Telegram linking
 - **ADRs**: ADR-0019, ADR-0021
 
 ### Recipe scaling and units
@@ -458,3 +458,75 @@ Each kiosk has settings an admin changes: theme (system, light or dark), and amb
 - **Covers**: FOS-11 and RED-44, narrowed to four settings
 - **Depends on**: Roles (admins), the `/ws` channel
 - **ADRs**: ADR-0016, ADR-0029
+
+### Telegram linking
+
+Home HQ is the only reader of @MapleFrontierBot (ADR-0019). A family member taps Link Telegram in their settings and Home HQ shows a one-time code, valid for 10 minutes, which they send to the bot. From then on that chat is theirs, and everything it sends acts as them. Unlink removes it, from the member's own settings or by an admin. The bot answers an unlinked chat with one line on how to link and does nothing else. Admins see each member's link state and the bot's polling status, including a 409 conflict.
+
+- **Covers**: FOS-41 (the Telegram way in)
+- **Depends on**: Roles; the Telegram bot poller (ADR-0019)
+- **ADRs**: ADR-0019, ADR-0030
+
+### AI connection and cap
+
+The server calls the Claude API with `@anthropic-ai/sdk`, using Sonnet 5.5, and the key is a server secret that's never in source, the bundle or a served file. Each call records its feature, model, tokens and cost. The AI cap, $5 a month by default, is changed by admins, who also see this month's spend by feature. Once the cap is reached, or the API fails, quick add and dinner ideas pause. The bot replies "AI is paused, try again later" and keeps nothing, the add box keeps the typed text, and dinner ideas say they're unavailable. The cap resets on the first of the month (household time zone). The Anthropic Console workspace spend limit is set as a backstop. Before build, an eval on real captures checks the model choice.
+
+- **Covers**: FOS-47 (narrowed to one provider and one cap)
+- **Depends on**: Roles (admins); Region format (the month boundary)
+- **ADRs**: ADR-0016, ADR-0030
+
+### Quick add
+
+A family member sends text, photos (JPEG, PNG, WebP, HEIC converted) or a PDF to the bot, or puts them in the add box on their own device. Kiosks have no add box. Voice notes get a reply asking for text. The server resizes images, then asks Claude, with propose tools only, to read the capture into suggestions: tasks (who, one-off or repeating, date and time), shopping items (list, store, amount, merged as a shopping add would be), recipes and events. The model gets the household's member names, shopping lists, stores, categories and open tasks so it can match them. A suggestion it's unsure of marks the field to check. Nothing is saved until the sender adds it. A capture that yields nothing gets "I couldn't find anything to add."
+
+- **Covers**: FOS-41 (text, photos and PDFs from the bot and the app; no voice, mailbox or share target), RED-11's menu-photo idea in general form
+- **Depends on**: Telegram linking; AI connection and cap; Tasks; Shopping add
+- **ADRs**: ADR-0017, ADR-0019, ADR-0023, ADR-0030
+
+### Quick add tray
+
+Suggestions from one capture show together in the bot's reply, each ticked, with Add selected and Dismiss buttons, and in the sender's quick add tray in the app, where a suggestion can be edited first. Add selected saves the ticked ones as the sender, through the same actions as their own taps, and offers one Undo for the batch. A suggestion that matches something already there ("Already on Shopping", an open task with the same name) starts unticked and says so. Ticking it adds it anyway. Suggestions expire after 7 days, or once their date has passed if that's sooner. The capture's attachments are deleted when its last suggestion is added, dismissed or expired. Only the sender ever sees their tray. A count of waiting suggestions is available to the Today layout.
+
+- **Covers**: FOS-42; question 16's propose-or-write (the sender adds, no one else approves); not FOS-43
+- **Depends on**: Quick add
+- **ADRs**: ADR-0016, ADR-0030
+
+### Event suggestions
+
+An event read from a capture becomes a suggestion with title, start, end or all-day, and place, and an Add to Google Calendar button instead of a tick. The button opens Google Calendar's pre-filled event page (`calendar.google.com/calendar/render?action=TEMPLATE`) and names the Workspace address it expects. Saving there is the sender's own act in Google. Home HQ keeps read-only scopes, and the event reaches Home HQ when it next syncs the Family calendar or the sender's busy blocks. Add selected skips event suggestions, and they expire after their date.
+
+- **Covers**: FOS-41 (events, as a hand-off)
+- **Depends on**: Quick add tray; Google calendar connection
+- **ADRs**: ADR-0024, ADR-0030
+
+### Recipe from a capture
+
+A recipe in a photo, screenshot or PDF (a cookbook page, a handwritten card) is read into title, ingredient lines, steps, servings and time, and becomes the sender's recipe draft, as a link sent to the bot does. The capture's photo stays with the draft as its recipe photo when it shows the dish. The bot reply and the tray link to the draft, which is saved from its own form. Ingredient lines are parsed as on save.
+
+- **Covers**: FOS-33 (AI capture), FOS-41 (recipes)
+- **Depends on**: Quick add; Recipe from a link (the recipe draft); Recipe scaling and units
+- **ADRs**: ADR-0021, ADR-0030
+
+### Dinner ideas
+
+On request, on a phone or a kiosk, Home HQ suggests three dinners for today: mostly recipes from the recipe box, plus one new dish. Each shows a name, a one-line summary and total time. The model weighs today's weather (Open-Meteo, as the weather hero has it), recent dinners and the food notes, and avoids repeating a recent dinner. Other ideas runs again with the shown ones excluded. Make this counts the dish as today's dinner and opens the recipe, or the new dish's full recipe with ingredient lines that scale and go to shopping. A new dish also has Save to recipe box, owned by whoever saved it, or the household on a kiosk. Nothing runs on a schedule.
+
+- **Covers**: RED-10 (adapted to an adult household with no meal plan)
+- **Depends on**: AI connection and cap; Recipe box; Recipe scaling and units; Ingredients to shopping; Recent dinners and food notes; the weather source (ADR from the Today hero ticket)
+- **ADRs**: ADR-0021, ADR-0030
+
+### Recent dinners and food notes
+
+Home HQ keeps the household's recent dinners for 14 days: a dish chosen with Make this, and a recipe opened in cook mode, counted once per day. Food notes are one short household text ("no shellfish, quick on weeknights"), edited by any member, with who changed it last. Both feed dinner ideas only.
+
+- **Covers**: RED-10 (avoid recent meals, the family's rules)
+- **Depends on**: Recipe box; Cook mode
+- **ADRs**: ADR-0030
+
+### Search
+
+One search box finds tasks, shopping items, recipes, records and duties by words, using SQLite full-text search, with no AI. Results are grouped by area and limited to what the searcher may see (papers stay admin-only). Kiosks search as the household. Where the box lives is set by the navigation ticket.
+
+- **Covers**: FOS-45 (by words, not by meaning)
+- **Depends on**: Tasks; Shopping lists; Recipe box; Records; Duties
+- **ADRs**: ADR-0018, ADR-0030

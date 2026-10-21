@@ -119,7 +119,7 @@ One line of a recipe's ingredients, read as an amount, a unit and the rest when 
 _Avoid_: ingredient (alone, for the line), item (a shopping item)
 
 **Recipe draft**:
-A recipe read from a link sent to the Telegram bot, seen only by its sender until they save it to the recipe box.
+A recipe read from a link sent to the Telegram bot, or from a capture, seen only by its sender until they save it to the recipe box.
 _Avoid_: proposal, pending recipe, import
 
 **Cook mode**:
@@ -401,3 +401,49 @@ _Avoid_: screen off (as a setting), standby, power save
 **Kiosk settings**:
 What an admin sets per kiosk: its theme (system, light or dark), and whether it shows ambient, the night clock and the Time's up chime. A new kiosk starts with everything on.
 _Avoid_: display settings, per-display grants (FOS-11's, not adopted)
+
+## Quick add and dinner ideas
+
+What the AI does in Home HQ: it reads what a family member sends and suggests, and it suggests dinners. It never saves anything itself. See ADR-0030.
+
+### Language
+
+**Quick add**:
+Sending Home HQ text, a photo or a PDF, through the Telegram bot or the add box, to have it read into suggestions.
+_Avoid_: inbox (the voice inbox is something else), capture inbox, import
+
+**Capture**:
+One thing a family member sent to quick add: a message with its text and attachments.
+_Avoid_: upload, message (alone), item
+
+**Suggestion**:
+One task, shopping item or event the AI read from a capture, waiting for its sender to add or dismiss it. It starts ticked unless it matches something already there.
+_Avoid_: proposal, draft, card (the UI), approval
+
+**Add selected**:
+Saving the ticked suggestions from one capture as their sender, with one Undo for the batch.
+_Avoid_: approve, accept, confirm
+
+**Quick add tray**:
+Where a family member's waiting suggestions sit in the app, seen only by them. Suggestions leave it after 7 days, or once their date has passed.
+_Avoid_: inbox, drafts, review queue
+
+**Dinner ideas**:
+Three dishes suggested on request for today's dinner, mostly from the recipe box plus one new dish.
+_Avoid_: meal plan, meal suggestions, recommendations
+
+**Make this**:
+Choosing a dinner idea, which counts it as today's dinner and opens it.
+_Avoid_: pick, cook (alone), like
+
+**Recent dinners**:
+What the household had for dinner in the last 14 days, known from Make this and from recipes opened in cook mode.
+_Avoid_: meal log, history, meals
+
+**Food notes**:
+One short household text, edited by any member, that steers dinner ideas ("no shellfish, quick on weeknights").
+_Avoid_: preferences, rules, dietary profile
+
+**AI cap**:
+The monthly spending limit, set by admins, that pauses quick add and dinner ideas once reached.
+_Avoid_: budget, quota, call cap

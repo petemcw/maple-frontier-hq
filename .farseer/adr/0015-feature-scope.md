@@ -4,6 +4,8 @@
 **Status**: accepted
 **Deciders**: Pete McWilliams
 
+**Note (2026-10-20)**: of the AI features, only quick add and dinner ideas ship. Assistant chat (FOS-44), search by meaning (FOS-45) and auto-approval (FOS-43) are out of scope (ADR-0030).
+
 ## Context
 
 The brainstorm collects features from the prototype, FamilyOS (`FOS-xx`) and Reddit dashboards (`RED-xx`), many sized for other households. Maple Frontier is two adults and four children aged 17 to 21, and the house has fewer devices than the Reddit examples. Settles brainstorm section 18 questions 7 and 19, and the Agents part of question 1.
