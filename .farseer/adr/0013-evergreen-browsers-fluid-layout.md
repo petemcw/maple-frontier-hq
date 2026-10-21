@@ -3,6 +3,7 @@
 **Date**: 2026-10-18
 **Status**: accepted
 **Deciders**: Pete McWilliams
+**Note (2026-10-19)**: Home HQ's page drives the panel's screen and motion wake through Fully Kiosk's JavaScript interface, so the HA integration isn't needed for them (ADR-0029). The decision is unchanged.
 
 ## Context
 

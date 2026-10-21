@@ -402,3 +402,59 @@ When a timer reaches zero it becomes a "Time's up · {label}" banner. Every scre
 - **Covers**: RED-07 (the "Time's up!" state)
 - **Depends on**: Timers, Banners; Companion notifications to the starter (ADR-0012)
 - **ADRs**: ADR-0012, ADR-0027, ADR-0028
+
+### Day, evening and night
+
+Home HQ reads night from `binary_sensor.household_nighttime` in the HA mirror (22:45 to 08:00 today), the same night the garage left open banner uses. Evening runs from 45 minutes before sunset, from `sun.sun`, until night. Every kiosk knows which of the three it is in, and the change reaches open kiosks over `/ws`. While the HA connection is down, a kiosk keeps the last phase it had and works out evening from the sun times it last saw. Tests cover the edges of each phase, a night that crosses midnight, and a dropped HA connection.
+
+- **Covers**: SHELL-06's day and night windows, RED-24's time-of-day brightness
+- **Depends on**: the HA mirror, the `/ws` channel
+- **ADRs**: ADR-0027, ADR-0029
+
+### Idle timers
+
+On a kiosk, a touch anywhere resets the idle timer. After 60 s idle it closes any open sheet and goes to Today. After 120 s it shows ambient by day and the night clock at night, as that kiosk's settings allow. In the night dashboard, 20 s idle returns to the night clock. Phones never go idle this way. Tests cover each timeout and that a touch resets it.
+
+- **Covers**: SHELL-04, SHELL-05, SHELL-06, SHELL-08; SHELL-07 is moot (no takeovers)
+- **Depends on**: Day, evening and night; Kiosk settings
+- **ADRs**: ADR-0029
+
+### Ambient
+
+A kiosk's idle screen by day: the slideshow at its 15 s pace, weighted by anyone's favorites, with each slide's place-and-date caption, under a dark gradient. Bottom left, a huge clock and the date. Bottom right, the weather and the next Family calendar event, as Next up counts it, with its person-color dot. Busy blocks never show. In the evening the gradient darkens and the kiosk dims. The text shifts by up to 4 px every minute. A tap goes to Today. A banner shows over ambient without leaving it.
+
+- **Covers**: AMB-01 (captions shown; presence avatars wait for the presence decision), AMB-02, AMB-03, NFR-12
+- **Depends on**: Slideshow, Idle timers, the weather source, Calendar; Banners
+- **ADRs**: ADR-0024, ADR-0025, ADR-0029
+
+### Night clock
+
+A kiosk's idle screen at night, on black in dim red: a big clock; the weather with "First up tomorrow: {title} {time} · {person}" from the Family calendar ("today" after midnight, or "Nothing early tomorrow"); and the house status line, such as "Garage closed · 3 lights on · 68°". The text shifts by up to 4 px every minute. A tap opens the night dashboard. A banner shows over the night clock without leaving it.
+
+- **Covers**: NIGHT-01 (with the house status line in place of "House locked · alarm armed"), NFR-12, DEF-05
+- **Depends on**: Day, evening and night; Idle timers; Calendar; House status; Banners
+- **ADRs**: ADR-0027, ADR-0029
+
+### Night dashboard
+
+A tap on the night clock opens the full interface under a dim red-amber filter (invert, sepia, saturate, dim). Everything works as normal. After 20 s idle it goes back to the night clock.
+
+- **Covers**: NIGHT-02, SHELL-08
+- **Depends on**: Night clock, Idle timers
+- **ADRs**: ADR-0029
+
+### Screen sleep
+
+On a kiosk running in Fully Kiosk, one small screen-control module listens for Fully's camera motion events and turns the screen on, off and dim through Fully's JavaScript interface. Outside Fully the module does nothing. By day the screen goes off after 10 minutes with no motion, and motion wakes it to ambient. At night it stays off, and motion or a touch brings up the night clock, which goes dark 1 minute after the last motion. In the evening and at night the screen dims. A new banner wakes the screen, which then sleeps by the same rules, with the banner still showing when it next wakes. Time's up chimes at night too. Tests run against a fake Fully interface.
+
+- **Covers**: question 15, RED-24 (wake and dim by motion from the panel's own camera, not a room sensor); RED-25's and RED-46's screensavers are not adopted
+- **Depends on**: Day, evening and night; Ambient; Night clock; Banners; Fully Kiosk Plus on the wall panel with motion detection, camera access and the JavaScript interface turned on (a household change)
+- **ADRs**: ADR-0013, ADR-0029
+
+### Kiosk settings
+
+Each kiosk has settings an admin changes: theme (system, light or dark), and ambient, night clock and Time's up chime, each on or off. A new kiosk starts with everything on and the system theme. With ambient off the kiosk stays on Today when idle by day. With the night clock off, its nights look like its days, and with the chime off, Time's up shows silently there. Changes reach the kiosk over `/ws`. Where admins change them is set with the other admin surfaces.
+
+- **Covers**: FOS-11 and RED-44, narrowed to four settings
+- **Depends on**: Roles (admins), the `/ws` channel
+- **ADRs**: ADR-0016, ADR-0029

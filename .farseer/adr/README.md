@@ -30,3 +30,4 @@
 | [0026](0026-home-control-from-what-the-house-has.md) | Home control covers the devices Maple Frontier has, with scenes from HA and automations left in HA | accepted | 2026-10-18 |
 | [0027](0027-alerts-from-garage-and-parcels.md) | Alerts are banners for the garage and parcels, with no takeovers | accepted | 2026-10-19 |
 | [0028](0028-household-timers-no-voice-or-appliances.md) | Timers are Home HQ's own and shared by the household, with no voice timers or appliance cycles | accepted | 2026-10-19 |
+| [0029](0029-kiosk-idle-screen-sleep-and-night.md) | Kiosks go idle to ambient by day and a night clock at night, and the wall panel sleeps its screen by camera motion | accepted | 2026-10-19 |

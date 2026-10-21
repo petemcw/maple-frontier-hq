@@ -367,3 +367,37 @@ _Avoid_: security line, health pill, status bar
 **House problem**:
 Something in the house that needs fixing: a battery below 20%, a device fault, or a failed HA backup. An unavailable tile isn't one.
 _Avoid_: alert, warning, issue
+
+## Idle and night
+
+What a kiosk shows when nobody is touching it. See ADR-0029.
+
+### Language
+
+**Night**:
+The hours HA's household nighttime helper marks, 22:45 to 08:00 today. Home HQ has one night, shared by the garage alert and every kiosk.
+_Avoid_: bedtime, after dark, night mode (alone)
+
+**Evening**:
+From 45 minutes before sunset, when HA turns on the main-floor lamps, until night. Kiosks dim in the evening.
+_Avoid_: dusk, night (before the nighttime helper turns on)
+
+**Ambient**:
+A kiosk's idle screen by day: the slideshow with the clock, date, weather and next event over it.
+_Avoid_: screensaver, photo frame, ambient mode (in code, just ambient)
+
+**Night clock**:
+A kiosk's idle screen at night: a big dim red clock, the weather, first up tomorrow and the house status, on black.
+_Avoid_: night mode, bedside clock, night screen
+
+**Night dashboard**:
+The full Home HQ interface under a dim red-amber filter, opened by a tap on the night clock.
+_Avoid_: night mode, dark mode (a theme, not this)
+
+**Screen sleep**:
+A kiosk in Fully Kiosk turning its own screen off when its camera sees no one, and back on at motion, a touch or a banner.
+_Avoid_: screen off (as a setting), standby, power save
+
+**Kiosk settings**:
+What an admin sets per kiosk: its theme (system, light or dark), and whether it shows ambient, the night clock and the Time's up chime. A new kiosk starts with everything on.
+_Avoid_: display settings, per-display grants (FOS-11's, not adopted)
