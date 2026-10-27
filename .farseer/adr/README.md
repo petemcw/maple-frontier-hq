@@ -33,3 +33,4 @@
 | [0029](0029-kiosk-idle-screen-sleep-and-night.md) | Kiosks go idle to ambient by day and a night clock at night, and the wall panel sleeps its screen by camera motion | accepted | 2026-10-19 |
 | [0030](0030-quick-add-and-dinner-ideas-on-claude.md) | AI features are quick add and dinner ideas on the Claude API, and the AI only suggests | accepted | 2026-10-20 |
 | [0031](0031-today-backdrop-and-open-meteo-weather.md) | The Today hero is a backdrop of Maple Frontier picked by rules, with weather from Open-Meteo | accepted | 2026-10-27 |
+| [0032](0032-every-member-on-ha-and-companion.md) | Every family member gets their own HA user and the Companion app, with location While Using | accepted | 2026-10-27 |

@@ -58,6 +58,14 @@ _Avoid_: author, assignee (when the delete right is meant)
 A request from a member or a kiosk to delete an item they don't own. It takes effect only when an owner or an admin approves it.
 _Avoid_: draft, proposal, suggestion
 
+**HA user**:
+A family member's or kiosk's own account in Home Assistant, used to sign in to Home HQ and the Companion app. Every family member has one. Only Peter's is an HA admin.
+_Avoid_: HA account, login, service user (that's Home HQ's own)
+
+**Notify target**:
+The one phone, running the Companion app, that a family member's pushes go to. Each member has exactly one.
+_Avoid_: device (alone), push target, phone (in code)
+
 **Service user**:
 The non-admin "Home HQ" user in Home Assistant whose token only the server holds. Every HA read and command goes through it.
 _Avoid_: HA token (alone), bot user

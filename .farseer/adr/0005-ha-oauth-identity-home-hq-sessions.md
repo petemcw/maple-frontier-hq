@@ -4,6 +4,7 @@
 **Status**: accepted
 **Deciders**: Pete McWilliams
 **Note (2026-10-19)**: the wall panel hangs in the entry, not the kitchen. Wording that called it the kitchen panel is corrected; the decision is unchanged (ADR-0028).
+**Note (2026-10-27)**: only Peter had a linked HA user. The other five members get non-admin HA users, and only the admins use TOTP (ADR-0032).
 
 ## Context
 

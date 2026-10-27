@@ -3,6 +3,7 @@
 **Date**: 2026-10-18
 **Status**: accepted
 **Deciders**: Pete McWilliams
+**Note (2026-10-27)**: a location older than 30 minutes counts as stale, so leave-by measures from home (ADR-0032).
 
 ## Context
 

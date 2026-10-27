@@ -3,6 +3,7 @@
 **Date**: 2026-10-18
 **Status**: accepted
 **Deciders**: Pete McWilliams
+**Note (2026-10-27)**: only Peter had the Companion app. All six phones install it, each member maps to one phone, and links in a push open Safari on iOS (ADR-0032).
 
 ## Context
 
