@@ -269,11 +269,11 @@ Anyone, a kiosk included, can hide the photo on screen from the slideshow bar. I
 
 ### Photo of the day
 
-The server picks one photo per family day, the same on every screen. An on this day photo wins when there is one. Otherwise it walks a shuffled round of the album, stored in SQLite, so every photo comes up once per round and none repeats on consecutive days. A photo anyone has hearted is likelier, and hidden photos never qualify. A photo hidden during its day is replaced at once. Where the photo of the day shows (the Today hero, the ambient screen) belongs to those features.
+The server picks one photo per family day, the same on every screen. An on this day photo wins when there is one. Otherwise it walks a shuffled round of the album, stored in SQLite, so every photo comes up once per round and none repeats on consecutive days. A photo anyone has hearted is likelier, and hidden photos never qualify. A photo hidden during its day is replaced at once. It doesn't fill the Today hero, which is the backdrop (ADR-0031). Whether it gets a Today tile belongs to the Today layout.
 
 - **Covers**: FOS-08
 - **Depends on**: Immich connection; Photo favorites; Hidden photos; Region format (the family day)
-- **ADRs**: ADR-0008, ADR-0020, ADR-0025
+- **ADRs**: ADR-0008, ADR-0020, ADR-0025, ADR-0031
 
 ### Home control layout
 
@@ -424,7 +424,7 @@ On a kiosk, a touch anywhere resets the idle timer. After 60 s idle it closes an
 A kiosk's idle screen by day: the slideshow at its 15 s pace, weighted by anyone's favorites, with each slide's place-and-date caption, under a dark gradient. Bottom left, a huge clock and the date. Bottom right, the weather and the next Family calendar event, as Next up counts it, with its person-color dot. Busy blocks never show. In the evening the gradient darkens and the kiosk dims. The text shifts by up to 4 px every minute. A tap goes to Today. A banner shows over ambient without leaving it.
 
 - **Covers**: AMB-01 (captions shown; presence avatars wait for the presence decision), AMB-02, AMB-03, NFR-12
-- **Depends on**: Slideshow, Idle timers, the weather source, Calendar; Banners
+- **Depends on**: Slideshow, Idle timers, Weather, Calendar; Banners
 - **ADRs**: ADR-0024, ADR-0025, ADR-0029
 
 ### Night clock
@@ -509,10 +509,10 @@ A recipe in a photo, screenshot or PDF (a cookbook page, a handwritten card) is 
 
 ### Dinner ideas
 
-On request, on a phone or a kiosk, Home HQ suggests three dinners for today: mostly recipes from the recipe box, plus one new dish. Each shows a name, a one-line summary and total time. The model weighs today's weather (Open-Meteo, as the weather hero has it), recent dinners and the food notes, and avoids repeating a recent dinner. Other ideas runs again with the shown ones excluded. Make this counts the dish as today's dinner and opens the recipe, or the new dish's full recipe with ingredient lines that scale and go to shopping. A new dish also has Save to recipe box, owned by whoever saved it, or the household on a kiosk. Nothing runs on a schedule.
+On request, on a phone or a kiosk, Home HQ suggests three dinners for today: mostly recipes from the recipe box, plus one new dish. Each shows a name, a one-line summary and total time. The model weighs today's weather (Open-Meteo, from Weather), recent dinners and the food notes, and avoids repeating a recent dinner. Other ideas runs again with the shown ones excluded. Make this counts the dish as today's dinner and opens the recipe, or the new dish's full recipe with ingredient lines that scale and go to shopping. A new dish also has Save to recipe box, owned by whoever saved it, or the household on a kiosk. Nothing runs on a schedule.
 
 - **Covers**: RED-10 (adapted to an adult household with no meal plan)
-- **Depends on**: AI connection and cap; Recipe box; Recipe scaling and units; Ingredients to shopping; Recent dinners and food notes; the weather source (ADR from the Today hero ticket)
+- **Depends on**: AI connection and cap; Recipe box; Recipe scaling and units; Ingredients to shopping; Recent dinners and food notes; Weather
 - **ADRs**: ADR-0021, ADR-0030
 
 ### Recent dinners and food notes
@@ -530,3 +530,28 @@ One search box finds tasks, shopping items, recipes, records and duties by words
 - **Covers**: FOS-45 (by words, not by meaning)
 - **Depends on**: Tasks; Shopping lists; Recipe box; Records; Duties
 - **ADRs**: ADR-0018, ADR-0030
+
+### Weather
+
+The server fetches the forecast from Open-Meteo every 15 minutes, with no key, for the weather location an admin sets: the hourly WMO code, temperature, rain chance and wind, plus the local day's high, low, sunrise and sunset, in the household's units. It picks hours by timestamp, never by index, so the strip crosses midnight (DEF-07). Today's weather, the weather advice line, ambient, the night clock, the backdrop and dinner ideas all read it. Once the last fetch is out of date, no screen presents the weather as current. A "Weather data by Open-Meteo.com" link sits next to it.
+
+- **Covers**: TODAY-02, TODAY-03, TODAY-04 (the data; how they show is the Today layout's), DATA-23, DEF-07, question 13 (weather source)
+- **Depends on**: Region format (units and the family day); Roles (the weather location is admin-only)
+- **ADRs**: ADR-0020, ADR-0031
+
+### Backdrop
+
+The Today hero is a backdrop: a storybook painting of Maple Frontier for the current weather group, light phase and season, on the panel and on phones. The server picks the cell and pushes it over `/ws`, so every screen shows the same image. Weather groups come from the hourly WMO code, and windy means clear or partly cloudy with wind over 19 mph. Light phase comes from the sun's elevation: daylight above 20°, golden hour to 8°, twilight to −6°, then dark. Season goes by month, but snow and freezing rain use winter art. Ten holidays win all day with their own day and dark images per weather. When weather is out of date it shows the weatherless backdrop for the season and light phase. Images and a manifest (cell, text tone, focus point) live in a mounted backdrops folder, outside the repo. A missing image falls back from holiday to base, then to weatherless, then to a plain background, and admins see which cells have no image. Phones crop a short banner around the focus point. The clock and weather sit at upper left over a soft scrim, in the manifest's text tone. The full list of images and prompts is `docs/backdrops.md`.
+
+- **Covers**: RED-01 (our own art), RED-02 (adapted: no kid schedule, temperature gates or birthdays), RED-03, question 13
+- **Depends on**: Weather; the backdrop art set (household setup); HA's `sun.sun` elevation; Idle and night (kiosks dim in the evening)
+- **ADRs**: ADR-0029, ADR-0031
+
+### Moon on the backdrop
+
+On clear, partly cloudy and windy dark backdrops, Home HQ places the painted sprite for today's moon phase at the manifest's moon spot, between moonrise and moonset. The server reads the phase and the moon times from wttr.in once a day for the weather location. With no answer, no moon shows. Holiday backdrops get no moon, and a new moon shows nothing.
+
+- **Covers**: question 13 (moon, added in this ticket)
+- **Depends on**: Backdrop; the 7 moon sprites
+- **ADRs**: ADR-0031
+

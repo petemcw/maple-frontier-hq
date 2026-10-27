@@ -368,6 +368,24 @@ _Avoid_: security line, health pill, status bar
 Something in the house that needs fixing: a battery below 20%, a device fault, or a failed HA backup. An unavailable tile isn't one.
 _Avoid_: alert, warning, issue
 
+## Today
+
+The home screen every family member and kiosk opens to.
+
+### Language
+
+**Backdrop**:
+An illustration of Maple Frontier under the current weather, light and season, shown behind Today's clock and weather. Home HQ picks it by rules, the same one on every screen.
+_Avoid_: scene (an HA scene), hero (the slot it fills), wallpaper, weather art
+
+**Light phase**:
+Where the sun is, as the backdrop sees it: daylight, golden hour, twilight or dark, at sunrise and sunset alike.
+_Avoid_: dusk, night, time of day (Evening and Night are the household's, not the sun's)
+
+**Weatherless backdrop**:
+A backdrop with a soft, even sky, shown when Home HQ's weather is out of date.
+_Avoid_: default backdrop, fallback scene, offline art
+
 ## Idle and night
 
 What a kiosk shows when nobody is touching it. See ADR-0029.

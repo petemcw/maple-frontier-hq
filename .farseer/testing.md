@@ -48,6 +48,10 @@ pnpm run test:e2e
 - Minimum: 80% (lines, functions, branches, statements) on logic code, enforced in the Vitest config once it exists.
 - New code must have tests.
 
+## Exhaustive rule tests
+
+Rule-driven content is tested over every combination of its inputs, not only examples (RED-03, ADR-0031). That covers the backdrop rules (weather code × half hour × month × holiday), the weather advice line (TODAY-03), and the kiosk idle and night timers. Each run asserts that every combination gets a sensible result, such as a backdrop cell that exists in the set.
+
 ## Safety: this is a real house
 
 - Tests must never change real devices. Anything that taps a control runs against a fake Home Assistant, never the live instance.
