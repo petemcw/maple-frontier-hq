@@ -72,7 +72,7 @@ Each record lists its open duties, soonest first, with due labels ("3 days overd
 A duty can link one HA entity and the state that triggers it, such as the HVAC filter tray contact opening. On that state the duty either raises a sensor prompt ("Was the furnace filter changed?") or, if set to auto-complete, completes itself with a log entry "by HA sensor" and undo on the duty. A prompt goes to the assignee's (or the admins') Companion app as a notification with Yes and No, shows as an attention card, and appears on every kiosk. It stays open until it's answered or the duty is done, one answer clears it everywhere, and repeat triggers never add a second one. Yes completes the duty. Once the furnace filter and the fridge water and air filters run as duties here, HA's filter helpers, reset scripts and detection automation are retired, an HA config change to agree with the family at the time.
 
 - **Covers**: RED-17 (consumables fed by HA sensors)
-- **Depends on**: Duties; the HA mirror (ADR-0004); actionable Companion notifications (ADR-0012); what needs attention; kiosks (ADR-0006)
+- **Depends on**: Duties; the HA mirror (ADR-0004); actionable Companion notifications (ADR-0012); Attention; kiosks (ADR-0006)
 - **ADRs**: ADR-0004, ADR-0012, ADR-0018
 
 ### Papers
@@ -381,11 +381,11 @@ The house status line on Today shows the garage open or closed, in the warning s
 
 ### House problems
 
-The server derives house problems from the HA mirror: a battery below 20%, named with its device, room and battery-type label ("Laundry motion · Laundry Room · CR2450 · 14%"), a Shelly or TP-Link fault sensor turning on, and HA's daily backup failing. A problem clears itself when its cause clears. An unavailable tile is not a house problem. Where problems appear is set by the "What needs attention" ticket.
+The server derives house problems from the HA mirror: a battery below 20%, named with its device, room and battery-type label ("Laundry motion · Laundry Room · CR2450 · 14%"), a Shelly or TP-Link fault sensor turning on, and HA's daily backup failing. A problem clears itself when its cause clears. An unavailable tile is not a house problem. Problems show as attention to the admins and on every kiosk.
 
 - **Covers**: RED-06 (the signals, not the pill)
 - **Depends on**: the HA mirror
-- **ADRs**: ADR-0027
+- **ADRs**: ADR-0027, ADR-0033
 
 ### Timers
 
@@ -555,3 +555,27 @@ On clear, partly cloudy and windy dark backdrops, Home HQ places the painted spr
 - **Depends on**: Backdrop; the 7 moon sprites
 - **ADRs**: ADR-0031
 
+
+### Attention
+
+A "Needs attention" section on Today holds one attention card per item waiting on someone who can act. Each viewer sees only their own. Sensor prompts go to the duty's assignee (or the admins for Anyone) and every kiosk. Delete requests go to every owner of the item and both admins, never a kiosk, and the first answer clears them everywhere. Overdue tasks: a member sees their fixed tasks, their turns and Anyone tasks, and a kiosk sees every overdue task with who's up. Overdue duties go to the assignee (or both admins for Anyone) and every kiosk. House problems go to both admins and every kiosk. Banners, lights left on, waiting quick add suggestions and Someday tasks are not attention. Sensor prompts and delete requests come first, then overdue tasks and duties, most overdue first, then house problems. Up to the Today layout's cap, then "+{n} more" opens the full list. Each card has its actions: Yes or No on a prompt, Delete or Keep on a delete request, Done or Snooze on a task, Done or Move date on a duty, Snooze on a house problem. On a kiosk, Done asks "Who did it?". With nothing waiting, the section leaves Today, and no other screen shows attention. The server works out each viewer's attention and pushes changes over `/ws`, so an item comes and goes on every device as its cause changes. The server withdraws house problems while the HA connection is down (ADR-0004). Tests cover who sees each kind, member and kiosk alike.
+
+- **Covers**: FOS-05 (adapted: no suggestions, shown on kiosks), RED-06 (the place, not the pill), RED-51 (ruled out: no notification center or "on now" list)
+- **Depends on**: Roles; Delete requests; Sensor prompts; Duties; Tasks; Task snooze; House problems; the `/ws` channel; the Today layout for placement and the cap
+- **ADRs**: ADR-0004, ADR-0006, ADR-0016, ADR-0018, ADR-0023, ADR-0027, ADR-0033
+
+### Duty move date
+
+Move date on an overdue duty's attention card moves only this due date later, never past the next period's date. A repeating duty stays anchored to its first due date, so the cycle doesn't shift. Anyone who sees the duty may move it, a kiosk included, which asks "Who moved it?". The move goes in the duty's log with who made it, and its reminders follow the new date.
+
+- **Covers**: FOS-05 (postpone, applied to duties)
+- **Depends on**: Duties; Attention
+- **ADRs**: ADR-0018, ADR-0033
+
+### House problem snooze
+
+Admins and kiosks may snooze a house problem from its attention card. It leaves every screen at once until it gets worse: a battery comes back after another 5% drop, and a fault sensor or a failed backup comes back the next time it fires. A problem that clears and returns is a new one. Home HQ records who or what snoozed it. Tests cover the 5% step, a repeat failure and a cleared-then-returned problem.
+
+- **Covers**: RED-06 (setting a problem aside)
+- **Depends on**: House problems; Attention
+- **ADRs**: ADR-0027, ADR-0033

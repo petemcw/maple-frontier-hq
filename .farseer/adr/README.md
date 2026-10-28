@@ -34,3 +34,4 @@
 | [0030](0030-quick-add-and-dinner-ideas-on-claude.md) | AI features are quick add and dinner ideas on the Claude API, and the AI only suggests | accepted | 2026-10-20 |
 | [0031](0031-today-backdrop-and-open-meteo-weather.md) | The Today hero is a backdrop of Maple Frontier picked by rules, with weather from Open-Meteo | accepted | 2026-10-27 |
 | [0032](0032-every-member-on-ha-and-companion.md) | Every family member gets their own HA user and the Companion app, with location While Using | accepted | 2026-10-27 |
+| [0033](0033-attention-on-today-for-whoever-can-act.md) | Attention is a Today section of per-item cards, shown to whoever can act | accepted | 2026-10-28 |

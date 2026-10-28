@@ -249,7 +249,7 @@ The household's evening hour at which dated tasks still open without a due time 
 _Avoid_: chores check, deadline, nag, cutoff
 
 **Snooze**:
-Pushing an open, dated task later, by an hour, to the evening check or to tomorrow morning, but never past a repeating task's next occurrence. It isn't overdue until then.
+Pushing an open, dated task later, by an hour, to the evening check or to tomorrow morning, but never past a repeating task's next occurrence. It isn't overdue until then. Snoozing a house problem sets it aside until it gets worse.
 _Avoid_: postpone, defer, skip
 
 ## Calendar
@@ -393,6 +393,14 @@ _Avoid_: dusk, night, time of day (Evening and Night are the household's, not th
 **Weatherless backdrop**:
 A backdrop with a soft, even sky, shown when Home HQ's weather is out of date.
 _Avoid_: default backdrop, fallback scene, offline art
+
+**Attention**:
+What's waiting on someone who can act: sensor prompts, delete requests, overdue tasks and duties, and house problems. Each viewer sees only what they can act on, and it shows on Today as "Needs attention".
+_Avoid_: needs you, notifications, alerts, inbox
+
+**Attention card**:
+One item of attention on Today, with its own actions, such as Done, Snooze or Yes and No.
+_Avoid_: alert card, needs-you card, notification
 
 ## Idle and night
 
