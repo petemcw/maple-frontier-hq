@@ -314,7 +314,7 @@ _Avoid_: memories (Immich's own, per owner), flashback, anniversary
 
 **Favorite**:
 A photo a family member has hearted in Home HQ, which comes up more often in their slideshow. Each member has their own, and a kiosk has none.
-_Avoid_: star, like, Immich favorite (owner-only, not used)
+_Avoid_: star, like, Immich favorite (owner-only, not used), Sonos favorite (the speaker's one-tap list)
 
 **Hidden photo**:
 A photo taken off every Home HQ screen while it stays in Immich and in the Home HQ album. Anyone may hide one, and only an admin may unhide it.
@@ -331,7 +331,7 @@ The house's lights, garage, climate and cameras, run from Home HQ. See ADR-0011 
 ### Language
 
 **Tile**:
-The control for one labeled HA entity in Home control: a light, switch, fan, the garage or a camera. A tap acts on it, and a long press opens its sheet.
+The control for one labeled HA entity in Home control: a light, switch, fan, the garage or a camera, or for the speaker or a TV. A tap acts on it, and a long press opens its sheet.
 _Avoid_: card, widget, button, device (an HA device)
 
 **Scene**:
@@ -345,6 +345,36 @@ _Avoid_: kill switch, Good Night (an HA scene)
 **Room presence**:
 The room HA places a family member in, from their phone heard in that room. It's missing when nothing hears the phone.
 _Avoid_: location (GPS and zones), occupancy (a motion reading that doesn't say who)
+
+## Media
+
+The Living Room speaker and the TVs, seen and run from Home control. See ADR-0034.
+
+### Language
+
+**Speaker**:
+The Living Room Sonos, the one player whose now playing Home HQ shows in full and controls.
+_Avoid_: Sonos (the brand, when the player is meant), player (any media device), zone, group
+
+**TV**:
+A room's TV setup taken as one: in the Family Room the Samsung TV, Denon receiver and Apple TV together, in Double Down its Apple TV. It's playing when its Apple TV plays and on when any part is on, and turning it off switches every part off.
+_Avoid_: Apple TV, receiver, Samsung (the separate devices), remote
+
+**Now playing**:
+What the speaker or a TV is playing right now: its title and artist or app, and for the speaker its art and position. Nothing playing anywhere is Quiet.
+_Avoid_: track (alone), queue, mini player
+
+**Sonos favorite**:
+One entry in the household's "My Sonos" list (a playlist, album or station), played on the speaker with one tap. It's edited in the Sonos app, never in Home HQ.
+_Avoid_: Favorite (a photo), station, preset, playlist (alone)
+
+**Synced lyrics**:
+The words of the speaker's current song, timed line by line, with the current line highlighted. They show only when a match is found.
+_Avoid_: captions, karaoke, subtitles
+
+**Lyrics offset**:
+How far a song's synced lyrics are shifted to line up with what plays, kept per song for the whole household.
+_Avoid_: delay, sync (alone), latency
 
 ## Alerts and house status
 

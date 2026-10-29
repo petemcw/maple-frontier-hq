@@ -279,7 +279,7 @@ The server picks one photo per family day, the same on every screen. An on this 
 
 Home control lists rooms from HA areas, grouped under HA floors (Top, Main, Lower, Lowest). Areas with no floor come last under "Outside". A room appears only if it holds a tile or a scene. Each room heading shows "{n} on" or "All off", plus a temperature where the room has a labeled temperature sensor. Three summary cards top the screen. Lights shows the count on and opens a sheet of every light, on first. Garage shows Open or Closed, tinted when open. Climate shows the temperature and what the ecobee is doing. Display names, order and hidden items use ADR-0011's admin overrides. With HA offline, every tile is disabled and no state shows as current.
 
-- **Covers**: HOME-01 (no Security or Media card), HOME-02 (Lights sheet), HOME-05, DATA-17, RED-55 (temperature on rooms only)
+- **Covers**: HOME-01 (no Security card; Media card is its own feature), HOME-02 (Lights sheet), HOME-05, DATA-17, RED-55 (temperature on rooms only)
 - **Depends on**: the HA connection (ADR-0004); HA areas, floors and Home HQ labels; Stairs and Double Down given a floor in HA (a household change)
 - **ADRs**: ADR-0004, ADR-0011, ADR-0026
 
@@ -579,3 +579,43 @@ Admins and kiosks may snooze a house problem from its attention card. It leaves 
 - **Covers**: RED-06 (setting a problem aside)
 - **Depends on**: House problems; Attention
 - **ADRs**: ADR-0027, ADR-0033
+
+### Speaker
+
+The Living Room Sonos is a tile in its room. A tap plays or pauses it, and the tile shows the art, title and artist while something plays. Its sheet holds play/pause, previous, next, a volume slider that commits on release, and the position, which the browser works out from HA's last reported position and time. The server fetches the album art and serves it from its own URL, so no HA proxy token reaches a browser. Every member and kiosk may use it, at home or away. Changes show a pending dot until HA reports them (Pending changes). With HA down, the tile is disabled. No shuffle, repeat, seek or sleep timer.
+
+- **Covers**: HOME-13, RED-08 (now playing, pause, skip, volume; no power button)
+- **Depends on**: Tiles; Pending changes; the speaker labeled for Home HQ in HA
+- **ADRs**: ADR-0004, ADR-0011, ADR-0026, ADR-0034
+
+### Sonos favorites
+
+The speaker's sheet shows the household's "My Sonos" list as it stands, each entry with its artwork, read through HA's media browser. A tap plays it on the speaker. The list is edited in the Sonos app and changes show as HA reports them. Home HQ adds no radio browsing and no admin-picked subset.
+
+- **Covers**: RED-08 (one-tap stations), RED-38 (one-tap playlists)
+- **Depends on**: Speaker
+- **ADRs**: ADR-0034
+
+### TVs
+
+Each room's TV is one tile: the Family Room TV (Samsung TV, Denon receiver and Apple TV together) and the Double Down TV (its Apple TV). A TV shows Off, On, or Playing with the app and title its Apple TV reports. A tap opens its sheet, which holds Turn off. Turn off switches every part off with `media_player.turn_off`, never `remote.turn_off`, and needs no confirm. Every member and kiosk may use it, at home or away. Home HQ can't turn a TV on, and has no remote, volume or input control. Tests cover a TV whose parts disagree, such as the Denon on with the Samsung off.
+
+- **Covers**: RED-08 ("TV & remote", narrowed to state and Turn off)
+- **Depends on**: Tiles; Pending changes; the TV parts labeled for Home HQ in HA
+- **ADRs**: ADR-0026, ADR-0034
+
+### Media card
+
+A fourth summary card on Home control, beside Lights, Garage and Climate. It shows "Quiet" when nothing plays, otherwise what's playing (the speaker's song first, then a playing TV), with "+{n}" when more than one player is busy. A tap opens a sheet with the speaker and every TV. With HA down, it shows no state as current.
+
+- **Covers**: HOME-01 (the Media card), RED-50 (the "+1" for a second player)
+- **Depends on**: Home control layout; Speaker; TVs
+- **ADRs**: ADR-0004, ADR-0026, ADR-0034
+
+### Synced lyrics
+
+When the speaker's song changes, the server looks it up on LRCLIB by title, artist, album and duration, then without the album, then by search for the closest duration within ±2 s. It sends a `User-Agent`, honors `Retry-After` and caches each result in SQLite. The speaker's sheet gains a Lyrics view on every device, the panel included, that highlights the current line. A ± lyrics offset lines them up, and the server keeps it with that song for the household. The view appears only when there's a match. Radio and tracks without a duration get none. Tests run against a fake LRCLIB and cover each fallback, a miss and the offset.
+
+- **Covers**: RED-50 (synced lyrics and the ± offset; no mini player)
+- **Depends on**: Speaker
+- **ADRs**: ADR-0008, ADR-0034
